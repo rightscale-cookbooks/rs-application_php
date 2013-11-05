@@ -26,59 +26,67 @@
 
 #include_recipe "php::module_#{database_module}"
 
-node.set['apache']['listen_ports'] = [node['rs-app']['listen_port']]
+# The database block in the php block below doesn't accept node variables.
+# It is a known issue and will be fixed by Opscode.
+#
+database_host = node['rs-application_php']['database_host']
+database_user = node['rs-application_php']['database_user']
+database_password = node['rs-application_php']['database_password']
+database_schema = node['rs-application_php']['database_schema']
 
-application node['rs-app']['application_name'] do
-  path "/usr/local/www/sites/#{node['rs-app']['application_name']}"
+node.set['apache']['listen_ports'] = [node['rs-application_php']['listen_port']]
+
+application node['rs-application_php']['application_name'] do
+  path "/usr/local/www/sites/#{node['rs-application_php']['application_name']}"
   owner node['apache']['user']
   group node['apache']['group']
 
-  repository node['rs-scm']['repository']
-  revision node['rs-scm']['revision']
-  scm_provider node['rs-scm']['provider']
+  repository node['rs-application_php']['scm']['repository']
+  revision node['rs-application_php']['scm']['revision']
+  scm_provider node['rs-application_php']['scm']['provider']
 
-  packages node['rs-st-php']['packages']
+  packages node['rs-application_php']['packages']
 
   # migration
-  if node['rs-app']['migration_command'] && !node['rs-app']['migration_command'].empty?
-    migrate true
-    migration_command node['rs-app']['migration_command']
-  end
+  #if node['rs-app']['migration_command'] && !node['rs-app']['migration_command'].empty?
+  #  migrate true
+  #  migration_command node['rs-app']['migration_command']
+  #end
 
   # TODO: change behavior of the before_deploy callback in the application
   # cookbook to be consistent with the behavior of the callbacks from the Chef
   # deploy resource
-  if node['rs-app']['before_deploy'] && !node['rs-app']['before_deploy'].empty?
-    before_deploy node['rs-app']['before_deploy']
+  if node['rs-application_php']['before_deploy'] && !node['rs-application_php']['before_deploy'].empty?
+    before_deploy node['rs-application_php']['before_deploy']
   end
 
-  if node['rs-app']['before_migrate'] && !node['rs-app']['before_migrate'].empty?
-    before_migrate node['rs-app']['before_migrate']
+  if node['rs-application_php']['before_migrate'] && !node['rs-application_php']['before_migrate'].empty?
+    before_migrate node['rs-application_php']['before_migrate']
   end
 
-  if node['rs-app']['before_symlink'] && !node['rs-app']['before_symlink'].empty?
-    before_symlink node['rs-app']['before_symlink']
+  if node['rs-application_php']['before_symlink'] && !node['rs-application_php']['before_symlink'].empty?
+    before_symlink node['rs-application_php']['before_symlink']
   end
 
-  if node['rs-app']['before_restart'] && !node['rs-app']['before_restart'].empty?
-    before_restart node['rs-app']['before_restart']
+  if node['rs-application_php']['before_restart'] && !node['rs-application_php']['before_restart'].empty?
+    before_restart node['rs-application_php']['before_restart']
   end
 
-  if node['rs-app']['after_restart'] && !node['rs-app']['after_restart'].empty?
-    after_restart node['rs-app']['after_restart']
+  if node['rs-application_php']['after_restart'] && !node['rs-application_php']['after_restart'].empty?
+    after_restart node['rs-application_php']['after_restart']
   end
 
-  php node['rs-app']['application_name'] do
-    # database configuration
-    write_settings_file true
-    local_settings_file 'config/db.php'
-    settings_template 'db.php.erb'
+  php node['rs-application_php']['application_name'] do
+    write_settings_file node['rs-application_php']['write_settings_file']
+    local_settings_file node['rs-application_php']['local_settings_file']
+    settings_template node['rs-application_php']['settings_template']
 
+    # Database configuration
     database do
-      host 'localhost'
-      user 'appuser'
-      password 'apppass'
-      schema 'app_test'
+      host database_host
+      user database_user
+      password database_password
+      schema database_schema
     end
   end
 

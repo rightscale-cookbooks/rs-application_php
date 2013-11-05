@@ -17,4 +17,40 @@
 # limitations under the License.
 #
 
-default['rs-st-php']['packages'] = ['php-soap']
+default['rs-application_php']['packages'] = ['php-soap']
+
+default['rs-application_php']['listen_port'] = 8080
+
+#default['rs-application_php']['application_name'] = 'testapp'
+
+default['rs-application_php']['scm']['provider'] = 'git'
+
+default['rs-application_php']['scm']['repository'] = 'git://github.com/rightscale/examples.git'
+
+default['rs-application_php']['scm']['revision'] = 'unified_php'
+
+default['rs-application_php']['packages'] = []
+
+default['rs-application_php']['application_name'] = 'example'
+
+default['rs-application_php']['migration_command'] = nil
+
+
+
+default['rs-application_php']['write_settings_file'] = true
+
+default['rs-application_php']['local_settings_file'] = 'config/db.php'
+
+default['rs-application_php']['settings_template'] = 'db.php.erb'
+
+# Database configuration
+
+default['rs-application_php']['database'] = 'mysql'
+
+default['rs-application_php']['database_host'] = 'localhost'
+
+default['rs-application_php']['database_user'] = 'appuser'
+
+default['rs-application_php']['database_password'] = 'apppass'
+
+default['rs-application_php']['database_schema'] = 'app_test'
