@@ -45,12 +45,12 @@ default['rs-application_php']['settings_template'] = 'db.php.erb'
 
 # Database configuration
 
-default['rs-application_php']['database'] = 'mysql'
+default['rs-application_php']['database']['provider'] = 'mysql'
 
-default['rs-application_php']['database_host'] = 'localhost'
+default['rs-application_php']['database']['host'] = 'localhost'
 
-default['rs-application_php']['database_user'] = 'appuser'
+default['rs-application_php']['database']['user'] = 'appuser'
 
-default['rs-application_php']['database_password'] = 'apppass'
+default['rs-application_php']['database']['password'] = 'apppass'
 
-default['rs-application_php']['database_schema'] = 'app_test'
+default['rs-application_php']['database']['schema'] = 'app_test'

@@ -81,6 +81,15 @@ Vagrant.configure("2") do |config|
       },
       :vagrant => {
         :box_name => 'appserver'
+      },
+      :'rs-application_php' => {
+        :database => {
+            :provider => 'mysql',
+            :host => '33.33.33.11',
+            :user => 'appuser',
+            :password => 'apppass',
+            :schema => 'app_test'
+        }
       }
     }
 

@@ -2,7 +2,7 @@ site :opscode
 
 metadata
 
-cookbook 'application', github: 'opscode-cookbooks/application', branch: 'lcg/COOK-3343'
+#cookbook 'application', github: 'opscode-cookbooks/application', branch: 'lcg/COOK-3343'
 #cookbook 'rs-app', path: '../../rightscale/rs-app'
 #cookbook 'rs-base', path: '../../rightscale/rs-base'
 #cookbook 'rs-scm-ast', path: '../../rightscale/rs-scm-ast'

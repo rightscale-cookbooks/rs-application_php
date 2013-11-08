@@ -24,15 +24,17 @@
 #  database_module = node['rs-app']['database']
 #end
 
-#include_recipe "php::module_#{database_module}"
+include_recipe 'database::mysql'
+
+include_recipe "php::module_mysql"
 
 # The database block in the php block below doesn't accept node variables.
 # It is a known issue and will be fixed by Opscode.
 #
-database_host = node['rs-application_php']['database_host']
-database_user = node['rs-application_php']['database_user']
-database_password = node['rs-application_php']['database_password']
-database_schema = node['rs-application_php']['database_schema']
+database_host = node['rs-application_php']['database']['host']
+database_user = node['rs-application_php']['database']['user']
+database_password = node['rs-application_php']['database']['password']
+database_schema = node['rs-application_php']['database']['schema']
 
 node.set['apache']['listen_ports'] = [node['rs-application_php']['listen_port']]
 
