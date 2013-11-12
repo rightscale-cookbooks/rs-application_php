@@ -17,21 +17,19 @@
 # limitations under the License.
 #
 
-default['rs-application_php']['packages'] = ['php-soap']
+default['rs-application_php']['packages'] = []
 
 default['rs-application_php']['listen_port'] = 8080
 
-#default['rs-application_php']['application_name'] = 'testapp'
-
 default['rs-application_php']['scm']['provider'] = 'git'
 
-default['rs-application_php']['scm']['repository'] = 'git://github.com/rightscale/examples.git'
+default['rs-application_php']['scm']['repository'] = nil
 
-default['rs-application_php']['scm']['revision'] = 'unified_php'
+default['rs-application_php']['scm']['revision'] = 'master'
 
 default['rs-application_php']['packages'] = []
 
-default['rs-application_php']['application_name'] = 'example'
+default['rs-application_php']['application_name'] = nil
 
 default['rs-application_php']['migration_command'] = nil
 
@@ -49,8 +47,8 @@ default['rs-application_php']['database']['provider'] = 'mysql'
 
 default['rs-application_php']['database']['host'] = 'localhost'
 
-default['rs-application_php']['database']['user'] = 'appuser'
+default['rs-application_php']['database']['user'] = nil
 
-default['rs-application_php']['database']['password'] = 'apppass'
+default['rs-application_php']['database']['password'] = nil
 
-default['rs-application_php']['database']['schema'] = 'app_test'
+default['rs-application_php']['database']['schema'] = nil

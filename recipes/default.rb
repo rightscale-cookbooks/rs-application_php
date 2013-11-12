@@ -17,12 +17,7 @@
 # limitations under the License.
 #
 
-#case node['rs-app']['database']
-#when 'postgresql'
-#  database_module = 'pgsql'
-#else
-#  database_module = node['rs-app']['database']
-#end
+include_recipe 'git'
 
 include_recipe 'database::mysql'
 
@@ -94,5 +89,3 @@ application node['rs-application_php']['application_name'] do
 
   mod_php_apache2
 end
-
-#include_recipe 'rs-app'

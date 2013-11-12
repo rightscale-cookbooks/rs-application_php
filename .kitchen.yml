@@ -5,23 +5,54 @@ driver_config:
 
 platforms:
 - name: ubuntu-12.04
+  run_list:
+    - recipe[apt::default]
   driver_config:
     box: opscode-ubuntu-12.04
-    box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_provisionerless.box
-- name: ubuntu-10.04
-  driver_config:
-    box: opscode-ubuntu-10.04
-    box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_ubuntu-10.04_provisionerless.box
+    box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_provisionerless.box
 - name: centos-6.4
   driver_config:
     box: opscode-centos-6.4
-    box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_centos-6.4_provisionerless.box
-- name: centos-5.9
-  driver_config:
-    box: opscode-centos-5.9
-    box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_centos-5.9_provisionerless.box
+    box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_centos-6.4_provisionerless.box
 
 suites:
 - name: default
-  run_list: ["recipe[rs-st-php]"]
-  attributes: {}
+  run_list:
+  - recipe[rs-application_php::default]
+  - recipe[curl::default]
+  attributes:
+    rs-application_php:
+      application_name: example
+      scm:
+        provider: git
+        revision: unified_php
+        repository: git://github.com/rightscale/examples.git
+
+# This test sets up a mysql database server locally and tests the database connectivity from the
+# application server.
+#
+- name: database_mysql
+  run_list:
+  - recipe[mysql::server]
+  - recipe[test_database_mysql::prepare]
+  - recipe[rs-application_php::default]
+  - recipe[curl::default]
+  attributes:
+    # The mysql cookbook requires these attributes to be set for running mysql server in a
+    # vagrant environment
+    mysql:
+      server_root_password: iamhardtoguess
+      server_debian_password: iamhardtoguess
+      server_repl_password: iamhardtoguess
+    rs-application_php:
+      application_name: example
+      scm:
+        provider: git
+        revision: unified_php
+        repository: git://github.com/rightscale/examples.git
+      database:
+        provider: mysql
+        host: localhost
+        user: app_user
+        password: apppass
+        schema: app_test
