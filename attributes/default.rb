@@ -17,38 +17,62 @@
 # limitations under the License.
 #
 
+# PHP packages to install
 default['rs-application_php']['packages'] = []
 
+# Application listen port
 default['rs-application_php']['listen_port'] = 8080
 
+# The source control provider
 default['rs-application_php']['scm']['provider'] = 'git'
 
+# The repository to checkout the code from
 default['rs-application_php']['scm']['repository'] = nil
 
-default['rs-application_php']['scm']['revision'] = 'master'
+# The revision of application code to checkout from the repository
+default['rs-application_php']['scm']['revision'] = nil
 
-default['rs-application_php']['packages'] = []
-
+# The name of the application
 default['rs-application_php']['application_name'] = nil
 
+# The command used to perform application migration
 default['rs-application_php']['migration_command'] = nil
 
-
-
+# Whether to write settings file TODO: I'm not clear
 default['rs-application_php']['write_settings_file'] = true
 
+# The local settings file TODO: I'm not clear
 default['rs-application_php']['local_settings_file'] = 'config/db.php'
 
+# The settings template used to create the settings file TODO: I'm not clear
 default['rs-application_php']['settings_template'] = 'db.php.erb'
 
 # Database configuration
 
+# The database provider
 default['rs-application_php']['database']['provider'] = 'mysql'
 
+# The database host
 default['rs-application_php']['database']['host'] = 'localhost'
 
+# The database username
 default['rs-application_php']['database']['user'] = nil
 
+# The database password
 default['rs-application_php']['database']['password'] = nil
 
+# The database schema name
 default['rs-application_php']['database']['schema'] = nil
+
+# Application callback attributes
+
+default['rs-application_php']['before_deploy'] = nil
+
+default['rs-application_php']['before_migrate'] = nil
+
+default['rs-application_php']['before_symlink'] = nil
+
+default['rs-application_php']['before_restart'] = nil
+
+default['rs-application_php']['after_restart'] = nil
+

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 apache_name = ''
-case backend.check_os
+case backend.check_os[:family]
 when 'Debian'
   apache_name = 'apache2'
 when 'RedHat'
@@ -14,7 +14,7 @@ describe 'Required packages are installed' do
   end
 
   php_packages = []
-  case backend.check_os
+  case backend.check_os[:family]
   when 'Debian'
     php_packages = %w(php5 php5-cgi php5-dev php5-cli php-pear)
   when 'RedHat'

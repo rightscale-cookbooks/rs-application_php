@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 mysql_service_name = ''
-case backend.check_os
+case backend.check_os[:family]
 when 'Debian'
   mysql_service_name = 'mysql'
 when 'RedHat'
@@ -11,7 +11,7 @@ end
 describe 'Required packages are installed' do
 
   php_mysql_packages = []
-  case backend.check_os
+  case backend.check_os[:family]
   when 'Debian'
     php_mysql_packages = %w(mysql-client libmysqlclient-dev php5-mysql)
   when 'RedHat'
