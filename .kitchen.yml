@@ -28,7 +28,9 @@ suites:
   - recipe[curl::default]
   attributes:
     rs-application_php:
+      packages: ['sl']
       application_name: example
+      local_settings_file: config/db.php
       scm:
         provider: git
         revision: unified_php
@@ -47,11 +49,12 @@ suites:
     # The mysql cookbook requires these attributes to be set for running mysql server in a
     # vagrant environment
     mysql:
-      server_root_password: iamhardtoguess
-      server_debian_password: iamhardtoguess
-      server_repl_password: iamhardtoguess
+      server_root_password: rootpass
+      server_debian_password: debianpass
+      server_repl_password: replpass
     rs-application_php:
       application_name: example
+      local_settings_file: config/db.php
       scm:
         provider: git
         revision: unified_php

@@ -23,6 +23,10 @@ include_recipe 'database::mysql'
 
 include_recipe "php::module_mysql"
 
+application_packages = RsApplicationPhp::Helper.versionize(node['rs-application_php']['packages'])
+php_pear_packages = RsApplicationPhp::Helper.versionize(node['rs-application_php']['pear_packages'])
+
+
 # The database block in the php block below doesn't accept node variables.
 # It is a known issue and will be fixed by Opscode.
 #
@@ -42,12 +46,12 @@ application node['rs-application_php']['application_name'] do
   revision node['rs-application_php']['scm']['revision']
   scm_provider node['rs-application_php']['scm']['provider']
 
-  packages node['rs-application_php']['packages']
+  packages application_packages
 
   # migration
-  #if node['rs-app']['migration_command'] && !node['rs-app']['migration_command'].empty?
+  #if node['rs-application_php']['migration_command'] && !node['rs-application_php']['migration_command'].empty?
   #  migrate true
-  #  migration_command node['rs-app']['migration_command']
+  #  migration_command node['rs-application_php']['migration_command']
   #end
 
   # TODO: change behavior of the before_deploy callback in the application
@@ -74,6 +78,8 @@ application node['rs-application_php']['application_name'] do
   end
 
   php node['rs-application_php']['application_name'] do
+    packages node['rs-application_php']['pear_packages']
+    app_root node['rs-application_php']['app_root']
     write_settings_file node['rs-application_php']['write_settings_file']
     local_settings_file node['rs-application_php']['local_settings_file']
     settings_template node['rs-application_php']['settings_template']

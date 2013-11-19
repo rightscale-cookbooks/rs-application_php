@@ -9,6 +9,13 @@ when 'RedHat'
 end
 
 describe 'Required packages are installed' do
+
+  # The package specified in rs-application_php/packages is installed
+  describe package('sl') do
+    it { should be_installed }
+  end
+
+  # The package 'git' should be installed by the git::default recipe
   describe package('git') do
     it { should be_installed }
   end

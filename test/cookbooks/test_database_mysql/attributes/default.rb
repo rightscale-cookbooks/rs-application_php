@@ -17,7 +17,6 @@
 # limitations under the License.
 #
 
-default['test_database_mysql']['server_root_password'] = 'iamhardtoguess'
 default['test_database_mysql']['database_name'] = 'app_test'
 default['test_database_mysql']['app_user'] = 'app_user'
 default['test_database_mysql']['app_password'] = 'apppass'
