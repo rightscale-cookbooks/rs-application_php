@@ -6,7 +6,7 @@ driver_config:
 platforms:
 - name: ubuntu-12.04
   run_list:
-    - recipe[apt::default]
+  - recipe[apt::default]
   driver_config:
     box: opscode-ubuntu-12.04
     box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_provisionerless.box
@@ -14,6 +14,8 @@ platforms:
       cpus: 2
       memory: 1024
 - name: centos-6.4
+  run_list:
+  - recipe[yum::epel]
   driver_config:
     box: opscode-centos-6.4
     box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_centos-6.4_provisionerless.box
