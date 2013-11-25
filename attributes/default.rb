@@ -20,9 +20,6 @@
 # Packages to install
 default['rs-application_php']['packages'] = []
 
-# PHP PEAR packages to install
-default['rs-application_php']['pear_packages'] = []
-
 # Application listen port
 default['rs-application_php']['listen_port'] = 8080
 
@@ -41,7 +38,12 @@ default['rs-application_php']['application_name'] = nil
 # The root of the application
 default['rs-application_php']['app_root'] = '/'
 
-# The command used to perform application migration
+# The command used to perform application migration.
+# Example: To import database contents from the dump file for a LAMP server, the following can be set as the
+# migration command:
+#   node.override['rs-application_php']['migration_command'] =
+#     "gunzip < #{dump_file}.sql.gz | mysql -u#{database_username} -p#{database_password} #{schema_name}"
+#
 default['rs-application_php']['migration_command'] = nil
 
 # Whether to crete the local settings file on the application deployment
@@ -69,28 +71,3 @@ default['rs-application_php']['database']['password'] = nil
 
 # The database schema name
 default['rs-application_php']['database']['schema'] = nil
-
-# Application callback attributes.
-#
-# These attributes are interpreted as callback to be called at specific points during
-# a deployment. If a block is passed, it will be evaluated within the new context. If a string is passed, it will be
-# interpreted as a path (relative to the release directory) to a file; if the file exists, it will be loaded and
-# evaluated as though it were a Chef recipe.
-#
-
-# Callback that is invoked immediately after initial setup and before the deployment is started. This callback will be
-# invoked on every Chef run.
-#
-default['rs-application_php']['before_deploy'] = nil
-
-# Callback that is invoked before the migration is started
-default['rs-application_php']['before_migrate'] = nil
-
-# Callback that is invoked before the symlinks are created
-default['rs-application_php']['before_symlink'] = nil
-
-# Callback that is invoked before the application is restarted
-default['rs-application_php']['before_restart'] = nil
-
-# Callback that is invoked after the application is restarted
-default['rs-application_php']['after_restart'] = nil

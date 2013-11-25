@@ -57,3 +57,7 @@ end
 describe command('curl --silent --location localhost:8080/appserver') do
   it { should return_stdout /PHP configuration=succeeded/ }
 end
+
+describe file('/usr/local/www/sites/example/migration') do
+  it { should contain 'migration is being performed' }
+end

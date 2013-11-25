@@ -24,7 +24,6 @@ include_recipe 'database::mysql'
 include_recipe "php::module_mysql"
 
 application_packages = RsApplicationPhp::Helper.versionize(node['rs-application_php']['packages'])
-php_pear_packages = RsApplicationPhp::Helper.versionize(node['rs-application_php']['pear_packages'])
 
 
 # The database block in the php block below doesn't accept node variables.
@@ -48,37 +47,13 @@ application node['rs-application_php']['application_name'] do
 
   packages application_packages
 
-  # migration
-  #if node['rs-application_php']['migration_command'] && !node['rs-application_php']['migration_command'].empty?
-  #  migrate true
-  #  migration_command node['rs-application_php']['migration_command']
-  #end
-
-  # TODO: change behavior of the before_deploy callback in the application
-  # cookbook to be consistent with the behavior of the callbacks from the Chef
-  # deploy resource
-  if node['rs-application_php']['before_deploy'] && !node['rs-application_php']['before_deploy'].empty?
-    before_deploy node['rs-application_php']['before_deploy']
-  end
-
-  if node['rs-application_php']['before_migrate'] && !node['rs-application_php']['before_migrate'].empty?
-    before_migrate node['rs-application_php']['before_migrate']
-  end
-
-  if node['rs-application_php']['before_symlink'] && !node['rs-application_php']['before_symlink'].empty?
-    before_symlink node['rs-application_php']['before_symlink']
-  end
-
-  if node['rs-application_php']['before_restart'] && !node['rs-application_php']['before_restart'].empty?
-    before_restart node['rs-application_php']['before_restart']
-  end
-
-  if node['rs-application_php']['after_restart'] && !node['rs-application_php']['after_restart'].empty?
-    after_restart node['rs-application_php']['after_restart']
+  # Application migration step
+  if node['rs-application_php']['migration_command'] && !node['rs-application_php']['migration_command'].empty?
+    migrate true
+    migration_command node['rs-application_php']['migration_command']
   end
 
   php node['rs-application_php']['application_name'] do
-    packages node['rs-application_php']['pear_packages']
     app_root node['rs-application_php']['app_root']
     write_settings_file node['rs-application_php']['write_settings_file']
     local_settings_file node['rs-application_php']['local_settings_file']
