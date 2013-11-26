@@ -32,15 +32,20 @@ default['rs-application_php']['scm']['repository'] = nil
 # The revision of application code to checkout from the repository
 default['rs-application_php']['scm']['revision'] = nil
 
+# The private key to access the repository via SSH
+default['rs-application_php']['scm']['deploy_key'] = nil
+
 # The name of the application
 default['rs-application_php']['application_name'] = nil
 
 # The root of the application
 default['rs-application_php']['app_root'] = '/'
 
-# The command used to perform application migration.
-# Example: To import database contents from the dump file for a LAMP server, the following can be set as the
+# The command used to perform application migration
+#
+# @example: To import database contents from the dump file for a LAMP server, the following can be set as the
 # migration command:
+#
 #   node.override['rs-application_php']['migration_command'] =
 #     "gunzip < #{dump_file}.sql.gz | mysql -u#{database_username} -p#{database_password} #{schema_name}"
 #

@@ -49,6 +49,12 @@ attribute 'rs-application_php/scm/revision',
   :required => 'required',
   :recipes => ['rs-application_php::default']
 
+attribute 'rs-application_php/scm/deploy_key',
+  :display_name => 'Application Deploy Key',
+  :description => 'The private key to access the repository via SSH',
+  :required => 'optional',
+  :recipes => ['rs-application_php::default']
+
 attribute 'rs-application_php/application_name',
   :display_name => 'Application Name',
   :description => 'The name of the application',

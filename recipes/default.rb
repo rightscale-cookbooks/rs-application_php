@@ -23,7 +23,9 @@ include_recipe 'database::mysql'
 
 include_recipe "php::module_mysql"
 
-application_packages = RsApplicationPhp::Helper.versionize(node['rs-application_php']['packages'])
+# Convert the packages list to a Hash if any of the package has version specified.
+# See libraries/helper.php for the definition of `split_by_package_name_and_version` method.
+application_packages = RsApplicationPhp::Helper.split_by_package_name_and_version(node['rs-application_php']['packages'])
 
 
 # The database block in the php block below doesn't accept node variables.
@@ -44,6 +46,9 @@ application node['rs-application_php']['application_name'] do
   repository node['rs-application_php']['scm']['repository']
   revision node['rs-application_php']['scm']['revision']
   scm_provider node['rs-application_php']['scm']['provider']
+  if node['rs-application_php']['scm']['deploy_key'] && !node['rs-application_php']['scm']['deploy_key'].empty?
+    deploy_key node['rs-application_php']['scm']['deploy_key']
+  end
 
   packages application_packages
 

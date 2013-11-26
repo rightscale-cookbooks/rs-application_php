@@ -18,33 +18,37 @@
 #
 
 module RsApplicationPhp
-  # This module contains helper methods for rs-application_php cookbook
+  # This module contains helper methods for rs-application_php cookbook.
   #
   module Helper
     # This is a simple helper method that will accept a list of package names as an array and convert them to a
     # Hash (key as the package name and value as the package version) if the package names contain the version number
     # in the format: package=version
     #
-    # @param packages [Array<String>] array of packages
+    # @param packages [Array<String>] list of packages
     #
-    # @return [Hash{String => String}|Array<String>] a Hash of package name and version or array of package names
+    # @return [Hash{String => String}, Array<String>] a Hash of package name and version or array of package names
     #
-    def self.versionize(packages)
+    # @example Split package by name and version
+    #   >> RsApplicationPhp::Helper.split_by_package_name_and_version(['pkg1', 'pkg2=2.0'])
+    #   => {'pkg1' => nil, 'pkg2' => '2.0'}
+    #
+    def self.split_by_package_name_and_version(packages)
       # The `packages` attribute in application resource supports both Hash and Array formats.
       # If any of the package given has version specified (in the format package=version),
       # use the hash format with the package nane as the key and package version as the value
       # otherwise use the array format with just the package names.
       #
       if packages.any? { |pkg| pkg =~ /(.*)=(.*)/ }
-        versionized_packages = {}
+        packages_hash = {}
         packages.each do |pkg|
           if pkg =~ /(.*)=(.*)/
-            versionized_packages[$1] = $2
+            packages_hash[$1] = $2
           else
-            versionized_packages[pkg] = nil
+            packages_hash[pkg] = nil
           end
         end
-        versionized_packages
+        packages_hash
       else
         packages
       end

@@ -1,4 +1,4 @@
-# rs-st-php cookbook
+# rs-application_php cookbook
 
 [![Build Status](https://travis-ci.org/rightscale-cookbooks/rs-application_php.png?branch=white_13_07_acu111903_implement_rs-application_php)](https://travis-ci.org/rightscale-cookbooks/rs-application_php)
 
@@ -64,7 +64,7 @@ Add the `rs-application_php::default` recipe to your run list.
 
 # Recipes
 
-## `rs-application_php::default`
+## rs-application_php::default
 
 Based on the attributes provided, this recipe will deploy the given application using the application LWRP.
 
