@@ -80,6 +80,13 @@ Vagrant.configure("2") do |config|
         :box_name => 'appserver'
       },
       :'rs-application_php' => {
+        :application_name => 'example',
+        :local_settings_file => 'config/db.php',
+        :scm => {
+          :provider => 'git',
+          :revision => 'unified_php',
+          :repository => 'git://github.com/rightscale/examples.git'
+        },
         :database => {
           :provider => 'mysql',
           :host => 'localhost',
