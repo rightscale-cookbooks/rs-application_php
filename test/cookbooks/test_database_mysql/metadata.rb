@@ -1,8 +1,8 @@
-name             'test-db'
-maintainer       'YOUR_NAME'
-maintainer_email 'YOUR_EMAIL'
-license          'All rights reserved'
-description      'Installs/Configures test-db'
+name             'test_database_mysql'
+maintainer       'RightScale, Inc.'
+maintainer_email 'cookbooks@rightscale.com'
+license          'Apache 2.0'
+description      'Installs/Configures a test mysql database server'
 version          '0.1.0'
 
 depends 'database'

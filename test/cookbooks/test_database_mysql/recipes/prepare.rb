@@ -1,6 +1,6 @@
 #
-# Cookbook Name:: rs-application_php
-# Recipe:: default
+# Cookbook Name:: test_database_mysql
+# Recipe:: prepare
 #
 # Copyright (C) 2013 RightScale, Inc.
 #

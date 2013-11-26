@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: rs-application_php
+# Cookbook Name:: test_database_mysql
 # Attribute:: default
 #
 # Copyright (C) 2013 RightScale, Inc.
