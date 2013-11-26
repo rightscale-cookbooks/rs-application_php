@@ -22,16 +22,9 @@ attribute 'rs-application_php/packages',
   :required => 'optional',
   :recipes => ['rs-application_php::default']
 
-attribute 'rs-application_php/pear_packages',
-  :display_name => 'PEAR Packages to install',
-  :description => 'List of PEAR packages to install',
-  :type => 'array',
-  :required => 'optional',
-  :recipes => ['rs-application_php::default']
-
 attribute 'rs-application_php/listen_port',
   :display_name => 'Application Listen Port',
-  :description => 'The port to use for the application to bound',
+  :description => 'The port to use for the application to bind',
   :default => '8080',
   :required => 'optional',
   :recipes => ['rs-application_php::default']
@@ -128,34 +121,4 @@ attribute 'rs-application_php/database/schema',
   :display_name => 'Database Schema',
   :description => 'The schema name used to connect to the database',
   :required => 'recommended',
-  :recipes => ['rs-application_php::default']
-
-attribute 'rs-application_php/before_deploy',
-  :display_name => 'Before Deploy Callback',
-  :description => 'The callback invoked before the application deployment is started',
-  :required => 'optional',
-  :recipes => ['rs-application_php::default']
-
-attribute 'rs-application_php/before_migrate',
-  :display_name => 'Before Migrate Callback',
-  :description => 'The callback invoked before application migration is started',
-  :required => 'optional',
-  :recipes => ['rs-application_php::default']
-
-attribute 'rs-application_php/before_symlink',
-  :display_name => 'Before Symlink Callback',
-  :description => 'The callback invoked before the symlinks are created',
-  :required => 'optional',
-  :recipes => ['rs-application_php::default']
-
-attribute 'rs-application_php/before_restart',
-  :display_name => 'Before Restart Callback',
-  :description => 'The callback invoked before the application is restarted',
-  :required => 'optional',
-  :recipes => ['rs-application_php::default']
-
-attribute 'rs-application_php/after_restart',
-  :display_name => 'After Restart Callback',
-  :description => 'The callback invoked after the application is restarted',
-  :required => 'optional',
   :recipes => ['rs-application_php::default']
