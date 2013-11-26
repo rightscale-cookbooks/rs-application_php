@@ -2,7 +2,6 @@
 driver_plugin: vagrant
 driver_config:
   require_chef_omnibus: true
-  log_file: /var/log/chef-solo.log
 
 platforms:
 - name: ubuntu-12.04
@@ -25,6 +24,9 @@ platforms:
       memory: 1024
 
 suites:
+# This test sets up a simple PHP application, verifies the functionality of the application, and ensures that
+# the required application packages are installed.
+#
 - name: default
   run_list:
   - recipe[rs-application_php::default]
@@ -40,8 +42,8 @@ suites:
         revision: unified_php
         repository: git://github.com/rightscale/examples.git
 
-# This test sets up a mysql database server locally and tests the database connectivity from the
-# application server.
+# This test sets up a mysql database server locally, tests the database connectivity from the application to the
+# database server, and ensures that the required database client packages are installed.
 #
 - name: database_mysql
   run_list:
@@ -54,7 +56,7 @@ suites:
     # vagrant environment
     mysql:
       server_root_password: rootpass
-      server_debian_password: debianpass
+      server_debian_password: debpass
       server_repl_password: replpass
     rs-application_php:
       application_name: example

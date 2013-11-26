@@ -49,11 +49,7 @@ describe service(mysql_service_name) do
   it { should be_enabled }
   it { should be_running }
 end
-# The bats test was
-# @test 'php application connects to the database' {
-#   curl --silent --location localhost:8080/dbread | grep --only-matching 'I am in the db' | wc --lines | grep 3
-# }
-#
+
 describe command('curl --silent --location localhost:8080/dbread') do
   it { should return_stdout /I am in the db/ }
 end

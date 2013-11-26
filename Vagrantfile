@@ -72,32 +72,29 @@ Vagrant.configure("2") do |config|
   config.vm.provision :chef_solo do |chef|
     chef.json = {
       :mysql => {
-        :server_root_password => 'iamhardtoguess',
-        :server_debian_password => 'iamhardtoguess',
-        :server_repl_password => 'iamhardtoguess'
+        :server_root_password => 'rootpass',
+        :server_debian_password => 'debpass',
+        :server_repl_password => 'replpass'
       },
       :vagrant => {
         :box_name => 'appserver'
       },
       :'rs-application_php' => {
         :database => {
-            :provider => 'mysql',
-            :host => 'localhost',
-            :user => 'app_user',
-            :password => 'apppass',
-            :schema => 'app_test'
+          :provider => 'mysql',
+          :host => 'localhost',
+          :user => 'app_user',
+          :password => 'apppass',
+          :schema => 'app_test'
         }
       }
     }
 
     chef.run_list = [
-        "recipe[apt]",
-        "recipe[git]",
-        "recipe[mysql::server]",
-        "recipe[test_database_mysql::prepare]",
-        "recipe[php::module_mysql]",
-        "recipe[php::module_pgsql]",
-        "recipe[rs-application_php::default]"
+      "recipe[apt]",
+      "recipe[mysql::server]",
+      "recipe[test_database_mysql::prepare]",
+      "recipe[rs-application_php::default]"
     ]
   end
 end
