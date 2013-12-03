@@ -6,5 +6,5 @@ group :integration do
   cookbook 'apt', '~> 2.3.0'
   cookbook 'yum', '~> 2.4.2'
   cookbook 'curl'
-  cookbook 'test_database_mysql', path: './test/cookbooks/test_database_mysql'
+  cookbook 'fake', path: './test/cookbooks/fake'
 end

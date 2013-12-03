@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/rightscale-cookbooks/rs-application_php.png?branch=master)](https://travis-ci.org/rightscale-cookbooks/rs-application_php)
 
-Sets up a PHP application server.
+Sets up a PHP application server by checking out code from a `git` repository and connecting to a `mysql` database.
 
 # Requirements
 
@@ -30,16 +30,14 @@ Add the `rs-application_php::default` recipe to your run list.
   starting the deployment. Package versions can be specified. Example: `pkg1, pkg2=2.0`.
 * `node['rs-application_php']['listen_port']` - The port to use for the application to bind.
   Default: `8080`.
-* `node['rs-application_php']['scm']['provider']` - The provider used for source control
-  management. Only git is supported. Default: `git`.
 * `node['rs-application_php']['scm']['repository']` - The repository location to download
   application code. Example: `git://github.com/rightscale/examples.git`.
 * `node['rs-application_php']['scm']['revision']` - The revision of application code to
-  download from the repository. Example: `unified_php`.
+  download from the repository. Example: `37741af646ca4181972902432859c1c3857de742`.
 * `node['rs-application_php']['application_name']` - The name of the application. Example:
-  `example`.
-* `node['rs-application_php]['app_root']` - The path where the application can be found in
-  relative from path. Default: `/`.
+  `hello_world`.
+* `node['rs-application_php]['app_root']` - The path of application root relative to
+  `/usr/local/www/sites/<application name>` directory. Default: `/`.
 * `node['rs-application_php']['migration_command']` - The command used to perform
   application migration. Example: `gunzip < dump.sql.gz | mysql -udbuser -pdbpass app_test`.
 * `node['rs-application_php']['write_settings_file']` - Whether to create the local settings
@@ -51,8 +49,6 @@ Add the `rs-application_php::default` recipe to your run list.
   rendered to create the local settings file. Default: `<local settings file name>.erb`.
   Example: If the local settings file is `config/db.php`, the template will be
   `db.php.erb`.
-* `node['rs-application_php']['database']['provider']` - The database provider the
-  application should connect to. Only MySQL is currently supported. Default: `mysql`.
 * `node['rs-application_php']['database']['host']` - The FQDN of the database server.
   Default: `localhost`.
 * `node['rs-application_php']['database']['user']` - The username used to connect to the

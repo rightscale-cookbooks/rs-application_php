@@ -100,7 +100,7 @@ Vagrant.configure("2") do |config|
     chef.run_list = [
       "recipe[apt]",
       "recipe[mysql::server]",
-      "recipe[test_database_mysql::prepare]",
+      "recipe[fake::database_mysql]",
       "recipe[rs-application_php::default]"
     ]
   end

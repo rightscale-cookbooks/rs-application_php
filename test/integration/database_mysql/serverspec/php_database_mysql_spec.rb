@@ -27,17 +27,18 @@ describe 'Required packages are installed' do
   end
 end
 
-# TODO: serverspec currently doesn't support specifying the location of the gem command
-# So this test will only work if the gem command is in path.
-#
-#describe package('mysql') do
-#  let(:path) { '/opt/chef/embedded/bin' }
-#  it { should be_installed.by('gem') }
-#end
+describe package('mysql') do
+  let(:path) { '/opt/chef/embedded/bin' }
+  it { should be_installed.by('gem') }
+end
 
-describe 'Database configuration file is created' do
+describe 'Database configuration file is created with correct settings' do
   describe file('/usr/local/www/sites/example/shared/db.php') do
     it { should be_file }
+    it { should contain '$hostname_DB = "localhost";' }
+    it { should contain '$username_DB = "app_user";' }
+    it { should contain '$password_DB = "apppass";' }
+    it { should contain '$database_DB = "app_test";' }
   end
   describe file('/usr/local/www/sites/example/current/config/db.php') do
     it { should be_linked_to '/usr/local/www/sites/example/shared/db.php' }
@@ -50,6 +51,6 @@ describe service(mysql_service_name) do
   it { should be_running }
 end
 
-describe command('curl --silent --location localhost:8080/dbread') do
+describe command('curl --silent --location http://localhost:8080/dbread') do
   it { should return_stdout /I am in the db/ }
 end

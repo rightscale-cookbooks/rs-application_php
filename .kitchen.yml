@@ -23,6 +23,9 @@ platforms:
       cpus: 2
       memory: 1024
 
+busser:
+  sudo: true
+
 suites:
 # This test sets up a simple PHP application, verifies the functionality of the application, and ensures that
 # the required application packages are installed.
@@ -38,7 +41,6 @@ suites:
       local_settings_file: config/db.php
       migration_command: echo migration is being performed >> /usr/local/www/sites/example/migration
       scm:
-        provider: git
         revision: unified_php
         repository: git://github.com/rightscale/examples.git
 
@@ -48,7 +50,7 @@ suites:
 - name: database_mysql
   run_list:
   - recipe[mysql::server]
-  - recipe[test_database_mysql::prepare]
+  - recipe[fake::database_mysql]
   - recipe[rs-application_php::default]
   - recipe[curl::default]
   attributes:
@@ -62,11 +64,9 @@ suites:
       application_name: example
       local_settings_file: config/db.php
       scm:
-        provider: git
         revision: unified_php
         repository: git://github.com/rightscale/examples.git
       database:
-        provider: mysql
         host: localhost
         user: app_user
         password: apppass

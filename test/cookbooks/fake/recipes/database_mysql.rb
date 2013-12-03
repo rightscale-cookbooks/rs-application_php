@@ -1,6 +1,6 @@
 #
-# Cookbook Name:: test_database_mysql
-# Recipe:: prepare
+# Cookbook Name:: fake
+# Recipe:: database_mysql
 #
 # Copyright (C) 2013 RightScale, Inc.
 #
@@ -27,17 +27,17 @@ mysql_connection_info = {
 }
 
 # Create the application user
-mysql_database_user node['test_database_mysql']['app_user'] do
+mysql_database_user node['fake']['app_user'] do
   connection mysql_connection_info
-  password   node['test_database_mysql']['app_password']
-  database_name node['test_database_mysql']['database_name']
+  password   node['fake']['app_password']
+  database_name node['fake']['database_name']
   host 'localhost'
   privileges [:select, :update, :insert]
   action     [:create, :grant]
 end
 
 # Create the test database
-mysql_database node['test_database_mysql']['database_name'] do
+mysql_database node['fake']['database_name'] do
   connection mysql_connection_info
   action :create
 end
@@ -49,6 +49,6 @@ end
 
 # Import the mysql dump
 execute 'import mysql dump' do
-  command "cat /tmp/mysql.dump | mysql --user=root -b #{node['test_database_mysql']['database_name']}" +
+  command "cat /tmp/mysql.dump | mysql --user=root -b #{node['fake']['database_name']}" +
     " --password=#{node['mysql']['server_root_password']}"
 end

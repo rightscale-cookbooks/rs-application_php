@@ -50,11 +50,11 @@ describe port(8080) do
   it { should be_listening }
 end
 
-describe command('curl --silent --location localhost:8080') do
+describe command('curl --silent --location http://localhost:8080') do
   it { should return_stdout /Basic html serving succeeded/ }
 end
 
-describe command('curl --silent --location localhost:8080/appserver') do
+describe command('curl --silent --location http://localhost:8080/appserver') do
   it { should return_stdout /PHP configuration=succeeded/ }
 end
 

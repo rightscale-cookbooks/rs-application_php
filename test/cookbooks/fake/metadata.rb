@@ -1,4 +1,4 @@
-name             'test_database_mysql'
+name             'fake'
 maintainer       'RightScale, Inc.'
 maintainer_email 'cookbooks@rightscale.com'
 license          'Apache 2.0'
@@ -7,4 +7,4 @@ version          '0.1.0'
 
 depends 'database'
 
-recipe 'test_database_mysql::prepare', 'Prepares the test mysql database'
+recipe 'fake::database_mysql', 'Prepares the test mysql database'

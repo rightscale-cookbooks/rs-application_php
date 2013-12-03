@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: test_database_mysql
+# Cookbook Name:: fake
 # Attribute:: default
 #
 # Copyright (C) 2013 RightScale, Inc.
@@ -17,6 +17,6 @@
 # limitations under the License.
 #
 
-default['test_database_mysql']['database_name'] = 'app_test'
-default['test_database_mysql']['app_user'] = 'app_user'
-default['test_database_mysql']['app_password'] = 'apppass'
+default['fake']['database_name'] = 'app_test'
+default['fake']['app_user'] = 'app_user'
+default['fake']['app_password'] = 'apppass'
