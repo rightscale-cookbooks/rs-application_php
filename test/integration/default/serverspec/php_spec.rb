@@ -1,11 +1,14 @@
 require 'spec_helper'
 
 apache_name = ''
+php_packages = []
 case backend.check_os[:family]
-when 'Debian'
+when 'Debian', 'Ubuntu'
   apache_name = 'apache2'
+  php_packages = %w(php5 php5-cgi php5-dev php5-cli php-pear)
 when 'RedHat'
   apache_name = 'httpd'
+  php_packages = %w(php php-devel php-cli php-pear)
 end
 
 describe 'Required packages are installed' do
@@ -18,14 +21,6 @@ describe 'Required packages are installed' do
   # The package 'git' should be installed by the git::default recipe
   describe package('git') do
     it { should be_installed }
-  end
-
-  php_packages = []
-  case backend.check_os[:family]
-  when 'Debian'
-    php_packages = %w(php5 php5-cgi php5-dev php5-cli php-pear)
-  when 'RedHat'
-    php_packages = %w(php php-devel php-cli php-pear)
   end
 
   describe 'PHP packages are installed' do
