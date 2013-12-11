@@ -5,4 +5,7 @@ rvm:
 before_script: bundle exec berks install
 script: bundle exec strainer test --except kitchen
 notifications:
-  irc: "chat.freenode.net#rightscale"
+  irc:
+    channels: ["chat.freenode.net#rightscale"]
+    use_notice: true
+    skip_join: true
