@@ -39,7 +39,7 @@ Add the `rs-application_php::default` recipe to your run list.
 * `node['rs-application_php]['app_root']` - The path of application root relative to
   `/usr/local/www/sites/<application name>` directory. Default: `/`.
 * `node['rs-application_php']['migration_command']` - The command used to perform
-  application migration. Example: `gunzip < dump.sql.gz | mysql -udbuser -pdbpass app_test`.
+  application migration. Example: `php app/console doctrine:migrations:migrate`.
 * `node['rs-application_php']['write_settings_file']` - Whether to create the local settings
   file on the application deployment. Default: `true`.
 * `node['rs-application_php]['local_settings_file']` - The name of local settings file to be

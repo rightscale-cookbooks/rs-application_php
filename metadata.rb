@@ -62,7 +62,7 @@ attribute 'rs-application_php/app_root',
 
 attribute 'rs-application_php/migration_command',
   :display_name => 'Migration Command',
-  :description => 'The command used to perform application migration. Example: gunzip < dump.sql.gz | mysql -udbuser -pdbpass app_test',
+  :description => 'The command used to perform application migration. Example: php app/console doctrine:migrations:migrate',
   :requried => 'optional',
   :recipes => ['rs-application_php::default']
 
