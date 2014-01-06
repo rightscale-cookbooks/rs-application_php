@@ -2,8 +2,9 @@ source 'https://rubygems.org'
 
 gem 'berkshelf'
 gem 'thor-foodcritic'
-gem 'thor-scmversion'
-gem 'test-kitchen', '~> 1.0.0.alpha', :group => :integration
-gem 'kitchen-vagrant', :group => :integration
-gem 'berks_to_rightscale'
-gem 'rake'
+group :integration do
+  gem 'test-kitchen', '~> 1.0.0'
+  gem 'kitchen-vagrant'
+  gem 'chefspec', '~> 3.0'
+  gem 'strainer', '~> 3.0'
+end

@@ -6,14 +6,14 @@ Vagrant.configure("2") do |config|
   # options are documented and commented below. For a complete reference,
   # please see the online documentation at vagrantup.com.
 
-  config.vm.hostname = "rs-st-php-berkshelf"
+  config.vm.hostname = "rs-application-php-berkshelf"
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "Berkshelf-CentOS-6.3-x86_64-minimal"
+  config.vm.box = "opscode-ubuntu-12.04"
 
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
-  config.vm.box_url = "https://dl.dropbox.com/u/31081437/Berkshelf-CentOS-6.3-x86_64-minimal.box"
+  config.vm.box_url = "https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_provisionerless.box"
 
   # Assign this VM to a host-only network IP, allowing you to access it
   # via the IP. Host-only networks can talk to the host machine as well as
@@ -52,9 +52,6 @@ Vagrant.configure("2") do |config|
   # View the documentation for the provider you're using for more
   # information on available options.
 
-  config.ssh.max_tries = 40
-  config.ssh.timeout   = 120
-
   # The path to the Berksfile to use with Vagrant Berkshelf
   # config.berkshelf.berksfile_path = "./Berksfile"
 
@@ -65,6 +62,8 @@ Vagrant.configure("2") do |config|
   # An array of symbols representing groups of cookbook described in the Vagrantfile
   # to exclusively install and copy to Vagrant's shelf.
   # config.berkshelf.only = []
+
+  config.omnibus.chef_version = :latest
 
   # An array of symbols representing groups of cookbook described in the Vagrantfile
   # to skip installing and copying to Vagrant's shelf.
@@ -79,16 +78,30 @@ Vagrant.configure("2") do |config|
       },
       :vagrant => {
         :box_name => 'appserver'
+      },
+      :'rs-application_php' => {
+        :application_name => 'example',
+        :local_settings_file => 'config/db.php',
+        :scm => {
+          :provider => 'git',
+          :revision => 'unified_php',
+          :repository => 'git://github.com/rightscale/examples.git'
+        },
+        :database => {
+          :provider => 'mysql',
+          :host => 'localhost',
+          :user => 'app_user',
+          :password => 'apppass',
+          :schema => 'app_test'
+        }
       }
     }
 
     chef.run_list = [
-#        "recipe[rs-base::default]",
-        "recipe[rs-scm::default]",
-        "recipe[php::module_mysql]",
-        "recipe[php::module_pgsql]",
-        "recipe[rs-st-php::default]",
-        "recipe[rs-app::default]"
+      "recipe[apt]",
+      "recipe[mysql::server]",
+      "recipe[fake::database_mysql]",
+      "recipe[rs-application_php::default]"
     ]
   end
 end

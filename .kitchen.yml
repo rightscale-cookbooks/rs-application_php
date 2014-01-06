@@ -5,23 +5,69 @@ driver_config:
 
 platforms:
 - name: ubuntu-12.04
+  run_list:
+  - recipe[apt::default]
   driver_config:
     box: opscode-ubuntu-12.04
-    box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_provisionerless.box
-- name: ubuntu-10.04
-  driver_config:
-    box: opscode-ubuntu-10.04
-    box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_ubuntu-10.04_provisionerless.box
+    box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_provisionerless.box
+    customize:
+      cpus: 2
+      memory: 1024
 - name: centos-6.4
+  run_list:
+  - recipe[yum::epel]
   driver_config:
     box: opscode-centos-6.4
-    box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_centos-6.4_provisionerless.box
-- name: centos-5.9
-  driver_config:
-    box: opscode-centos-5.9
-    box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_centos-5.9_provisionerless.box
+    box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_centos-6.4_provisionerless.box
+    customize:
+      cpus: 2
+      memory: 1024
+
+busser:
+  sudo: true
 
 suites:
+# This test sets up a simple PHP application, verifies the functionality of the application, and ensures that
+# the required application packages are installed.
+#
 - name: default
-  run_list: ["recipe[rs-st-php]"]
-  attributes: {}
+  run_list:
+  - recipe[rs-application_php::default]
+  - recipe[curl::default]
+  attributes:
+    rs-application_php:
+      packages: ['sl']
+      application_name: example
+      local_settings_file: config/db.php
+      migration_command: echo migration is being performed >> /usr/local/www/sites/example/migration
+      scm:
+        revision: unified_php
+        repository: git://github.com/rightscale/examples.git
+
+# This test sets up a mysql database server locally, tests the database connectivity from the application to the
+# database server, and ensures that the required database client packages are installed.
+#
+- name: database_mysql
+  run_list:
+  - recipe[mysql::server]
+  - recipe[fake::database_mysql]
+  - recipe[rs-application_php::default]
+  - recipe[curl::default]
+  attributes:
+    # The mysql cookbook requires these attributes to be set for running mysql server in a
+    # vagrant environment
+    mysql:
+      server_root_password: rootpass
+      server_debian_password: debpass
+      server_repl_password: replpass
+    rs-application_php:
+      application_name: example
+      local_settings_file: config/db.php
+      scm:
+        revision: unified_php
+        repository: git://github.com/rightscale/examples.git
+      database:
+        host: localhost
+        user: app_user
+        password: apppass
+        schema: app_test
