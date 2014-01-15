@@ -70,6 +70,7 @@ attribute 'rs-application_php/write_settings_file',
   :display_name => 'Write Settings File',
   :description => 'Whether to create the local settings file on the application deployment. Example: true',
   :default => 'true',
+  :choice => ['true', 'false'],
   :required => 'recommended',
   :recipes => ['rs-application_php::default']
 
