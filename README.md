@@ -4,6 +4,8 @@
 
 Sets up a PHP application server by checking out code from a `git` repository and connecting to a `mysql` database.
 
+Github Repository: https://github.com/rightscale-cookbooks/rs-application_php
+
 # Requirements
 
 * Chef 11 or higher
