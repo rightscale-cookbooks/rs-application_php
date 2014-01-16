@@ -6,6 +6,7 @@ description      "Installs/Configures a PHP application server"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          "0.1.0"
 
+depends 'marker', '~> 1.0.0'
 depends 'application', '~> 4.1.4'
 depends 'application_php', '~> 2.0.0'
 depends 'database', '~> 1.5.2'

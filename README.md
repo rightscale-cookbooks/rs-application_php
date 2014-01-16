@@ -10,11 +10,15 @@ Github Repository: https://github.com/rightscale-cookbooks/rs-application_php
 
 * Chef 11 or higher
 * Cookbook requirements
+  * [marker](http://community.opscode.com/cookbooks/marker)
   * [application](http://community.opscode.com/cookbooks/application)
   * [application_php](http://community.opscode.com/cookbooks/application_php)
   * [database](http://community.opscode.com/cookbooks/database)
   * [php](http://community.opscode.com/cookbooks/php)
   * [git](http://community.opscode.com/cookbooks/git)
+* Platform
+  * Ubuntu 12.04
+  * CentOS 6
 
 # Usage
 
