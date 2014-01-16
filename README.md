@@ -66,7 +66,7 @@ Add the `rs-application_php::default` recipe to your run list.
 
 # Recipes
 
-## rs-application_php::default
+## `rs-application_php::default`
 
 Based on the attributes provided, this recipe will deploy the given application using the application LWRP.
 
