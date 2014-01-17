@@ -17,6 +17,10 @@
 # limitations under the License.
 #
 
+marker "recipe_start_rightscale" do
+  template "rightscale_audit_entry.erb"
+end
+
 include_recipe 'git'
 
 include_recipe 'database::mysql'
@@ -60,7 +64,8 @@ application node['rs-application_php']['application_name'] do
 
   php node['rs-application_php']['application_name'] do
     app_root node['rs-application_php']['app_root']
-    write_settings_file node['rs-application_php']['write_settings_file']
+    write_settings_file node['rs-application_php']['write_settings_file'] == true ||
+      node['rs-application_php']['write_settings_file'] == 'true'
     local_settings_file node['rs-application_php']['local_settings_file']
     settings_template node['rs-application_php']['settings_template']
 

@@ -4,15 +4,21 @@
 
 Sets up a PHP application server by checking out code from a `git` repository and connecting to a `mysql` database.
 
+Github Repository: https://github.com/rightscale-cookbooks/rs-application_php
+
 # Requirements
 
 * Chef 11 or higher
 * Cookbook requirements
+  * [marker](http://community.opscode.com/cookbooks/marker)
   * [application](http://community.opscode.com/cookbooks/application)
   * [application_php](http://community.opscode.com/cookbooks/application_php)
   * [database](http://community.opscode.com/cookbooks/database)
   * [php](http://community.opscode.com/cookbooks/php)
   * [git](http://community.opscode.com/cookbooks/git)
+* Platform
+  * Ubuntu 12.04
+  * CentOS 6
 
 # Usage
 
@@ -60,7 +66,7 @@ Add the `rs-application_php::default` recipe to your run list.
 
 # Recipes
 
-## rs-application_php::default
+## `rs-application_php::default`
 
 Based on the attributes provided, this recipe will deploy the given application using the application LWRP.
 
