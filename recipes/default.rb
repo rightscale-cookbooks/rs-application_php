@@ -80,3 +80,18 @@ application node['rs-application_php']['application_name'] do
 
   mod_php_apache2
 end
+
+package 'collectd-apache' do
+  only_if { node['platform'] =~ /redhat|centos/ }
+end
+
+include_recipe 'collectd::default'
+
+Chef::Log.info "Overring 'apache/ext_status' to true"
+node.override['apache']['ext_status'] = true
+
+collectd_plugin 'apache' do
+  options(
+    'URL' => "http://localhost:#{node['rs-application_php']['listen_port']}/server-status?auto"
+  )
+end
