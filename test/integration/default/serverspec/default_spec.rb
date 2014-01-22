@@ -6,9 +6,11 @@ case backend.check_os[:family]
 when 'Debian', 'Ubuntu'
   apache_name = 'apache2'
   php_packages = %w(php5 php5-cgi php5-dev php5-cli php-pear)
+  collectd_plugin_dir = '/etc/collectd/plugins'
 when 'RedHat'
   apache_name = 'httpd'
   php_packages = %w(php php-devel php-cli php-pear)
+  collectd_plugin_dir = '/etc/collectd.d'
 end
 
 describe 'Required packages are installed' do
@@ -55,4 +57,23 @@ end
 
 describe file('/usr/local/www/sites/example/migration') do
   it { should contain 'migration is being performed' }
+end
+
+describe 'apache status module' do
+  describe file("/etc/#{apache_name}/mods-available/status.conf") do
+    it { should be_file }
+    its(:content) { should match /^\s*ExtendedStatus On/ }
+  end
+
+  describe file("/etc/#{apache_name}/mods-enabled/status.conf") do
+    it { should be_linked_to "../mods-available/status.conf" }
+  end
+end
+
+describe 'apache collectd plugin' do
+  describe file("#{collectd_plugin_dir}/apache.conf") do
+    it { should be_file }
+    its(:content) { should match /^\s*LoadPlugin "apache"/ }
+    it { should contain("URL \"http://localhost:8080/server-status?auto\"").from("<Plugin \"apache\">").to("</Plugin>") }
+  end
 end
