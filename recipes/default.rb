@@ -81,6 +81,12 @@ application node['rs-application_php']['application_name'] do
   mod_php_apache2
 end
 
+# Set up application server tags
+rightscale_tag_application node['rs-application_php']['application_name'] do
+  action :create
+end
+
+# Set up apache monitoring
 package 'collectd-apache' do
   only_if { node['platform'] =~ /redhat|centos/ }
 end
