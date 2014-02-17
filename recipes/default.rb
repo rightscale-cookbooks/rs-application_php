@@ -84,7 +84,7 @@ end
 # Set up application server tags
 rightscale_tag_application node['rs-application_php']['application_name'] do
   bind_ip_address node['cloud']['private_ips'].first
-  bind_port node['rs-application_php']['listen_port']
+  bind_port node['rs-application_php']['listen_port'].to_i
   vhost_path node['rs-application_php']['app_root']
   action :create
 end
