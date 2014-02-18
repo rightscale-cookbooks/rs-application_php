@@ -89,6 +89,24 @@ rightscale_tag_application node['rs-application_php']['application_name'] do
   action :create
 end
 
+# Attach application server to the load balancer serving the application name
+unless node['cloud']['provider'] == 'vagrant'
+  node.override['rs-application_php']['remote_attach_recipe'] = 'rs-haproxy::default'
+
+  log "Attaching application server to load balancer by calling #{node['rs-application_php']['remote_attach_recipe']} recipe..."
+  remote_recipe "Attach me to load balancer" do
+    recipe node['rs-application_php']['remote_attach_recipe']
+    attributes 'remote_recipe' => {
+      'bind_ip_address' => node['cloud']['private_ips'].first
+      'bind_port' => node['rs-application_php']['listen_port'],
+      'server_id' => node['rightscale']['instance_uuid'],
+      'pool_name' => node['rs-application_php']['application_name']
+      'action' => 'attach'
+    }
+    recipients_tags "loadbalancer:active_#{node['rs-application_php']['application_name']}=true"
+  end
+end
+
 # Set up apache monitoring
 package 'collectd-apache' do
   only_if { node['platform'] =~ /redhat|centos/ }

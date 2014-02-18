@@ -76,3 +76,6 @@ default['rs-application_php']['database']['password'] = nil
 
 # The database schema name
 default['rs-application_php']['database']['schema'] = nil
+
+# Remote recipe to attach application server to load balancer
+default['rs-application_php']['remote_attach_recipe'] = nil
