@@ -97,10 +97,10 @@ unless node['cloud']['provider'] == 'vagrant'
   remote_recipe "Attach me to load balancer" do
     recipe node['rs-application_php']['remote_attach_recipe']
     attributes 'remote_recipe' => {
-      'bind_ip_address' => node['cloud']['private_ips'].first
+      'bind_ip_address' => node['cloud']['private_ips'].first,
       'bind_port' => node['rs-application_php']['listen_port'],
       'server_id' => node['rightscale']['instance_uuid'],
-      'pool_name' => node['rs-application_php']['application_name']
+      'pool_name' => node['rs-application_php']['application_name'],
       'action' => 'attach'
     }
     recipients_tags "loadbalancer:active_#{node['rs-application_php']['application_name']}=true"
