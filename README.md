@@ -92,6 +92,8 @@ Override the `node['rs-application_php']['remote_detach_recipe']` attribute to
 specify the recipe to run by the remote load balancer server to detach the
 application server. Example: `rs-haproxy::default`.
 
+[remote_recipe resource]: http://support.rightscale.com/12-Guides/Chef_Cookbooks_Developer_Guide/04-Developer/06-Development_Resources/Chef_Resources#RemoteRecipe
+
 # Author
 
 Author:: RightScale, Inc. (<support@rightscale.com>)
