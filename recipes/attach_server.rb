@@ -31,6 +31,6 @@ unless node['cloud']['provider'] == 'vagrant'
       'pool_name' => node['rs-application_php']['application_name'],
       'action' => 'attach'
     }
-    recipients_tags "loadbalancer:active_#{node['rs-application_php']['application_name']}=true"
+    recipients_tags "load_balancer:active_#{node['rs-application_php']['application_name']}=true"
   end
 end
