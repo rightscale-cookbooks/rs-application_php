@@ -70,6 +70,28 @@ Add the `rs-application_php::default` recipe to your run list.
 
 Based on the attributes provided, this recipe will deploy the given application using the application LWRP.
 
+## `rs-application_php::attach_server`
+
+Attaches the application server to a load balancer in the same deployment serving
+its application. This recipe calls the [remote_recipe][remote_recipe resource]
+resource to send the attach request to a remote load balancer in the same deployment
+matching specific load balancer tags.
+
+Override the `node['rs-application_php']['remote_attach_recipe']` attribute to
+specify the recipe to run by the remote load balancer server to attach the
+application server. Example: `rs-haproxy::default`.
+
+## `rs-application_php::detach_server`
+
+Detaches the application server from a load balancer in the same deployment serving
+its application. This recipe calls the [remote_recipe][remote_recipe resource]
+resource to send the detach request to a remote load balancer in the same deployment
+matching specific load balancer tags.
+
+Override the `node['rs-application_php']['remote_detach_recipe']` attribute to
+specify the recipe to run by the remote load balancer server to detach the
+application server. Example: `rs-haproxy::default`.
+
 # Author
 
 Author:: RightScale, Inc. (<support@rightscale.com>)

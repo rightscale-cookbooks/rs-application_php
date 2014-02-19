@@ -79,3 +79,6 @@ default['rs-application_php']['database']['schema'] = nil
 
 # Remote recipe to attach application server to load balancer
 default['rs-application_php']['remote_attach_recipe'] = nil
+
+# Remote recipe to detach application server from load balancer
+default['rs-application_php']['remote_detach_recipe'] = nil
