@@ -66,7 +66,15 @@ describe 'apache status module' do
   end
 
   describe file("/etc/#{apache_name}/mods-enabled/status.conf") do
-    it { should be_linked_to "../mods-available/status.conf" }
+    # A relative link is created for httpd and apache2 has full path as the link.
+    # Serverspec doesn't detect it properly as it simply does the following stat:
+    # `stat -c %N /etc/httpd/mods-enabled/status.conf`.
+    #
+    if apache_name == 'httpd'
+      it { should be_linked_to '/etc/httpd/mods-available/status.conf' }
+    else
+      it { should be_linked_to '../mods-available/status.conf' }
+    end
   end
 end
 
