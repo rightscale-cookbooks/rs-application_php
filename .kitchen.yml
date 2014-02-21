@@ -32,7 +32,6 @@ suites:
 #
 - name: default
   run_list:
-  - recipe[rightscale_tag::default]
   - recipe[rs-application_php::default]
   - recipe[curl::default]
   attributes:
@@ -56,7 +55,6 @@ suites:
   run_list:
   - recipe[mysql::server]
   - recipe[fake::database_mysql]
-  - recipe[rightscale_tag::default]
   - recipe[rs-application_php::default]
   - recipe[curl::default]
   attributes:
