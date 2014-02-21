@@ -19,16 +19,20 @@
 
 # Detach application server from the load balancer serving the application name
 unless node['cloud']['provider'] == 'vagrant'
-  node.override['rs-application_php']['remote_detach_recipe'] = 'rs-haproxy::default'
+  namespace = node['rs-application_php']['remote_detach_recipe'].split('::').first
+  lb_tags = [
+    "load_balancer:active_#{node['rs-application_php']['application_name']}=true"
+  ]
 
-  log "Detaching application server from load balancer by calling #{node['rs-application_php']['remote_detach_recipe']} recipe..."
+  log "Detaching server from load balancer servers with tags '#{lb_tags.join(', ')}'" +
+    "by calling #{node['rs-application_php']['remote_detach_recipe']} recipe..."
   remote_recipe "Detach me from load balancer" do
     recipe node['rs-application_php']['remote_detach_recipe']
-    attributes 'remote_recipe' => {
-      'server_id' => node['rightscale']['instance_uuid'],
-      'pool_name' => node['rs-application_php']['application_name'],
+    attributes namespace => {
+      'application_server_id' => node['rightscale']['instance_uuid'],
+      'application_name' => node['rs-application_php']['application_name'],
       'action' => 'detach'
     }
-    recipients_tags "loadbalancer:active_#{node['rs-application_php']['application_name']}=true"
+    recipients_tags lb_tags
   end
 end

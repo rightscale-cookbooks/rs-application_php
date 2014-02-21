@@ -78,7 +78,7 @@ default['rs-application_php']['database']['password'] = nil
 default['rs-application_php']['database']['schema'] = nil
 
 # Remote recipe to attach application server to load balancer
-default['rs-application_php']['remote_attach_recipe'] = nil
+default['rs-application_php']['remote_attach_recipe'] = 'rs-haproxy::default'
 
 # Remote recipe to detach application server from load balancer
-default['rs-application_php']['remote_detach_recipe'] = nil
+default['rs-application_php']['remote_detach_recipe'] = 'rs-haproxy::default'

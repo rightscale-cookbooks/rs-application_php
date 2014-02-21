@@ -78,6 +78,20 @@ describe 'apache status module' do
   end
 end
 
+describe 'application server tags' do
+  hostname = `hostname -s`.chomp
+  tag_file = "/vagrant/cache_dir/machine_tag_cache/#{hostname}/tags.json"
+
+  describe file(tag_file) do
+    it { should be_file }
+    its(:content) { should match /application:active=true/ }
+    its(:content) { should match /application:active_example=true/ }
+    its(:content) { should match /application:bind_ip_address_example=10\.0\.2\.15/ }
+    its(:content) { should match /application:bind_port_example=8080/ }
+    its(:content) { should match /application:vhost_path_example=\// }
+  end
+end
+
 describe 'apache collectd plugin' do
   describe file("#{collectd_plugin_dir}/apache.conf") do
     it { should be_file }

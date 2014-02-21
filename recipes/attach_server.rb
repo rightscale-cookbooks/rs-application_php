@@ -19,18 +19,22 @@
 
 # Attach application server to the load balancer serving the application name
 unless node['cloud']['provider'] == 'vagrant'
-  node.override['rs-application_php']['remote_attach_recipe'] = 'rs-haproxy::default'
+  namespace = node['rs-application_php']['remote_attach_recipe'].split('::').first
+  lb_tags = [
+    "load_balancer:active_#{node['rs-application_php']['application_name']}=true"
+  ]
 
-  log "Attaching application server to load balancer by calling #{node['rs-application_php']['remote_attach_recipe']} recipe..."
+  log "Attaching server to load balancer servers with tags '#{lb_tags.join(', ')}'" +
+    " by calling #{node['rs-application_php']['remote_attach_recipe']} recipe..."
   remote_recipe "Attach me to load balancer" do
     recipe node['rs-application_php']['remote_attach_recipe']
-    attributes 'remote_recipe' => {
-      'bind_ip_address' => node['cloud']['private_ips'].first,
-      'bind_port' => node['rs-application_php']['listen_port'],
-      'server_id' => node['rightscale']['instance_uuid'],
-      'pool_name' => node['rs-application_php']['application_name'],
+    attributes namespace => {
+      'application_bind_ip' => node['cloud']['private_ips'].first,
+      'application_bind_port' => node['rs-application_php']['listen_port'],
+      'application_server_id' => node['rightscale']['instance_uuid'],
+      'application_name' => node['rs-application_php']['application_name'],
       'action' => 'attach'
     }
-    recipients_tags "load_balancer:active_#{node['rs-application_php']['application_name']}=true"
+    recipients_tags lb_tags
   end
 end

@@ -96,4 +96,4 @@ application server. Example: `rs-haproxy::default`.
 
 # Author
 
-Author:: RightScale, Inc. (<support@rightscale.com>)
+Author:: RightScale, Inc. (<cookbooks@rightscale.com>)
