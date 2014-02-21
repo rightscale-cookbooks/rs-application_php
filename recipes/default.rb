@@ -23,7 +23,7 @@ end
 
 include_recipe 'git'
 
-include_recipe 'machine_tag'
+include_recipe 'rightscale_tag'
 
 include_recipe 'database::mysql'
 
