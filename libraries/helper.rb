@@ -36,7 +36,7 @@ module RsApplicationPhp
     def self.split_by_package_name_and_version(packages)
       # The `packages` attribute in application resource supports both Hash and Array formats.
       # If any of the package given has version specified (in the format package=version),
-      # use the hash format with the package nane as the key and package version as the value
+      # use the hash format with the package name as the key and package version as the value
       # otherwise use the array format with just the package names.
       #
       if packages.any? { |pkg| pkg =~ /(.*)=(.*)/ }

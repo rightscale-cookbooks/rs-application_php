@@ -33,7 +33,8 @@ Add the `rs-application_php::default` recipe to your run list.
 # Attributes
 
 * `node['rs-application_php']['packages']` - List of packages to be installed before
-  starting the deployment. Package versions can be specified. Example: `pkg1, pkg2=2.0`.
+  starting the deployment. Package versions can be specified in this format `<package>=<version>`.
+  Example: `pkg1, pkg2=2.0`.
 * `node['rs-application_php']['listen_port']` - The port to use for the application to bind.
   Default: `8080`.
 * `node['rs-application_php']['scm']['repository']` - The repository location to download
@@ -70,29 +71,17 @@ Add the `rs-application_php::default` recipe to your run list.
 
 Based on the attributes provided, this recipe will deploy the given application using the application LWRP.
 
-## `rs-application_php::attach_server`
+## `rs-application_php::tags`
 
-Attaches the application server to a load balancer in the same deployment serving
-its application. This recipe calls the [remote_recipe][remote_recipe resource]
-resource to send the attach request to a remote load balancer in the same deployment
-matching specific load balancer tags.
+This recipe tags the application server with application server tags used in setting up a 3-tier architecture
+in a RightScale environment. Refer [Application Servers section in rightscale_tag cookbook][Application Server Tags]
+for the list of tags set on the application server.
 
-Override the `node['rs-application_php']['remote_attach_recipe']` attribute to
-specify the recipe to run by the remote load balancer server to attach the
-application server. Example: `rs-haproxy::default`.
+[Application Server Tags]:https://github.com/rightscale-cookbooks/rightscale_tag#application-servers
 
-## `rs-application_php::detach_server`
+## `rs-application_php::monitoring`
 
-Detaches the application server from a load balancer in the same deployment serving
-its application. This recipe calls the [remote_recipe][remote_recipe resource]
-resource to send the detach request to a remote load balancer in the same deployment
-matching specific load balancer tags.
-
-Override the `node['rs-application_php']['remote_detach_recipe']` attribute to
-specify the recipe to run by the remote load balancer server to detach the
-application server. Example: `rs-haproxy::default`.
-
-[remote_recipe resource]: http://support.rightscale.com/12-Guides/Chef_Cookbooks_Developer_Guide/04-Developer/06-Development_Resources/Chef_Resources#RemoteRecipe
+This recipe sets up monitoring for the application server by installing the collectd package for Apache.
 
 # Author
 

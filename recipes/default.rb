@@ -23,8 +23,6 @@ end
 
 include_recipe 'git'
 
-include_recipe 'rightscale_tag'
-
 include_recipe 'database::mysql'
 
 include_recipe "php::module_mysql"
@@ -33,8 +31,7 @@ include_recipe "php::module_mysql"
 # See libraries/helper.php for the definition of `split_by_package_name_and_version` method.
 application_packages = RsApplicationPhp::Helper.split_by_package_name_and_version(node['rs-application_php']['packages'])
 
-
-# The database block in the php block below doesn't accept node variables.
+# TODO: The database block in the php block below doesn't accept node variables.
 # It is a known issue and will be fixed by Opscode.
 #
 database_host = node['rs-application_php']['database']['host']
@@ -44,11 +41,13 @@ database_schema = node['rs-application_php']['database']['schema']
 
 node.set['apache']['listen_ports'] = [node['rs-application_php']['listen_port']]
 
+# Set up application
 application node['rs-application_php']['application_name'] do
   path "/usr/local/www/sites/#{node['rs-application_php']['application_name']}"
   owner node['apache']['user']
   group node['apache']['group']
 
+  # Configure SCM to check out application from
   repository node['rs-application_php']['scm']['repository']
   revision node['rs-application_php']['scm']['revision']
   scm_provider node['rs-application_php']['scm']['provider']
@@ -56,6 +55,7 @@ application node['rs-application_php']['application_name'] do
     deploy_key node['rs-application_php']['scm']['deploy_key']
   end
 
+  # Install application related packages
   packages application_packages
 
   # Application migration step
@@ -64,6 +64,7 @@ application node['rs-application_php']['application_name'] do
     migration_command node['rs-application_php']['migration_command']
   end
 
+  # Configure PHP
   php node['rs-application_php']['application_name'] do
     app_root node['rs-application_php']['app_root']
     write_settings_file node['rs-application_php']['write_settings_file'] == true ||
@@ -80,32 +81,6 @@ application node['rs-application_php']['application_name'] do
     end
   end
 
+  # Configure Apache and mod_php to run application by creating virtual host
   mod_php_apache2
-end
-
-# Set up application server tags
-rightscale_tag_application node['rs-application_php']['application_name'] do
-  bind_ip_address node['cloud']['private_ips'].first
-  bind_port node['rs-application_php']['listen_port'].to_i
-  vhost_path node['rs-application_php']['app_root']
-  action :create
-end
-
-# Attach server to the load balancer serving its application
-include_recipe 'rs-application_php::attach_server'
-
-# Set up apache monitoring
-package 'collectd-apache' do
-  only_if { node['platform'] =~ /redhat|centos/ }
-end
-
-include_recipe 'collectd::default'
-
-Chef::Log.info "Overring 'apache/ext_status' to true"
-node.override['apache']['ext_status'] = true
-
-collectd_plugin 'apache' do
-  options(
-    'URL' => "http://localhost:#{node['rs-application_php']['listen_port']}/server-status?auto"
-  )
 end
