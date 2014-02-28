@@ -16,10 +16,8 @@ depends 'collectd', '~> 1.1.0'
 depends 'rightscale_tag'
 
 recipe 'rs-application_php::default', 'Installs/configures PHP application server'
-recipe 'rs-application_php::', 'Attaches the PHP application server' +
-  ' to a load balancer that is serving its application in the same deployment'
-recipe 'rs-application_php::detach_server', 'Detaches the PHP application server' +
-  ' from a load balancer that is serving its application in the same deployment'
+recipe 'rs-application_php::tags', 'Sets up application server tags used in a 3-tier deployment setup'
+recipe 'rs-application_php::monitoring', 'Sets up monitoring for the application server'
 
 attribute 'rs-application_php/packages',
   :display_name => 'Packages to install',
