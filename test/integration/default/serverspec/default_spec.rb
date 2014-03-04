@@ -66,7 +66,33 @@ describe 'apache status module' do
   end
 
   describe file("/etc/#{apache_name}/mods-enabled/status.conf") do
-    it { should be_linked_to "../mods-available/status.conf" }
+    # A relative link is created for httpd and apache2 has full path as the link.
+    # Serverspec tries to do an exact match of the symlinks.
+    #
+    if apache_name == 'httpd'
+      it { should be_linked_to '/etc/httpd/mods-available/status.conf' }
+    else
+      it { should be_linked_to '../mods-available/status.conf' }
+    end
+  end
+end
+
+describe 'application server tags' do
+  hostname = `hostname -s`.chomp
+  tag_file = "/vagrant/cache_dir/machine_tag_cache/#{hostname}/tags.json"
+
+  describe file(tag_file) do
+    it { should be_file }
+
+    it "should have the following tags" do
+      tags_json = JSON.load(IO.read(tag_file))
+
+      tags_json.include?("application:active=true")
+      tags_json.include?("application:active_example=true")
+      tags_json.include?("application:bind_ip_address_example=10.0.2.15")
+      tags_json.include?("application:bind_port_example=8080")
+      tags_json.include?("application:vhost_path_example=/")
+    end
   end
 end
 

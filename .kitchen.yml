@@ -2,6 +2,9 @@
 driver_plugin: vagrant
 driver_config:
   require_chef_omnibus: true
+  customize:
+    cpus: 2
+    memory: 1024
 
 platforms:
 - name: ubuntu-12.04
@@ -10,18 +13,12 @@ platforms:
   driver_config:
     box: opscode-ubuntu-12.04
     box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_provisionerless.box
-    customize:
-      cpus: 2
-      memory: 1024
 - name: centos-6.4
   run_list:
   - recipe[yum::epel]
   driver_config:
     box: opscode-centos-6.4
     box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_centos-6.4_provisionerless.box
-    customize:
-      cpus: 2
-      memory: 1024
 
 busser:
   sudo: true
@@ -33,12 +30,17 @@ suites:
 - name: default
   run_list:
   - recipe[rs-application_php::default]
+  - recipe[rs-application_php::tags]
+  - recipe[rs-application_php::monitoring]
   - recipe[curl::default]
   attributes:
+    cloud:
+      provider: vagrant
+      public_ips: ['33.33.33.10']
+      private_ips: ['10.0.2.15']
     rs-application_php:
       packages: ['sl']
       application_name: example
-      local_settings_file: config/db.php
       migration_command: echo migration is being performed >> /usr/local/www/sites/example/migration
       scm:
         revision: unified_php
@@ -56,13 +58,16 @@ suites:
   attributes:
     # The mysql cookbook requires these attributes to be set for running mysql server in a
     # vagrant environment
+    cloud:
+      provider: vagrant
+      public_ips: ['33.33.33.10']
+      private_ips: ['10.0.2.15']
     mysql:
       server_root_password: rootpass
       server_debian_password: debpass
       server_repl_password: replpass
     rs-application_php:
       application_name: example
-      local_settings_file: config/db.php
       scm:
         revision: unified_php
         repository: git://github.com/rightscale/examples.git
