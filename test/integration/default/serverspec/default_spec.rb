@@ -67,8 +67,7 @@ describe 'apache status module' do
 
   describe file("/etc/#{apache_name}/mods-enabled/status.conf") do
     # A relative link is created for httpd and apache2 has full path as the link.
-    # Serverspec doesn't detect it properly as it simply does the following stat:
-    # `stat -c %N /etc/httpd/mods-enabled/status.conf`.
+    # Serverspec tries to do an exact match of the symlinks.
     #
     if apache_name == 'httpd'
       it { should be_linked_to '/etc/httpd/mods-available/status.conf' }
@@ -84,11 +83,16 @@ describe 'application server tags' do
 
   describe file(tag_file) do
     it { should be_file }
-    its(:content) { should match /application:active=true/ }
-    its(:content) { should match /application:active_example=true/ }
-    its(:content) { should match /application:bind_ip_address_example=10\.0\.2\.15/ }
-    its(:content) { should match /application:bind_port_example=8080/ }
-    its(:content) { should match /application:vhost_path_example=\// }
+
+    it "should have the following tags" do
+      tags_json = JSON.load(IO.read(tag_file))
+
+      tags_json.include?("application:active=true")
+      tags_json.include?("application:active_example=true")
+      tags_json.include?("application:bind_ip_address_example=10.0.2.15")
+      tags_json.include?("application:bind_port_example=8080")
+      tags_json.include?("application:vhost_path_example=/")
+    end
   end
 end
 

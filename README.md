@@ -76,7 +76,7 @@ Based on the attributes provided, this recipe will deploy the given application 
 ## `rs-application_php::tags`
 
 This recipe tags the application server with application server tags used in setting up a 3-tier architecture
-in a RightScale environment. Refer [Application Servers section in rightscale_tag cookbook][Application Server Tags]
+in a RightScale environment. Refer to [Application Servers section in rightscale_tag cookbook][Application Server Tags]
 for the list of tags set on the application server.
 
 [Application Server Tags]:https://github.com/rightscale-cookbooks/rightscale_tag#application-servers

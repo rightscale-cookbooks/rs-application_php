@@ -56,9 +56,6 @@ suites:
   - recipe[rs-application_php::default]
   - recipe[curl::default]
   attributes:
-    cloud:
-      provider: vagrant
-      private_ips: ['10.0.0.2']
     # The mysql cookbook requires these attributes to be set for running mysql server in a
     # vagrant environment
     cloud:
