@@ -20,8 +20,8 @@ recipe 'rs-application_php::tags', 'Sets up application server tags used in a 3-
 recipe 'rs-application_php::monitoring', 'Sets up monitoring for the application server'
 
 attribute 'rs-application_php/packages',
-  :display_name => 'Packages to install',
-  :description => 'List of packages to be installed before starting the deployment.' +
+  :display_name => 'Additional PHP Packages to Install',
+  :description => 'List of additional PHP packages to be installed before starting the deployment.' +
     ' Package versions can be specified. Example: pkg1, pkg2=2.0',
   :type => 'array',
   :required => 'optional',
@@ -66,7 +66,7 @@ attribute 'rs-application_php/app_root',
   :recipes => ['rs-application_php::default']
 
 attribute 'rs-application_php/migration_command',
-  :display_name => 'Migration Command',
+  :display_name => 'Application Migration Command',
   :description => 'The command used to perform application migration. Example: php app/console doctrine:migrations:migrate',
   :requried => 'optional',
   :recipes => ['rs-application_php::default']
