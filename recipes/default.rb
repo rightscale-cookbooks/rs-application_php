@@ -42,7 +42,7 @@ database_schema = node['rs-application_php']['database']['schema']
 node.set['apache']['listen_ports'] = [node['rs-application_php']['listen_port']]
 
 # Enable Apache extended status page
-Chef::Log.info "Overring 'apache/ext_status' to true"
+Chef::Log.info "Overriding 'apache/ext_status' to true"
 node.override['apache']['ext_status'] = true
 
 # Set up application
