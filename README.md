@@ -30,6 +30,11 @@ depends 'rs-application_php'
 
 Add the `rs-application_php::default` recipe to your run list.
 
+This cookbook is based on the [application] and [application_php] cookbooks and more information is available from them.
+
+[application]: https://github.com/poise/application/blob/master/README.md
+[application_php]: https://github.com/poise/application_php/blob/master/README.md
+
 # Attributes
 
 * `node['rs-application_php']['packages']` - List of packages to be installed before
