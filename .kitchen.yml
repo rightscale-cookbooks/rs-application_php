@@ -31,7 +31,7 @@ suites:
   run_list:
   - recipe[rs-application_php::default]
   - recipe[rs-application_php::tags]
-  - recipe[rs-application_php::monitoring]
+  - recipe[rs-application_php::collectd]
   - recipe[curl::default]
   attributes:
     cloud:

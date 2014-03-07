@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: rs-application_php
-# Recipe:: monitoring
+# Recipe:: collectd
 #
 # Copyright (C) 2013 RightScale, Inc.
 #

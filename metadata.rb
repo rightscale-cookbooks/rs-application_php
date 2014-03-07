@@ -17,7 +17,7 @@ depends 'rightscale_tag'
 
 recipe 'rs-application_php::default', 'Installs/configures PHP application server'
 recipe 'rs-application_php::tags', 'Sets up application server tags used in a 3-tier deployment setup'
-recipe 'rs-application_php::monitoring', 'Sets up monitoring for the application server'
+recipe 'rs-application_php::collectd', 'Sets up collectd monitoring for the application server'
 
 attribute 'rs-application_php/packages',
   :display_name => 'Additional PHP Packages to Install',

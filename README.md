@@ -81,9 +81,9 @@ for the list of tags set on the application server.
 
 [Application Server Tags]:https://github.com/rightscale-cookbooks/rightscale_tag#application-servers
 
-## `rs-application_php::monitoring`
+## `rs-application_php::collectd`
 
-This recipe sets up monitoring for the application server by installing the collectd package for Apache.
+This recipe sets up collectd monitoring for the application server by installing the collectd package for Apache.
 
 # Author
 
