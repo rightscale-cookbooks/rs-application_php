@@ -13,11 +13,14 @@ depends 'database', '~> 1.5.2'
 depends 'git', '~> 2.7.0'
 depends 'php', '~> 1.2.6'
 depends 'collectd', '~> 1.1.0'
-depends 'rightscale_tag'
+depends 'rightscale_tag', '~> 1.0.1'
 
 recipe 'rs-application_php::default', 'Installs/configures PHP application server'
 recipe 'rs-application_php::tags', 'Sets up application server tags used in a 3-tier deployment setup'
 recipe 'rs-application_php::collectd', 'Sets up collectd monitoring for the application server'
+recipe 'rs-application_php::application_backend', 'Attaches the application server to a load balancer'
+recipe 'rs-application_php::application_backend_detached', 'Detaches the application server' +
+  ' from a load balancer'
 
 attribute 'rs-application_php/packages',
   :display_name => 'Additional PHP Packages to Install',
