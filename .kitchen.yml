@@ -34,6 +34,8 @@ suites:
   - recipe[rs-application_php::collectd]
   - recipe[curl::default]
   attributes:
+    rightscale:
+      instance_uuid: '01-ABCDEFGH0123'
     cloud:
       provider: vagrant
       public_ips: ['33.33.33.10']

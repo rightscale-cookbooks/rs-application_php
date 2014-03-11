@@ -21,6 +21,13 @@ marker "recipe_start_rightscale" do
   template "rightscale_audit_entry.erb"
 end
 
+chef_gem 'chef-rewind'
+require 'chef/rewind'
+
+if node['rightscale'] && node['rightscale']['instance_uuid']
+  node.override['collectd']['fqdn'] = node['rightscale']['instance_uuid']
+end
+
 # On CentOS the Apache collectd plugin is installed separately
 package 'collectd-apache' do
   only_if { node['platform'] =~ /redhat|centos/ }
@@ -28,9 +35,31 @@ end
 
 include_recipe 'collectd::default'
 
+# collectd::default recipe attempts to delete collectd plugins that were not
+# created during the same runlist as this recipe. Some common plugins are installed
+# as a part of base install which runs in a different runlist. This resource
+# will safeguard the base plugins from being removed.
+rewind 'ruby_block[delete_old_plugins]' do
+  action :nothing
+end
+
 # Set up apache monitoring
 collectd_plugin 'apache' do
   options(
     'URL' => "http://localhost:#{node['rs-application_php']['listen_port']}/server-status?auto"
   )
+end
+
+# Set up apache process monitoring
+collectd_plugin 'processes' do
+  case node['platform_family']
+  when 'rhel'
+    process_name = 'httpd'
+  when 'debian'
+    process_name = 'apache2'
+  end
+
+  options({
+    :process => process_name
+  })
 end
