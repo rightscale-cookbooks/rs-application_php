@@ -53,5 +53,20 @@ module RsApplicationPhp
         packages
       end
     end
+
+    # Gets the IP address that the application server will bind to.
+    #
+    # @param node [Chef::Node] the chef node
+    #
+    # @return [String] the bind IP address
+    #
+    def get_bind_ip_address(node)
+      case node['rs-application_php']['bind_ip_type']
+      when /private/i
+        node['cloud']['private_ips'].first
+      when /public/i
+        node['cloud']['public_ips'].first
+      end
+    end
   end
 end

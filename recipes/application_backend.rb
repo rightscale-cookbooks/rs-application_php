@@ -35,7 +35,7 @@ end
 
 remote_request_hash = {
   'remote_recipe' => {
-    'application_bind_ip' => node['cloud']['private_ips'].first,
+    'application_bind_ip' => get_bind_ip_address(node),
     'application_bind_port' => node['rs-application_php']['listen_port'],
     'application_server_id' => node['rightscale']['instance_uuid'],
     'pool_name' => node['rs-application_php']['application_name'],
