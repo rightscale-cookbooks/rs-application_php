@@ -60,7 +60,7 @@ module RsApplicationPhp
     #
     # @return [String] the bind IP address
     #
-    def get_bind_ip_address(node)
+    def self.get_bind_ip_address(node)
       case node['rs-application_php']['bind_ip_type']
       when /private/i
         node['cloud']['private_ips'].first
