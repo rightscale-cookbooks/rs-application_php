@@ -25,7 +25,7 @@ include_recipe 'git'
 
 include_recipe 'database::mysql'
 
-include_recipe "php::module_mysql"
+include_recipe 'php::module_mysql'
 
 # Convert the packages list to a Hash if any of the package has version specified.
 # See libraries/helper.php for the definition of `split_by_package_name_and_version` method.
@@ -40,6 +40,10 @@ database_password = node['rs-application_php']['database']['password']
 database_schema = node['rs-application_php']['database']['schema']
 
 node.set['apache']['listen_ports'] = [node['rs-application_php']['listen_port']]
+
+# Enable Apache extended status page
+Chef::Log.info "Overriding 'apache/ext_status' to true"
+node.override['apache']['ext_status'] = true
 
 # Set up application
 application node['rs-application_php']['application_name'] do

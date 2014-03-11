@@ -30,6 +30,11 @@ depends 'rs-application_php'
 
 Add the `rs-application_php::default` recipe to your run list.
 
+This cookbook is based on the [application] and [application_php] cookbooks and more information is available from them.
+
+[application]: https://github.com/poise/application/blob/master/README.md
+[application_php]: https://github.com/poise/application_php/blob/master/README.md
+
 # Attributes
 
 * `node['rs-application_php']['packages']` - List of packages to be installed before
@@ -81,9 +86,9 @@ for the list of tags set on the application server.
 
 [Application Server Tags]:https://github.com/rightscale-cookbooks/rightscale_tag#application-servers
 
-## `rs-application_php::monitoring`
+## `rs-application_php::collectd`
 
-This recipe sets up monitoring for the application server by installing the collectd package for Apache.
+This recipe sets up collectd monitoring for the application server by installing the collectd package for Apache.
 
 # Author
 

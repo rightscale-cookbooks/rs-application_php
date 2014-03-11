@@ -17,7 +17,7 @@ depends 'rightscale_tag'
 
 recipe 'rs-application_php::default', 'Installs/configures PHP application server'
 recipe 'rs-application_php::tags', 'Sets up application server tags used in a 3-tier deployment setup'
-recipe 'rs-application_php::monitoring', 'Sets up monitoring for the application server'
+recipe 'rs-application_php::collectd', 'Sets up collectd monitoring for the application server'
 
 attribute 'rs-application_php/packages',
   :display_name => 'Additional PHP Packages to Install',
@@ -79,19 +79,19 @@ attribute 'rs-application_php/database/host',
   :recipes => ['rs-application_php::default']
 
 attribute 'rs-application_php/database/user',
-  :display_name => 'Database User',
-  :description => 'The username used to connect to the database. Example: dbuser',
+  :display_name => 'MySQL Application Username',
+  :description => 'The username used to connect to the database. Example: cred:MYSQL_APPLICATION_USERNAME',
   :required => 'recommended',
   :recipes => ['rs-application_php::default']
 
 attribute 'rs-application_php/database/password',
-  :display_name => 'Database Password',
-  :description => 'The password used to connect to the database. Example: dbpass',
+  :display_name => 'MySQL Application Password',
+  :description => 'The password used to connect to the database. Example: cred:MYSQL_APPLICATION_PASSWORD',
   :required => 'recommended',
   :recipes => ['rs-application_php::default']
 
 attribute 'rs-application_php/database/schema',
-  :display_name => 'Database Schema',
-  :description => 'The schema name used to connect to the database. Example: app_test',
+  :display_name => 'MySQL Database Name',
+  :description => 'The schema name used to connect to the database. Example: mydb',
   :required => 'recommended',
   :recipes => ['rs-application_php::default']

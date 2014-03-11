@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: rs-application_php
-# Recipe:: monitoring
+# Recipe:: collectd
 #
 # Copyright (C) 2013 RightScale, Inc.
 #
@@ -21,16 +21,14 @@ marker "recipe_start_rightscale" do
   template "rightscale_audit_entry.erb"
 end
 
-# Set up apache monitoring
+# On CentOS the Apache collectd plugin is installed separately
 package 'collectd-apache' do
   only_if { node['platform'] =~ /redhat|centos/ }
 end
 
 include_recipe 'collectd::default'
 
-Chef::Log.info "Overring 'apache/ext_status' to true"
-node.override['apache']['ext_status'] = true
-
+# Set up apache monitoring
 collectd_plugin 'apache' do
   options(
     'URL' => "http://localhost:#{node['rs-application_php']['listen_port']}/server-status?auto"
