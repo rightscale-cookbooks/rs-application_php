@@ -45,6 +45,8 @@ This cookbook is based on the [application] and [application_php] cookbooks and 
   Example: `pkg1, pkg2=2.0`.
 * `node['rs-application_php']['listen_port']` - The port to use for the application to bind.
   Default: `8080`.
+* `node['rs-application_php']['bind_ip_type']` - The type of the IP address for the application to
+  bind. This attribute can be either 'public' or 'private'. Default: 'private'.
 * `node['rs-application_php']['scm']['repository']` - The repository location to download
   application code. Example: `git://github.com/rightscale/examples.git`.
 * `node['rs-application_php']['scm']['revision']` - The revision of application code to
