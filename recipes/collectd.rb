@@ -28,6 +28,8 @@ if node['rightscale'] && node['rightscale']['instance_uuid']
   node.override['collectd']['fqdn'] = node['rightscale']['instance_uuid']
 end
 
+log "Setting up monitoring for apache..."
+
 # On CentOS the Apache collectd plugin is installed separately
 package 'collectd-apache' do
   only_if { node['platform'] =~ /redhat|centos/ }
@@ -51,15 +53,18 @@ collectd_plugin 'apache' do
 end
 
 # Set up apache process monitoring
-collectd_plugin 'processes' do
-  case node['platform_family']
-  when 'rhel'
-    process_name = 'httpd'
-  when 'debian'
-    process_name = 'apache2'
-  end
+cookbook_file "#{node['collectd']['plugin_dir']}/apache_ps" do
+  mode 0755
+  source 'apache_ps'
+  action :create_if_missing
+end
 
+collectd_plugin 'apache_ps' do
+  template 'apache_ps.conf.erb'
+  cookbook 'rs-application_php'
   options({
-    :process => process_name
+    :collectd_lib => node['collectd']['plugin_dir'],
+    :instance_uuid => node['rightscale']['instance_uuid'],
+    :apache_user => node['apache']['user']
   })
 end
