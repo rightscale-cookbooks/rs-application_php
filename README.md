@@ -31,7 +31,7 @@ Github Repository: https://github.com/rightscale-cookbooks/rs-application_php
 * Add the `rs-application_php::collectd` recipe to install collectd packages for apache and set up
   monitoring for the application server.
 
-[Applicaiton Tags]: https://github.com/rightscale-cookbooks/rightscale_tag#application-servers
+[Application Tags]: https://github.com/rightscale-cookbooks/rightscale_tag#application-servers
 
 This cookbook is based on the [application] and [application_php] cookbooks and more information is available from them.
 
@@ -103,7 +103,7 @@ This recipe sets up collectd monitoring for the application server by installing
 This recipe attaches the application server to the load balancer servers serving the same
 application name as that of the application server and existing in the same deployment. This recipe
 schedules the execution of the recipe specified in `node['rs-application_php']['remote_attach_recipe']`
-attribute on the load balancer servers matching the `load_balancers:active_<application_name>=true` 
+attribute on the load balancer servers matching the `load_balancers:active_<application_name>=true`
 tag. This remote recipe execution is achieved by the [rs_run_recipe utility][rs_run_recipe Utility].
 
 ## `rs-application_php::application_backend_detached`
@@ -111,7 +111,7 @@ tag. This remote recipe execution is achieved by the [rs_run_recipe utility][rs_
 This recipe detaches the application server from the load balancer servers serving the same
 application name as that of the application server and existing in the same deployment.  This recipe
 schedules the execution of the recipe specified in `node['rs-application_php']['remote_detach_recipe']`
-attribute on the load balancer servers matching the `load_balancers:active_<application_name>=true` 
+attribute on the load balancer servers matching the `load_balancers:active_<application_name>=true`
 tag. This remote recipe execution is achieved by the [rs_run_recipe utility][rs_run_recipe Utility].
 
 [rs_run_recipe Utility]: http://support.rightscale.com/12-Guides/RightLink/02-RightLink_5.9/Using_RightLink/Command_Line_Utilities#rs_run_recipe
