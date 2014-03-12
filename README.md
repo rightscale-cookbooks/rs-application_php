@@ -22,13 +22,16 @@ Github Repository: https://github.com/rightscale-cookbooks/rs-application_php
 
 # Usage
 
-Add a dependency to your cookbook's `metadata.rb`:
+* Add the `rs-application_php::default` recipe to your run list to set up a PHP application server.
+  When the database inputs are provided, this recipe sets up a MySQL client and establishes
+  connection with a MySQL database server.
+* Add the `rs-application_php::tags` recpie to the run list to set up application-related machine
+  tags on the application server. Refer to [rightscale_tag cookbook][Application Tags] for the list
+  of tags set on an application server.
+* Add the `rs-application_php::collectd` recipe to install collectd packages for apache and set up
+  monitoring for the application server.
 
-```ruby
-depends 'rs-application_php'
-```
-
-Add the `rs-application_php::default` recipe to your run list.
+[Applicaiton Tags]: https://github.com/rightscale-cookbooks/rightscale_tag#application-servers
 
 This cookbook is based on the [application] and [application_php] cookbooks and more information is available from them.
 
@@ -71,6 +74,11 @@ This cookbook is based on the [application] and [application_php] cookbooks and 
   database. Example: `dbpass`.
 * `node['rs-application_php']['database']['schema']` - The schema name used to connect to the
   database. Example: `app_test`.
+* `node['rs-application_php']['remote_attach_recipe']` - The recipe to run on remote load balancer
+  servers to attach the application server to the load balancer servers. Example: `rs-haproxy::frontend`.
+* `node['rs-application_php']['remote_detach_recipe']` - The recipe to run on remote load balancer
+  servers to detach the application server from the load balancer servers. Example: `rs-haproxy::frontend`.
+
 
 # Recipes
 
@@ -89,6 +97,24 @@ for the list of tags set on the application server.
 ## `rs-application_php::collectd`
 
 This recipe sets up collectd monitoring for the application server by installing the collectd package for Apache.
+
+## `rs-application_php::application_backend`
+
+This recipe attaches the application server to the load balancer servers serving the same
+application name as that of the application server and existing in the same deployment. This recipe
+schedules the execution of the recipe specified in `node['rs-application_php']['remote_attach_recipe']`
+attribute on the load balancer servers matching the `load_balancers:active_<application_name>=true` 
+tag. This remote recipe execution is achieved by the [rs_run_recipe utility][rs_run_recipe Utility].
+
+## `rs-application_php::application_backend_detached`
+
+This recipe detaches the application server from the load balancer servers serving the same
+application name as that of the application server and existing in the same deployment.  This recipe
+schedules the execution of the recipe specified in `node['rs-application_php']['remote_detach_recipe']`
+attribute on the load balancer servers matching the `load_balancers:active_<application_name>=true` 
+tag. This remote recipe execution is achieved by the [rs_run_recipe utility][rs_run_recipe Utility].
+
+[rs_run_recipe Utility]: http://support.rightscale.com/12-Guides/RightLink/02-RightLink_5.9/Using_RightLink/Command_Line_Utilities#rs_run_recipe
 
 # Author
 
