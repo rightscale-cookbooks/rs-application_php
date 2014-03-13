@@ -1,75 +1,93 @@
-#! /usr/bin/ruby
+#! /bin/bash
 
-# Arguments: hostname to use to report the stats (Instance ID or UUID)
+# Default values
+hostname=''
+interval=20
 
-require 'getoptlong'
+# Displays command usage.
+usage()
+{
+  echo "Usage: $0 [-h/--hostname <hostname>] [-i/--sample-interval <seconds>]"
+  echo "    -h/--hostname:         The hostname of the machine. Instance ID or UUID"
+  echo "    -i/--sample-interval:  The sample interval of the file check (in seconds).  Default: 20 seconds"
+  exit 1
+}
 
-def usage
-  puts("#{$0} -h <hostname> [-i <sample_interval>]")
-  puts("    -h: The hostname of the machine. Instance ID or UUID")
-  puts("    -i: The sample interval of the file check (in seconds).  Default: 20 seconds")
-  exit
-end
+if [[ $# -le 1 ]]
+then
+  usage
+fi
 
-opts = GetoptLong.new(
-  ['--hostname', '-h', GetoptLong::REQUIRED_ARGUMENT],
-  ['--sample-interval', '-i', GetoptLong::OPTIONAL_ARGUMENT]
-)
+while [[ $# -gt 1 ]]
+do
+  cmd_option="$1"
+  shift
 
-# default values
-hostname = nil
-sample_interval = 20
+  case $cmd_option in
+    -h|--hostname)
+      hostname=$1
+      shift
+      ;;
+    -i|--sample-interval)
+      interval=$1
+      shift
+      ;;
+    *)
+      usage
+      ;;
+  esac
+done
 
-opts.each do |opt, arg|
-  case opt
-  when '--hostname'
-    hostname = arg
-  when '--sample-interval'
-    sample_interval = arg.to_i
-  end
-  arg.inspect
-end
+if [ $hostname == "" ]
+then
+  echo "hostname is missing!"
+  usage
+fi
 
-
-# ensure we have all the needed params to run, show usage if we don't
-usage if !hostname
-
-#check the linux disto
+# Get the apache process name as its different between Redhat and
+# Debian-based distributions
 distro=`lsb_release -si`
 
-#Chomp off the newline
-distro = distro.chomp
+apache_ps_name=""
 
-# default fallback
-apache_ps_name = "apache"
+# Do a case-insensitive search when comparing distributions
+# instead of having every possible names in the conditions
+shopt -s nocasematch
+if [[ $distro == "centos" || $distro == "redhat" ]]
+then
+  apache_ps_name="httpd"
 
-if distro =~ /centos|redhat/i
-  apache_ps_name = "httpd"
   # Check to see if we're using worker or prefork.
-  ret = `grep -c '^HTTPD=/usr/sbin/httpd.worker' /etc/sysconfig/httpd`
-  if ret.to_i > 0
+  ret=`grep -c '^HTTPD=/usr/sbin/httpd.worker' /etc/sysconfig/httpd`
+  if [[ $ret -gt 0 ]]
+  then
     apache_ps_name="httpd.worker"
-  end
-end
+  fi
+elif [[ $distro == "ubuntu" ]]
+then
+  apache_ps_name="apache2"
+fi
 
-if distro == "Ubuntu"
-  apache_ps_name = "apache2"
-end
+if [[ $apache_ps_name == "" ]]
+then
+  echo "Could not find apache process!"
+  exit 1
+fi
 
-loop do
-  processes = 0
-  threads = 0
+# Find the number of apache processes and threads
+while true
+do
+  processes=0
+  threads=0
 
-  now = Time.new
+  current_time=`date +%s`
 
-  ps_out = `ps -C #{apache_ps_name} -o nlwp --no-header`
-  ps_out.each_line do |line|
-    processes = processes + 1
-    threads += line.to_i
-  end
+  for line in `ps -C $apache_ps_name -o nlwp --no-header`;
+  do
+    processes=$(($processes + 1))
+    threads=$(($threads + $line))
+  done
 
-  print "PUTVAL #{hostname}/apache/ps_count interval=#{sample_interval} #{now.to_i}:#{processes}:#{threads}\n"
-
-  STDOUT.flush
-  sleep sample_interval
-end
+  echo -e "PUTVAL $hostname/apache/ps_count interval=$interval $current_time:$processes:$threads"
+  sleep $interval
+done

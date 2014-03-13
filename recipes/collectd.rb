@@ -56,7 +56,6 @@ end
 cookbook_file "#{node['collectd']['plugin_dir']}/apache_ps" do
   mode 0755
   source 'apache_ps'
-  action :create_if_missing
 end
 
 collectd_plugin 'apache_ps' do
