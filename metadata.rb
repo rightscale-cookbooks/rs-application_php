@@ -11,7 +11,7 @@ depends 'application', '~> 4.1.4'
 depends 'application_php', '~> 2.0.0'
 depends 'database', '~> 1.5.2'
 depends 'git', '~> 2.7.0'
-depends 'php', '~> 1.2.6'
+depends 'php', '~> 1.4.4'
 depends 'collectd', '~> 1.1.0'
 depends 'rightscale_tag', '~> 1.0.1'
 
