@@ -13,13 +13,11 @@ usage()
   exit 1
 }
 
-if [[ $# -le 1 ]]
-then
+if [[ $# -le 1 ]]; then
   usage
 fi
 
-while [[ $# -gt 1 ]]
-do
+while [[ $# -gt 1 ]]; do
   cmd_option="$1"
   shift
 
@@ -38,8 +36,7 @@ do
   esac
 done
 
-if [ $hostname == "" ]
-then
+if [[ $hostname == "" ]]; then
   echo "hostname is missing!"
   usage
 fi
@@ -53,8 +50,7 @@ apache_ps_name=""
 # Do a case-insensitive search when comparing distributions
 # instead of having every possible names in the conditions
 shopt -s nocasematch
-if [[ $distro == "centos" || $distro == "redhat" ]]
-then
+if [[ $distro == "centos" || $distro == "redhat" ]]; then
   apache_ps_name="httpd"
 
   # Check to see if we're using worker or prefork.
@@ -63,20 +59,17 @@ then
   then
     apache_ps_name="httpd.worker"
   fi
-elif [[ $distro == "ubuntu" ]]
-then
+elif [[ $distro == "ubuntu" ]]; then
   apache_ps_name="apache2"
 fi
 
-if [[ $apache_ps_name == "" ]]
-then
+if [[ $apache_ps_name == "" ]]; then
   echo "Could not find apache process!"
   exit 1
 fi
 
 # Find the number of apache processes and threads
-while true
-do
+while true; do
   processes=0
   threads=0
 

@@ -17,8 +17,8 @@
 # limitations under the License.
 #
 
-marker "recipe_start_rightscale" do
-  template "rightscale_audit_entry.erb"
+marker 'recipe_start_rightscale' do
+  template 'rightscale_audit_entry.erb'
 end
 
 chef_gem 'chef-rewind'
@@ -28,7 +28,7 @@ if node['rightscale'] && node['rightscale']['instance_uuid']
   node.override['collectd']['fqdn'] = node['rightscale']['instance_uuid']
 end
 
-log "Setting up monitoring for apache..."
+log 'Setting up monitoring for apache...'
 
 # On CentOS the Apache collectd plugin is installed separately
 package 'collectd-apache' do
@@ -37,7 +37,7 @@ end
 
 include_recipe 'collectd::default'
 
-# collectd::default recipe attempts to delete collectd plugins that were not
+# The 'collectd::default' recipe attempts to delete collectd plugins that were not
 # created during the same runlist as this recipe. Some common plugins are installed
 # as a part of base install which runs in a different runlist. This resource
 # will safeguard the base plugins from being removed.

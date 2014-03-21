@@ -25,13 +25,13 @@ Github Repository: https://github.com/rightscale-cookbooks/rs-application_php
 * Add the `rs-application_php::default` recipe to your run list to set up a PHP application server.
   When the database inputs are provided, this recipe sets up a MySQL client and establishes
   connection with a MySQL database server.
-* Add the `rs-application_php::tags` recpie to the run list to set up application-related machine
-  tags on the application server. Refer to [rightscale_tag cookbook][Application Tags] for the list
+* Add the `rs-application_php::tags` recipe to the run list to set up application-related machine
+  tags on the application server. Refer to the [rightscale_tag cookbook][Application Servers] for the list
   of tags set on an application server.
 * Add the `rs-application_php::collectd` recipe to install collectd packages for apache and set up
   monitoring for the application server.
 
-[Application Tags]: https://github.com/rightscale-cookbooks/rightscale_tag#application-servers
+[Application Servers]: https://github.com/rightscale-cookbooks/rightscale_tag#application-servers
 
 This cookbook is based on the [application] and [application_php] cookbooks and more information is available from them.
 

@@ -64,9 +64,9 @@ module RsApplicationPhp
     #
     def self.get_bind_ip_address(node)
       case node['rs-application_php']['bind_ip_type']
-      when /private/i
+      when "private"
         node['cloud']['private_ips'].first
-      when /public/i
+      when "public"
         node['cloud']['public_ips'].first
       else
         raise "Unknown IP address type '#{node['rs-application_php']['bind_ip_type']}'!" +

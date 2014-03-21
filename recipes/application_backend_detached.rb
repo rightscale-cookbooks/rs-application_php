@@ -17,8 +17,8 @@
 # limitations under the License.
 #
 
-marker "recipe_start_rightscale" do
-  template "rightscale_audit_entry.erb"
+marker 'recipe_start_rightscale' do
+  template 'rightscale_audit_entry.erb'
 end
 
 class Chef::Recipe
@@ -26,35 +26,35 @@ class Chef::Recipe
 end
 
 # Put this backend out of service
-log "Putting the application server out of service..."
+log 'Putting the application server out of service...'
 machine_tag "application:active_#{node['rs-application_php']['application_name']}=false" do
   action :create
 end
 
-remote_request_hash = {
-  'remote_recipe' => {
-    'application_server_id' => node['rightscale']['instance_uuid'],
-    'pool_name' => node['rs-application_php']['application_name'],
-    'application_action' => 'detach'
-  }
-}
-
-file "/tmp/rs-haproxy_remote_request.json" do
+file '/tmp/rs-haproxy_remote_request.json' do
   mode 0660
-  content ::JSON.pretty_generate(remote_request_hash)
+  content ::JSON.pretty_generate({
+    'remote_recipe' => {
+      'application_server_id' => node['rightscale']['instance_uuid'],
+      'pool_name' => node['rs-application_php']['application_name'],
+      'application_action' => 'detach'
+    }
+  })
 end
 
 # Send remote recipe request
 log "Running recipe '#{node['rs-application_php']['remote_detach_recipe']}' on all load balancers" +
 " with tags 'load_balancer:active_#{node['rs-application_php']['application_name']}=true'..."
 
-execute "Detach me from load balancer" do
-  command "rs_run_recipe --name '#{node['rs-application_php']['remote_detach_recipe']}'" +
-    " --recipient_tags 'load_balancer:active_#{node['rs-application_php']['application_name']}=true'" +
-    " --json '/tmp/rs-haproxy_remote_request.json'"
-  only_if { ::File.exists?('/tmp/rs-haproxy_remote_request.json') }
+execute 'Detach from load balancer(s)' do
+  command [
+    "rs_run_recipe",
+    "--name '#{node['rs-application_php']['remote_detach_recipe']}'",
+    "--recipient_tags 'load_balancer:active_#{node['rs-application_php']['application_name']}=true'",
+    "--json '/tmp/rs-haproxy_remote_request.json'"
+  ]
 end
 
-file "/tmp/rs-haproxy_remote_request.json" do
+file '/tmp/rs-haproxy_remote_request.json' do
   action :delete
 end
