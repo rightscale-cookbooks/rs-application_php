@@ -28,6 +28,11 @@ end
 # Get the machine_tag-friendly application name
 application_name = RsApplicationPhp::Helper.get_friendly_app_name(node['rs-application_php']['application_name'])
 
+# Check if there is at least one load balancer in the deployment serving the application name
+if find_load_balancer_servers(node, application_name).empty?
+  raise "No load balancer servers found in the deployment serving #{node['rs-application_php']['application_name']}!"
+end
+
 # Put this backend in service
 log 'Putting the application server in service...'
 machine_tag "application:active_#{application_name}=true" do
