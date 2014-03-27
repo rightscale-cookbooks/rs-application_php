@@ -73,5 +73,18 @@ module RsApplicationPhp
           " The IP address type must be either 'public' or 'private'."
       end
     end
+
+    # Gets a machine tag compatible application name.
+    #
+    # @param application_name [String] the application name
+    #
+    # @return [String] the friendly application name
+    #
+    # @example Given an application name www.foo.com/app
+    #   this returns 'www_foo_com_app'
+    #
+    def self.get_friendly_app_name(pool_name)
+      pool_name.gsub(/[\/.]/, '_')
+    end
   end
 end

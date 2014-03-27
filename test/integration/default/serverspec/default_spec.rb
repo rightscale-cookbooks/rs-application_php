@@ -88,10 +88,10 @@ describe 'application server tags' do
       tags_json = JSON.load(IO.read(tag_file))
 
       tags_json.include?("application:active=true")
-      tags_json.include?("application:active_example=true")
-      tags_json.include?("application:bind_ip_address_example=10.0.2.15")
-      tags_json.include?("application:bind_port_example=8080")
-      tags_json.include?("application:vhost_path_example=/")
+      tags_json.include?("application:active_www_example_com=true")
+      tags_json.include?("application:bind_ip_address_www_example_com=10.0.2.15")
+      tags_json.include?("application:bind_port_www_example_com=8080")
+      tags_json.include?("application:vhost_path_www_example_com=/")
     end
   end
 end

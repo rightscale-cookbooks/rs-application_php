@@ -24,7 +24,8 @@ end
 include_recipe 'rightscale_tag::default'
 
 # Set up application server tags
-rightscale_tag_application node['rs-application_php']['application_name'] do
+app_name = RsApplicationPhp::Helper.get_friendly_app_name(node['rs-application_php']['application_name'])
+rightscale_tag_application app_name do
   bind_ip_address RsApplicationPhp::Helper.get_bind_ip_address(node)
   bind_port node['rs-application_php']['listen_port'].to_i
   vhost_path node['rs-application_php']['app_root']

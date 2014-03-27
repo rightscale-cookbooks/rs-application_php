@@ -69,7 +69,7 @@ suites:
       server_debian_password: debpass
       server_repl_password: replpass
     rs-application_php:
-      application_name: example
+      application_name: www.example.com
       scm:
         revision: unified_php
         repository: git://github.com/rightscale/examples.git

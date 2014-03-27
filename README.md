@@ -51,8 +51,10 @@ This cookbook is based on the [application] and [application_php] cookbooks and 
   application code. Example: `git://github.com/rightscale/examples.git`.
 * `node['rs-application_php']['scm']['revision']` - The revision of application code to
   download from the repository. Example: `37741af646ca4181972902432859c1c3857de742`.
-* `node['rs-application_php']['application_name']` - The name of the application. Example:
-  `hello_world`.
+* `node['rs-application_php']['application_name']` - The name of the application or an FQDN of the
+  application server. This attribute is used in finding the load balancer serving the application
+  name when attaching/detaching the application server from a load balancer. Example: `hello_world`,
+  `www.example.com`.
 * `node['rs-application_php]['app_root']` - The path of application root relative to
   `/usr/local/www/sites/<application name>` directory. Default: `/`.
 * `node['rs-application_php']['migration_command']` - The command used to perform
