@@ -27,6 +27,9 @@ include_recipe 'database::mysql'
 
 include_recipe 'php::module_mysql'
 
+# Validate application name
+RsApplicationPhp::Helper.validate_application_name(node['rs-application_php']['application_name'])
+
 # Convert the packages list to a Hash if any of the package has version specified.
 # See libraries/helper.php for the definition of `split_by_package_name_and_version` method.
 application_packages = RsApplicationPhp::Helper.split_by_package_name_and_version(node['rs-application_php']['packages'])

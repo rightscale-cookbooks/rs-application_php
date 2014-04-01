@@ -43,6 +43,7 @@ suites:
     rs-application_php:
       packages: ['sl']
       application_name: example
+      vhost_path: www.example.com
       migration_command: echo migration is being performed >> /usr/local/www/sites/example/migration
       scm:
         revision: unified_php
@@ -69,7 +70,7 @@ suites:
       server_debian_password: debpass
       server_repl_password: replpass
     rs-application_php:
-      application_name: www.example.com
+      application_name: example
       scm:
         revision: unified_php
         repository: git://github.com/rightscale/examples.git

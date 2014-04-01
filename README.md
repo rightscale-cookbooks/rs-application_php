@@ -4,6 +4,11 @@
 
 Sets up a PHP application server by checking out code from a `git` repository and connecting to a `mysql` database.
 
+This cookbook is based on the [application] and [application_php] cookbooks and more information is available from them.
+
+[application]: https://github.com/poise/application/blob/master/README.md
+[application_php]: https://github.com/poise/application_php/blob/master/README.md
+
 Github Repository: https://github.com/rightscale-cookbooks/rs-application_php
 
 # Requirements
@@ -25,18 +30,6 @@ Github Repository: https://github.com/rightscale-cookbooks/rs-application_php
 * Add the `rs-application_php::default` recipe to your run list to set up a PHP application server.
   When the database inputs are provided, this recipe sets up a MySQL client and establishes
   connection with a MySQL database server.
-* Add the `rs-application_php::tags` recipe to the run list to set up application-related machine
-  tags on the application server. Refer to the [rightscale_tag cookbook][Application Servers] for the list
-  of tags set on an application server.
-* Add the `rs-application_php::collectd` recipe to install collectd packages for apache and set up
-  monitoring for the application server.
-
-[Application Servers]: https://github.com/rightscale-cookbooks/rightscale_tag#application-servers
-
-This cookbook is based on the [application] and [application_php] cookbooks and more information is available from them.
-
-[application]: https://github.com/poise/application/blob/master/README.md
-[application_php]: https://github.com/poise/application_php/blob/master/README.md
 
 # Attributes
 
@@ -51,10 +44,16 @@ This cookbook is based on the [application] and [application_php] cookbooks and 
   application code. Example: `git://github.com/rightscale/examples.git`.
 * `node['rs-application_php']['scm']['revision']` - The revision of application code to
   download from the repository. Example: `37741af646ca4181972902432859c1c3857de742`.
-* `node['rs-application_php']['application_name']` - The name of the application or an FQDN of the
-  application server. This attribute is used in finding the load balancer serving the application
-  name when attaching/detaching the application server from a load balancer. Example: `hello_world`,
+* `node['rs-application_php']['application_name']` - The name of the application. The application
+  name can only have alphanumeric characters and underscores. This attribute is
+  used in finding the load balancer serving the application pool name when attaching/detaching the
+  application server from a load balancer. Example: `hello_world`,
   `www.example.com`.
+* `node['rs-application_php']['vhost_path']` - The virtual host served by the application server.
+  This must be a valid FQDN or URI. This attribute is used in setting the
+  `application:vhost_path_<application_name>` tag on the application server. No two application
+  servers can have the same application name but different vhost paths. A load balancer server uses
+  this attribute to set up access control lists (ACLs).
 * `node['rs-application_php]['app_root']` - The path of application root relative to
   `/usr/local/www/sites/<application name>` directory. Default: `/`.
 * `node['rs-application_php']['migration_command']` - The command used to perform

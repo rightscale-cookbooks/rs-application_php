@@ -84,14 +84,14 @@ describe 'application server tags' do
   describe file(tag_file) do
     it { should be_file }
 
-    it "should have the following tags" do
+    it "should have the application server tags" do
       tags_json = JSON.load(IO.read(tag_file))
 
-      tags_json.include?("application:active=true")
-      tags_json.include?("application:active_www_example_com=true")
-      tags_json.include?("application:bind_ip_address_www_example_com=10.0.2.15")
-      tags_json.include?("application:bind_port_www_example_com=8080")
-      tags_json.include?("application:vhost_path_www_example_com=/")
+      tags_json.should include("application:active=true")
+      tags_json.should include("application:active_example=true")
+      tags_json.should include("application:bind_ip_address_example=10.0.2.15")
+      tags_json.should include("application:bind_port_example=8080")
+      tags_json.should include("application:vhost_path_example=www.example.com")
     end
   end
 end

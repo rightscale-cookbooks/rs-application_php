@@ -61,13 +61,25 @@ attribute 'rs-application_php/scm/deploy_key',
 
 attribute 'rs-application_php/application_name',
   :display_name => 'Application Name',
-  :description => 'The name of the application. Example: hello_world',
+  :description => 'The name of the application. The name can have only alphanumeric characters' +
+    ' and underscores. Example: hello_world',
   :required => 'required',
   :recipes => [
     'rs-application_php::default',
     'rs-application_php::tags',
     'rs-application_php::application_backend',
     'rs-application_php::application_backend_detached'
+  ]
+
+attribute 'rs-application_php/vhost_path',
+  :display_name => 'Virtual Host Path',
+  :description => 'The virtual host served by the application server. This must be a valid FQDN' +
+    ' or URI. Ensure that no two application servers in the same deployment having the same' +
+    ' application name have different vhost paths. Example: www.example.com, /index',
+  :required => 'required',
+  :recipes => [
+    'rs-application_php::tags',
+    'rs-application_php::application_backend'
   ]
 
 attribute 'rs-application_php/app_root',

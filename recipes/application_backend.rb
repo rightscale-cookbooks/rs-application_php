@@ -25,17 +25,17 @@ class Chef::Recipe
   include Rightscale::RightscaleTag
 end
 
-# Get the machine_tag-friendly application name
-application_name = RsApplicationPhp::Helper.get_friendly_app_name(node['rs-application_php']['application_name'])
+# Validate application name
+RsApplicationPhp::Helper.validate_application_name(node['rs-application_php']['application_name'])
 
 # Check if there is at least one load balancer in the deployment serving the application name
-if find_load_balancer_servers(node, application_name).empty?
+if find_load_balancer_servers(node, node['rs-application_php']['application_name']).empty?
   raise "No load balancer servers found in the deployment serving #{node['rs-application_php']['application_name']}!"
 end
 
 # Put this backend in service
 log 'Putting the application server in service...'
-machine_tag "application:active_#{application_name}=true" do
+machine_tag "application:active_#{node['rs-application_php']['application_name']}=true" do
   action :create
 end
 
@@ -46,7 +46,8 @@ file '/tmp/rs-haproxy_remote_request.json' do
       'application_bind_ip' => RsApplicationPhp::Helper.get_bind_ip_address(node),
       'application_bind_port' => node['rs-application_php']['listen_port'],
       'application_server_id' => node['rightscale']['instance_uuid'],
-      'pool_name' => application_name,
+      'pool_name' => node['rs-application_php']['application_name'],
+      'vhost_path' => node['rs-application_php']['vhost_path'],
       'application_action' => 'attach'
     }
   })
@@ -54,13 +55,13 @@ end
 
 # Send remote recipe request
 log "Running recipe '#{node['rs-application_php']['remote_attach_recipe']}' on all load balancers" +
- " with tags 'load_balancer:active_#{application_name}=true'..."
+ " with tags 'load_balancer:active_#{node['rs-application_php']['application_name']}=true'..."
 
 execute 'Attach to load balancer(s)' do
   command [
     "rs_run_recipe",
     "--name '#{node['rs-application_php']['remote_attach_recipe']}'",
-    "--recipient_tags 'load_balancer:active_#{application_name}=true'",
+    "--recipient_tags 'load_balancer:active_#{node['rs-application_php']['application_name']}=true'",
     "--json '/tmp/rs-haproxy_remote_request.json'"
   ]
 end

@@ -44,6 +44,9 @@ default['rs-application_php']['application_name'] = nil
 # The root of the application
 default['rs-application_php']['app_root'] = '/'
 
+# The virtual host path served by the application server
+default['rs-application_php']['vhost_path'] = nil
+
 # The command used to perform application migration
 #
 # @example: To import database contents from the dump file for a LAMP server, the following can be set as the

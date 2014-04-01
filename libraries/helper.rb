@@ -74,17 +74,22 @@ module RsApplicationPhp
       end
     end
 
-    # Gets a machine tag compatible application name.
+    # Validates the application name by ensuring the name contains only alphanumeric characters and
+    # underscores.
     #
-    # @param application_name [String] the application name
+    # @param name [String] the application name
     #
-    # @return [String] the friendly application name
+    # @return [Boolean] true if application name valid
     #
-    # @example Given an application name www.foo.com/app
-    #   this returns 'www_foo_com_app'
+    # @raise [RuntimeError] if application name invalid
     #
-    def self.get_friendly_app_name(pool_name)
-      pool_name.gsub(/[\/.]/, '_')
+    def self.validate_application_name(name)
+      if name =~ /[^a-zA-Z0-9_]/
+        raise "'#{name}' is not a valid application name. The application name can only have" +
+        " alphanumeric characters and underscores!"
+      else
+        true
+      end
     end
   end
 end
