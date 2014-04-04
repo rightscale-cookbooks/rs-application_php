@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-# Packages to install
+# Packages to install. Example: pkg1, pkg2=2.0
 default['rs-application_php']['packages'] = []
 
 # Application listen port
@@ -29,16 +29,17 @@ default['rs-application_php']['bind_ip_type'] = 'private'
 # The source control provider
 default['rs-application_php']['scm']['provider'] = 'git'
 
-# The repository to checkout the code from
+# The repository to checkout the code from. Example: git://github.com/rightscale/examples.git
 default['rs-application_php']['scm']['repository'] = nil
 
 # The revision of application code to checkout from the repository
+# Example: 37741af646ca4181972902432859c1c3857de742
 default['rs-application_php']['scm']['revision'] = nil
 
 # The private key to access the repository via SSH
 default['rs-application_php']['scm']['deploy_key'] = nil
 
-# The name of the application
+# The name of the application. Example: hello_world
 default['rs-application_php']['application_name'] = nil
 
 # The root of the application
@@ -71,16 +72,16 @@ default['rs-application_php']['settings_template'] = nil
 # The database provider
 default['rs-application_php']['database']['provider'] = 'mysql'
 
-# The database host
+# The database host FQDN
 default['rs-application_php']['database']['host'] = 'localhost'
 
-# The database username
+# The database username. Example: dbuser
 default['rs-application_php']['database']['user'] = nil
 
-# The database password
+# The database password. Example: dbpass
 default['rs-application_php']['database']['password'] = nil
 
-# The database schema name
+# The database schema name. Example: app_test
 default['rs-application_php']['database']['schema'] = nil
 
 # Remote recipe to attach application server to load balancer
