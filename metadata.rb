@@ -61,8 +61,10 @@ attribute 'rs-application_php/scm/deploy_key',
 
 attribute 'rs-application_php/application_name',
   :display_name => 'Application Name',
-  :description => 'The name of the application. The name can have only alphanumeric characters' +
-    ' and underscores. Example: hello_world',
+  :description => 'The name of the application. This name will be used in the path name where the' +
+    ' application code will be checked out from a repository. This is also used to determine the' +
+    ' backend pool in a load balancer server to which the application server will be attached.' +
+    ' Application names can have only alphanumeric characters and underscores. Example: hello_world',
   :required => 'required',
   :recipes => [
     'rs-application_php::default',
@@ -72,10 +74,11 @@ attribute 'rs-application_php/application_name',
   ]
 
 attribute 'rs-application_php/vhost_path',
-  :display_name => 'Virtual Host Path',
-  :description => 'The virtual host served by the application server. This must be a valid FQDN' +
-    ' or URI. Ensure that no two application servers in the same deployment having the same' +
-    ' application name have different vhost paths. Example: www.example.com, /index',
+  :display_name => 'Virtual Host Name/Path',
+  :description => 'The virtual host served by the application server. The virtual host name can be' +
+    ' a valid domain/path name supported by the access control lists (ACLs) in a load balancer.' +
+    ' Ensure that no two application servers in the same deployment having the same' +
+    ' application name have different vhost paths. Example: http:://www.example.com, /index',
   :required => 'required',
   :recipes => [
     'rs-application_php::tags',

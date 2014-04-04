@@ -38,7 +38,7 @@ describe RsApplicationPhp::Helper do
     end
 
     it 'raises an exception if application name is invalid' do
-      ['/example', '$%^&*#'].each do |name|
+      ['/example', 'my application'].each do |name|
         expect { RsApplicationPhp::Helper.validate_application_name(name) }.to raise_error(RuntimeError)
       end
     end

@@ -84,7 +84,7 @@ module RsApplicationPhp
     # @raise [RuntimeError] if application name invalid
     #
     def self.validate_application_name(name)
-      if name =~ /[^a-zA-Z0-9_]/
+      if name =~ /[^\w]/
         raise "'#{name}' is not a valid application name. The application name can only have" +
         " alphanumeric characters and underscores!"
       else

@@ -33,13 +33,15 @@ if find_load_balancer_servers(node, node['rs-application_php']['application_name
   raise "No load balancer servers found in the deployment serving #{node['rs-application_php']['application_name']}!"
 end
 
-# Put this backend in service
-log 'Putting the application server in service...'
+# Put this backend into consideration during tag queries
+log 'Tagging the application server to put it into consideration during tag queries...'
 machine_tag "application:active_#{node['rs-application_php']['application_name']}=true" do
   action :create
 end
 
-file '/tmp/rs-haproxy_remote_request.json' do
+remote_request_json = '/tmp/rs-haproxy_remote_request.json'
+
+file remote_request_json do
   mode 0660
   content ::JSON.pretty_generate({
     'remote_recipe' => {
@@ -62,10 +64,10 @@ execute 'Attach to load balancer(s)' do
     "rs_run_recipe",
     "--name '#{node['rs-application_php']['remote_attach_recipe']}'",
     "--recipient_tags 'load_balancer:active_#{node['rs-application_php']['application_name']}=true'",
-    "--json '/tmp/rs-haproxy_remote_request.json'"
+    "--json '#{remote_request_json}'"
   ]
 end
 
-file '/tmp/rs-haproxy_remote_request.json' do
+file remote_request_json do
   action :delete
 end

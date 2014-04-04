@@ -28,13 +28,15 @@ end
 # Validate application name
 RsApplicationPhp::Helper.validate_application_name(node['rs-application_php']['application_name'])
 
-# Put this backend out of service
-log 'Putting the application server out of service...'
+# Put this backend out of consideration during tag queries
+log 'Tagging the application server to take it out of consideration during tag queries...'
 machine_tag "application:active_#{node['rs-application_php']['application_name']}=false" do
   action :create
 end
 
-file '/tmp/rs-haproxy_remote_request.json' do
+remote_request_json = '/tmp/rs-haproxy_remote_request.json'
+
+file remote_request_json do
   mode 0660
   content ::JSON.pretty_generate({
     'remote_recipe' => {
@@ -54,10 +56,10 @@ execute 'Detach from load balancer(s)' do
     "rs_run_recipe",
     "--name '#{node['rs-application_php']['remote_detach_recipe']}'",
     "--recipient_tags 'load_balancer:active_#{node['rs-application_php']['application_name']}=true'",
-    "--json '/tmp/rs-haproxy_remote_request.json'"
+    "--json '#{remote_request_json}'"
   ]
 end
 
-file '/tmp/rs-haproxy_remote_request.json' do
+file remote_request_json do
   action :delete
 end
