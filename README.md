@@ -27,37 +27,67 @@ Github Repository: https://github.com/rightscale-cookbooks/rs-application_php
 
 # Usage
 
-* Add the `rs-application_php::default` recipe to your run list to set up a PHP application server.
-  When the database inputs are provided, this recipe sets up a MySQL client and establishes
-  connection with a MySQL database server.
+To set up a stand-alone PHP application server
+
+* Add the `rs-application_php::default` recipe to your run list.
+* Set the `node['rs-application_php']['application_name']` attribute to provide a friendly name for
+  the application.
+* Application code can be checked out from a remote repository by setting the `rs-application_php/scm/*`
+  attributes.
+
+To connect the PHP application server to a database server
+
+* Follow the same steps to set up a stand-alone PHP application server.
+* Set the `rs-application_php/database/*` attributes to provide the hostname of the database server,
+  and the database credentials.
+
+To attach the PHP application server to a load balancer
+
+* Add `rs-application_php::tags` and `rs-application_php::application_backend` recipes to your run
+  list.
+* Set the `node['rs-application_php']['remote_attach_recipe']` attribute to the recipe name that
+  needs to be executed on the remote load balancer servers to attach an application server.
+* Ensure that the remote load balancer server has the necessary machine tags set up. Refer to
+  [Load Balancer Servers][Load Balancer Servers] section in the `rightscale_tag` cookbook for the
+  machine tags set on a load balancer server.
+
+To detach the application server from a load balancer
+
+* Add the `rs-application_php::application_backend_detached` recipe to your run list.
+* Set the `node['rs-application_php']['remote_detach_recipe']` attribute to the recipe name that
+  needs to be executed on the remote load balancer servers to detach an application server.
+* Ensure that the remote load balancer servers has the necessary machine tags set up. Refer to
+  [Load Balancer Servers][Load Balancer Servers] section in the `rightscale_tag` cookbook for the
+  machine tags set on a load balancer server.
+
+[Load Balancer Servers]: https://github.com/rightscale-cookbooks/rightscale_tag#load-balancer-servers
 
 # Attributes
 
 * `node['rs-application_php']['packages']` - List of packages to be installed before
   starting the deployment. Package versions can be specified in this format `<package>=<version>`.
-  Example: `pkg1, pkg2=2.0`.
 * `node['rs-application_php']['listen_port']` - The port to use for the application to bind.
   Default: `8080`.
 * `node['rs-application_php']['bind_ip_type']` - The type of the IP address for the application to
   bind. This attribute can be either 'public' or 'private'. Default: 'private'.
 * `node['rs-application_php']['scm']['repository']` - The repository location to download
-  application code. Example: `git://github.com/rightscale/examples.git`.
+  application code.
 * `node['rs-application_php']['scm']['revision']` - The revision of application code to
-  download from the repository. Example: `37741af646ca4181972902432859c1c3857de742`.
-* `node['rs-application_php']['application_name']` - The name of the application. The application
-  name can only have alphanumeric characters and underscores. This attribute is
-  used in finding the load balancer serving the application pool name when attaching/detaching the
-  application server from a load balancer. Example: `hello_world`,
-  `www.example.com`.
+  download from the repository.
+* `node['rs-application_php']['application_name']` - The name of the application. This name will be
+  used in the path name where the application code will be checked out from a repository. This is
+  also used to determine the backend pool in a load balancer server to which the application server
+  will be attached. The application name can only have alphanumeric characters and underscores.
 * `node['rs-application_php']['vhost_path']` - The virtual host served by the application server.
-  This must be a valid FQDN or URI. This attribute is used in setting the
-  `application:vhost_path_<application_name>` tag on the application server. No two application
-  servers can have the same application name but different vhost paths. A load balancer server uses
-  this attribute to set up access control lists (ACLs).
+  The virtual host name can be a valid domain/path name supported by the access control lists (ACLs)
+  in a load balancer. This attribute is used in setting the `application:vhost_path_<application_name>`
+  tag on the application server. A load balancer server uses this attribute to set up access control
+  lists (ACLs).When setting a 3-tier deployment, ensure that no two application servers have the same
+  application name but different virtual host names.
 * `node['rs-application_php]['app_root']` - The path of application root relative to
   `/usr/local/www/sites/<application name>` directory. Default: `/`.
 * `node['rs-application_php']['migration_command']` - The command used to perform
-  application migration. Example: `php app/console doctrine:migrations:migrate`.
+  application migration.
 * `node['rs-application_php']['write_settings_file']` - Create the local settings file on the
   application deployment. Default: `true`.
 * `node['rs-application_php]['local_settings_file']` - The name of local settings file to be
@@ -72,15 +102,15 @@ Github Repository: https://github.com/rightscale-cookbooks/rs-application_php
 * `node['rs-application_php']['database']['host']` - The FQDN of the database server.
   Default: `localhost`.
 * `node['rs-application_php']['database']['user']` - The username used to connect to the
-  database. Example: `dbuser`.
+  database.
 * `node['rs-application_php']['database']['password']` - The password used to connect to the
-  database. Example: `dbpass`.
+  database.
 * `node['rs-application_php']['database']['schema']` - The schema name used to connect to the
-  database. Example: `app_test`.
+  database.
 * `node['rs-application_php']['remote_attach_recipe']` - The recipe to run on remote load balancer
-  servers to attach the application server to the load balancer servers. Example: `rs-haproxy::frontend`.
+  servers to attach the application server to the load balancer servers. Default: `rs-haproxy::frontend`.
 * `node['rs-application_php']['remote_detach_recipe']` - The recipe to run on remote load balancer
-  servers to detach the application server from the load balancer servers. Example: `rs-haproxy::frontend`.
+  servers to detach the application server from the load balancer servers. Default: `rs-haproxy::frontend`.
 
 
 # Recipes
