@@ -27,7 +27,7 @@ Github Repository: https://github.com/rightscale-cookbooks/rs-application_php
 
 # Usage
 
-To set up a stand-alone PHP application server
+To **set up** a **stand-alone** PHP application server
 
 * Add the `rs-application_php::default` recipe to your run list.
 * Set the `node['rs-application_php']['application_name']` attribute to provide a friendly name for
@@ -35,27 +35,36 @@ To set up a stand-alone PHP application server
 * Application code can be checked out from a remote repository by setting the `rs-application_php/scm/*`
   attributes.
 
-To connect the PHP application server to a database server
+To **connect** the PHP application server to a **database server**
 
 * Follow the same steps to set up a stand-alone PHP application server.
 * Set the `rs-application_php/database/*` attributes to provide the hostname of the database server,
   and the database credentials.
 
-To attach the PHP application server to a load balancer
+To **attach** the PHP application server to a **load balancer**
 
 * Add `rs-application_php::tags` and `rs-application_php::application_backend` recipes to your run
   list.
+* Set the `node['rs-application_php']['vhost_path']` attribute to provide the virtual host name
+  served by the application server. The remote load balancer servers will use this virtual host name
+  to configure the access control lists (ACLs).
 * Set the `node['rs-application_php']['remote_attach_recipe']` attribute to the recipe name that
   needs to be executed on the remote load balancer servers to attach an application server.
+* To attach the application server to the remote load balancer servers in the deployment, the
+  `node['rs-application_php']['application_name']` attribute in the application server should match
+  one of the pool names served by the remote load balancer servers.
 * Ensure that the remote load balancer server has the necessary machine tags set up. Refer to
   [Load Balancer Servers][Load Balancer Servers] section in the `rightscale_tag` cookbook for the
   machine tags set on a load balancer server.
 
-To detach the application server from a load balancer
+To **detach** the application server from a **load balancer**
 
 * Add the `rs-application_php::application_backend_detached` recipe to your run list.
 * Set the `node['rs-application_php']['remote_detach_recipe']` attribute to the recipe name that
   needs to be executed on the remote load balancer servers to detach an application server.
+* To detach the application server from the remote load balancer servers in the deployment, the
+  `node['rs-application_php']['application_name']` attribute in the application server should match
+  one of the pool names served by the remote load balancer servers.
 * Ensure that the remote load balancer servers has the necessary machine tags set up. Refer to
   [Load Balancer Servers][Load Balancer Servers] section in the `rightscale_tag` cookbook for the
   machine tags set on a load balancer server.
