@@ -61,10 +61,10 @@ log "Running recipe '#{node['rs-application_php']['remote_attach_recipe']}' on a
 
 execute 'Attach to load balancer(s)' do
   command [
-    "rs_run_recipe",
-    "--name '#{node['rs-application_php']['remote_attach_recipe']}'",
-    "--recipient_tags 'load_balancer:active_#{node['rs-application_php']['application_name']}=true'",
-    "--json '#{remote_request_json}'"
+    'rs_run_recipe',
+    '--name', node['rs-application_php']['remote_attach_recipe'],
+    '--recipient_tags', "load_balancer:active_#{node['rs-application_php']['application_name']}=true",
+    '--json', remote_request_json
   ]
 end
 
