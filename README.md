@@ -83,10 +83,10 @@ To **detach** the application server from a **load balancer**
   application code.
 * `node['rs-application_php']['scm']['revision']` - The revision of application code to
   download from the repository.
-* `node['rs-application_php']['application_name']` - The name of the application. This name will be
-  used in the path name where the application code will be checked out from a repository. This is
-  also used to determine the backend pool in a load balancer server to which the application server
-  will be attached. The application name can only have alphanumeric characters and underscores.
+* `node['rs-application_php']['application_name']` - The name of the application. This name is used
+  to generate the path of the application code and to determine the backend pool in a load balancer
+  that the application server will be attached to. The application name can only have alphanumeric
+  characters and underscores.
 * `node['rs-application_php']['vhost_path']` - The virtual host served by the application server.
   The virtual host name can be a valid domain/path name supported by the access control lists (ACLs)
   in a load balancer. This attribute is used in setting the `application:vhost_path_<application_name>`

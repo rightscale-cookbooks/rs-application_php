@@ -61,10 +61,10 @@ attribute 'rs-application_php/scm/deploy_key',
 
 attribute 'rs-application_php/application_name',
   :display_name => 'Application Name',
-  :description => 'The name of the application. This name will be used in the path name where the' +
-    ' application code will be checked out from a repository. This is also used to determine the' +
-    ' backend pool in a load balancer server to which the application server will be attached.' +
-    ' Application names can have only alphanumeric characters and underscores. Example: hello_world',
+  :description => 'The name of the application. This name is used to generate the path of the' +
+    ' application code and to determine the backend pool in a load balancer server that the' +
+    ' application server will be attached to. Application names can have only alphanumeric' +
+    ' characters and underscores. Example: hello_world',
   :required => 'required',
   :recipes => [
     'rs-application_php::default',
