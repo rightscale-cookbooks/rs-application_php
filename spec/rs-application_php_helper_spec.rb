@@ -29,4 +29,18 @@ describe RsApplicationPhp::Helper do
       ).not_to raise_error
     end
   end
+
+  describe '#validate_application_name' do
+    it 'returns true if the application name is valid' do
+      ['example', '123test', '_api'].each do |name|
+        RsApplicationPhp::Helper.validate_application_name(name).should be_true
+      end
+    end
+
+    it 'raises an exception if application name is invalid' do
+      ['/example', 'my application'].each do |name|
+        expect { RsApplicationPhp::Helper.validate_application_name(name) }.to raise_error(RuntimeError)
+      end
+    end
+  end
 end

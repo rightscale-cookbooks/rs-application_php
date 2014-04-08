@@ -34,6 +34,8 @@ suites:
   - recipe[rs-application_php::collectd]
   - recipe[curl::default]
   attributes:
+    rightscale:
+      instance_uuid: '01-ABCDEFGH0123'
     cloud:
       provider: vagrant
       public_ips: ['33.33.33.10']
@@ -41,6 +43,7 @@ suites:
     rs-application_php:
       packages: ['sl']
       application_name: example
+      vhost_path: www.example.com
       migration_command: echo migration is being performed >> /usr/local/www/sites/example/migration
       scm:
         revision: unified_php

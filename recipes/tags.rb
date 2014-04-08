@@ -2,7 +2,7 @@
 # Cookbook Name:: rs-application_php
 # Recipe:: tags
 #
-# Copyright (C) 2013 RightScale, Inc.
+# Copyright (C) 2014 RightScale, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -23,10 +23,13 @@ end
 
 include_recipe 'rightscale_tag::default'
 
+# Validate application name
+RsApplicationPhp::Helper.validate_application_name(node['rs-application_php']['application_name'])
+
 # Set up application server tags
 rightscale_tag_application node['rs-application_php']['application_name'] do
-  bind_ip_address node['cloud']['private_ips'].first
+  bind_ip_address RsApplicationPhp::Helper.get_bind_ip_address(node)
   bind_port node['rs-application_php']['listen_port'].to_i
-  vhost_path node['rs-application_php']['app_root']
+  vhost_path node['rs-application_php']['vhost_path']
   action :create
 end
