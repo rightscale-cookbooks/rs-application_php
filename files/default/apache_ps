@@ -64,9 +64,7 @@ if [[ $distro == "centos" || $distro == "redhat" ]]; then
   fi
 elif [[ $distro == "ubuntu" ]]; then
   apache_ps_name="apache2"
-fi
-
-if [[ $apache_ps_name == "" ]]; then
+else
   echo "Could not find apache process!"
   exit 1
 fi
