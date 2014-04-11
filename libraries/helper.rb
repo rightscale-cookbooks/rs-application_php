@@ -63,7 +63,7 @@ module RsApplicationPhp
     # @raise [RuntimeError] if the IP address type is not either 'public' or 'private'
     #
     def self.get_bind_ip_address(node)
-      case node['rs-application_php']['bind_ip_type']
+      case node['rs-application_php']['bind_network_interface']
       when "private"
         if node['cloud']['private_ips'].nil? || node['cloud']['private_ips'].empty?
           raise 'Cannot find private IP of the server!'
@@ -77,7 +77,7 @@ module RsApplicationPhp
 
         node['cloud']['public_ips'].first
       else
-        raise "Unknown IP address type '#{node['rs-application_php']['bind_ip_type']}'!" +
+        raise "Unknown IP address type '#{node['rs-application_php']['bind_network_interface']}'!" +
           " The IP address type must be either 'public' or 'private'."
       end
     end
