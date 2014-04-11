@@ -77,8 +77,8 @@ module RsApplicationPhp
 
         node['cloud']['public_ips'].first
       else
-        raise "Unknown IP address type '#{node['rs-application_php']['bind_network_interface']}'!" +
-          " The IP address type must be either 'public' or 'private'."
+        raise "Unknown network interface '#{node['rs-application_php']['bind_network_interface']}'!" +
+          " The network interface must be either 'public' or 'private'."
       end
     end
 
