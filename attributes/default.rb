@@ -24,7 +24,7 @@ default['rs-application_php']['packages'] = []
 default['rs-application_php']['listen_port'] = 8080
 
 # Application bind IP type - 'private' or 'public'
-default['rs-application_php']['bind_ip_type'] = 'private'
+default['rs-application_php']['bind_network_interface'] = 'private'
 
 # The source control provider
 default['rs-application_php']['scm']['provider'] = 'git'

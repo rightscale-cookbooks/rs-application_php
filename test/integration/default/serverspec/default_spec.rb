@@ -89,7 +89,7 @@ describe 'application server tags' do
 
       tags_json.should include("application:active=true")
       tags_json.should include("application:active_example=true")
-      tags_json.should include("application:bind_ip_address_example=10.0.2.15")
+      tags_json.should include("application:bind_ip_address_example=33.33.33.10")
       tags_json.should include("application:bind_port_example=8080")
       tags_json.should include("application:vhost_path_example=www.example.com")
     end

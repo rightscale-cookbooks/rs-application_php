@@ -77,8 +77,8 @@ To **detach** the application server from a **load balancer**
   starting the deployment. Package versions can be specified in this format `<package>=<version>`.
 * `node['rs-application_php']['listen_port']` - The port to use for the application to bind.
   Default: `8080`.
-* `node['rs-application_php']['bind_ip_type']` - The type of the IP address for the application to
-  bind. This attribute can be either 'public' or 'private'. Default: 'private'.
+* `node['rs-application_php']['bind_network_interface']` - The network interface for the application
+  to bind. This attribute can be either 'public' or 'private' interface. Default: 'private'.
 * `node['rs-application_php']['scm']['repository']` - The repository location to download
   application code.
 * `node['rs-application_php']['scm']['revision']` - The revision of application code to
