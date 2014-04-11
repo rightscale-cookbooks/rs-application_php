@@ -96,9 +96,9 @@ attribute 'rs-application_php/app_root',
   ]
 
 attribute 'rs-application_php/bind_network_interface',
-  :display_name => 'Bind IP Interface Type',
-  :description => "The type of IP interface to use for the bind address of the application server." +
-    " It can be either 'private' or 'public'.",
+  :display_name => 'Application Bind Network Interface',
+  :description => "The network interface to use for the bind address of the application server." +
+    " It can be either 'private' or 'public' interface.",
   :default => 'private',
   :choice => ['public', 'private'],
   :required => 'optional',
