@@ -65,8 +65,16 @@ module RsApplicationPhp
     def self.get_bind_ip_address(node)
       case node['rs-application_php']['bind_ip_type']
       when "private"
+        if node['cloud']['private_ips'].nil? || node['cloud']['private_ips'].empty?
+          raise 'Cannot find private IP of the server!'
+        end
+
         node['cloud']['private_ips'].first
       when "public"
+        if node['cloud']['public_ips'].nil? || node['cloud']['public_ips'].empty?
+          raise 'Cannot find public IP of the server!'
+        end
+
         node['cloud']['public_ips'].first
       else
         raise "Unknown IP address type '#{node['rs-application_php']['bind_ip_type']}'!" +
