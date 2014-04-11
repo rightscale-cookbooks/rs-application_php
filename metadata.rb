@@ -95,6 +95,18 @@ attribute 'rs-application_php/app_root',
     'rs-application_php::tags'
   ]
 
+attribute 'rs-application_php/bind_ip_type',
+  :display_name => 'Bind IP Interface Type',
+  :description => "The type of IP interface to use for the bind address of the application server." +
+    " It can be either 'private' or 'public'.",
+  :default => 'private',
+  :choice => ['public', 'private'],
+  :required => 'optional',
+  :recipes => [
+    'rs-application_php::default',
+    'rs-application_php::tags'
+  ]
+
 attribute 'rs-application_php/migration_command',
   :display_name => 'Application Migration Command',
   :description => 'The command used to perform application migration. Example: php app/console doctrine:migrations:migrate',
