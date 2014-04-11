@@ -38,7 +38,7 @@ attribute 'rs-application_php/listen_port',
   :recipes => [
     'rs-application_php::default',
     'rs-application_php::tags',
-    'rs-application_php::application_backend'
+    'rs-application_php::application_backend',
   ]
 
 attribute 'rs-application_php/scm/repository',
@@ -70,7 +70,7 @@ attribute 'rs-application_php/application_name',
     'rs-application_php::default',
     'rs-application_php::tags',
     'rs-application_php::application_backend',
-    'rs-application_php::application_backend_detached'
+    'rs-application_php::application_backend_detached',
   ]
 
 attribute 'rs-application_php/vhost_path',
@@ -82,7 +82,7 @@ attribute 'rs-application_php/vhost_path',
   :required => 'required',
   :recipes => [
     'rs-application_php::tags',
-    'rs-application_php::application_backend'
+    'rs-application_php::application_backend',
   ]
 
 attribute 'rs-application_php/app_root',
@@ -92,7 +92,7 @@ attribute 'rs-application_php/app_root',
   :required => 'optional',
   :recipes => [
     'rs-application_php::default',
-    'rs-application_php::tags'
+    'rs-application_php::tags',
   ]
 
 attribute 'rs-application_php/bind_ip_type',
@@ -104,7 +104,7 @@ attribute 'rs-application_php/bind_ip_type',
   :required => 'optional',
   :recipes => [
     'rs-application_php::default',
-    'rs-application_php::tags'
+    'rs-application_php::tags',
   ]
 
 attribute 'rs-application_php/migration_command',
