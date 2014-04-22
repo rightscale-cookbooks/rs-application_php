@@ -9,7 +9,7 @@ This cookbook is based on the [application] and [application_php] cookbooks and 
 [application]: https://github.com/poise/application/blob/master/README.md
 [application_php]: https://github.com/poise/application_php/blob/master/README.md
 
-Github Repository: https://github.com/rightscale-cookbooks/rs-application_php
+Github Repository: [https://github.com/rightscale-cookbooks/rs-application_php](https://github.com/rightscale-cookbooks/rs-application_php)
 
 # Requirements
 
@@ -21,6 +21,8 @@ Github Repository: https://github.com/rightscale-cookbooks/rs-application_php
   * [database](http://community.opscode.com/cookbooks/database)
   * [php](http://community.opscode.com/cookbooks/php)
   * [git](http://community.opscode.com/cookbooks/git)
+  * [rightscale_tag](http://community.opscode.com/cookbooks/rightscale_tag)
+  * [collectd](https://github.com/EfrainOlivares/chef-collectd)
 * Platform
   * Ubuntu 12.04
   * CentOS 6
