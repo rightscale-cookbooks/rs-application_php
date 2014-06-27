@@ -1,6 +1,10 @@
 # rs-application_php cookbook
 
-[![Build Status](https://travis-ci.org/rightscale-cookbooks/rs-application_php.png?branch=master)](https://travis-ci.org/rightscale-cookbooks/rs-application_php)
+[![Release](https://img.shields.io/github/release/rightscale-cookbooks/rs-application_php.svg?style=flat)][release]
+[![Build Status](https://img.shields.io/travis/rightscale-cookbooks/rs-application_php.svg?style=flat)][travis]
+
+[release]: https://github.com/rightscale-cookbooks/rs-application_php/releases/latest
+[travis]: https://travis-ci.org/rightscale-cookbooks/rs-application_php
 
 Sets up a PHP application server by checking out code from a `git` repository and connecting to a `mysql` database.
 
