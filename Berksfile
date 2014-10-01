@@ -2,7 +2,7 @@ site :opscode
 
 metadata
 
-cookbook 'collectd', github: 'EfrainOlivares/chef-collectd', ref: 'ec50609ed6eb193e0411f30aced91befa571940f'
+cookbook 'collectd', github: 'EfrainOlivares/chef-collectd', branch: 'generalize_install_for_both_centos_and_ubuntu'
 cookbook 'application_php', github: 'lopakadelp/application_php', branch: 'updates_for_apache_24'
 cookbook 'rightscale_tag', github: 'rightscale-cookbooks/rightscale_tag'
 cookbook 'mysql', github: 'david-vo/mysql', branch: 'st_14_13_acu173881_add_rhel7_support'
