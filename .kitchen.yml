@@ -12,22 +12,27 @@ platforms:
   driver_config:
     box: opscode-centos-6.5
 - name: rhel-6.5
-  run_list: ['recipe[yum-epel]', 'recipe[rhsm]']
+  run_list: ['recipe[yum-epel]', 'recipe[rhsm::register]']
   attributes:
     rhsm:
       username: <%= ENV['RHSM_USERNAME'] %>
       password: <%= ENV['RHSM_PASSWORD'] %>
-      compile_time: true
       additional_repos: ['rhel-6-server-optional-rpms']
   driver_config:
     box: local-rhel-6.5
     box_url: file://<%= File.expand_path('~') %>/opscode_rhel-6.5_chef-provisionerless.box
 - name: ubuntu-12.04
   run_list: ['recipe[apt]']
+  attributes:
+    apt:
+      compile_time_update: true
   driver_config:
     box: opscode-ubuntu-12.04
 - name: ubuntu-14.04
   run_list: ['recipe[apt]']
+  attributes:
+    apt:
+      compile_time_update: true
   driver_config:
     box: opscode-ubuntu-14.04
 
