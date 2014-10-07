@@ -28,7 +28,7 @@ describe 'Required packages are installed' do
 end
 
 describe package('mysql') do
-  let(:path) { '/opt/chef/embedded/bin' }
+  let(:path) { '/opt/chef/embedded/bin:$PATH' }
   it { should be_installed.by('gem') }
 end
 
