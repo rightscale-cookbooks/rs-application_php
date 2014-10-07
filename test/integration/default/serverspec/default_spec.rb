@@ -48,11 +48,11 @@ describe port(8080) do
 end
 
 describe command('curl --silent --location http://localhost:8080') do
-  it { should return_stdout /Basic html serving succeeded/ }
+  its(:stdout) { should match /Basic html serving succeeded/ }
 end
 
 describe command('curl --silent --location http://localhost:8080/appserver') do
-  it { should return_stdout /PHP configuration=succeeded/ }
+  its(:stdout) { should match /PHP configuration=succeeded/ }
 end
 
 describe file('/usr/local/www/sites/example/migration') do

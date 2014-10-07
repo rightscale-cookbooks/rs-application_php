@@ -52,5 +52,5 @@ describe service(mysql_service_name) do
 end
 
 describe command('curl --silent --location http://localhost:8080/dbread') do
-  it { should return_stdout /I am in the db/ }
+  its(:stdout) { should match /I am in the db/ }
 end
