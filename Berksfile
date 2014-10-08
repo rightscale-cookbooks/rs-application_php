@@ -5,7 +5,7 @@ metadata
 cookbook 'collectd', github: 'EfrainOlivares/chef-collectd', branch: 'generalize_install_for_both_centos_and_ubuntu'
 cookbook 'application_php', github: 'rightscale-cookbooks-contrib/application_php', branch: 'updates_for_apache_24'
 cookbook 'rightscale_tag', github: 'rightscale-cookbooks/rightscale_tag'
-cookbook 'mysql', github: 'david-vo/mysql', branch: 'st_14_13_acu173881_add_rhel7_support'
+cookbook 'mysql', github: 'rightscale-cookbooks-contrib/mysql', branch: 'st_14_13_acu173881_add_rhel7_support'
 cookbook 'rs-mysql', github: 'rightscale-cookbooks/rs-mysql'
 cookbook 'dns', github: 'rightscale-cookbooks-contrib/dns', branch: 'rightscale_development_v2'
 
