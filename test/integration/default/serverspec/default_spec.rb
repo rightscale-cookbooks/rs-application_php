@@ -80,11 +80,11 @@ describe 'application server tags' do
     it "should have the application server tags" do
       tags_json = JSON.load(IO.read(tag_file))
 
-      tags_json.should include("application:active=true")
-      tags_json.should include("application:active_example=true")
-      tags_json.should include("application:bind_ip_address_example=33.33.33.10")
-      tags_json.should include("application:bind_port_example=8080")
-      tags_json.should include("application:vhost_path_example=www.example.com")
+      expect(tags_json).to include("application:active=true")
+      expect(tags_json).to include("application:active_example=true")
+      expect(tags_json).to include("application:bind_ip_address_example=33.33.33.10")
+      expect(tags_json).to include("application:bind_port_example=8080")
+      expect(tags_json).to include("application:vhost_path_example=www.example.com")
     end
   end
 end
