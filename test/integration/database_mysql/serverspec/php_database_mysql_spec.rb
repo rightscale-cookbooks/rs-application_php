@@ -1,20 +1,20 @@
 require 'spec_helper'
 
 mysql_service_name = ''
-case backend.check_os[:family]
-when 'Debian'
+case os[:family]
+when 'debian'
   mysql_service_name = 'mysql'
-when 'RedHat'
+when 'redhat'
   mysql_service_name = 'mysqld'
 end
 
 describe 'Required packages are installed' do
 
   php_mysql_packages = []
-  case backend.check_os[:family]
-  when 'Debian'
+  case os[:family]
+  when 'debian'
     php_mysql_packages = %w(mysql-client libmysqlclient-dev php5-mysql)
-  when 'RedHat'
+  when 'redhat'
     php_mysql_packages = %w(mysql mysql-devel php-mysql)
   end
 
@@ -28,7 +28,7 @@ describe 'Required packages are installed' do
 end
 
 describe package('mysql') do
-  let(:path) { '/opt/chef/embedded/bin' }
+  let(:path) { '/opt/chef/embedded/bin:$PATH' }
   it { should be_installed.by('gem') }
 end
 
@@ -52,5 +52,5 @@ describe service(mysql_service_name) do
 end
 
 describe command('curl --silent --location http://localhost:8080/dbread') do
-  it { should return_stdout /I am in the db/ }
+  its(:stdout) { should match /I am in the db/ }
 end

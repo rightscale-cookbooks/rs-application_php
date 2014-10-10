@@ -2,14 +2,17 @@ site :opscode
 
 metadata
 
-cookbook 'collectd', github: 'EfrainOlivares/chef-collectd', ref: 'ec50609ed6eb193e0411f30aced91befa571940f'
-cookbook 'application_php', github: 'arangamani-cookbooks/application_php', branch: 'template_fix_and_application_cookbook_upgrade'
+cookbook 'collectd', github: 'rightscale-cookbooks-contrib/chef-collectd', branch: 'generalize_install_for_both_centos_and_ubuntu'
+cookbook 'application_php', github: 'rightscale-cookbooks-contrib/application_php', branch: 'template_fix_and_application_cookbook_upgrade'
 cookbook 'rightscale_tag', github: 'rightscale-cookbooks/rightscale_tag'
-cookbook 'mysql', github: 'arangamani-cookbooks/mysql', branch: 'rs-fixes'
+cookbook 'mysql', github: 'rightscale-cookbooks-contrib/mysql', branch: 'rs-fixes'
+cookbook 'rs-mysql', github: 'rightscale-cookbooks/rs-mysql'
+cookbook 'dns', github: 'rightscale-cookbooks-contrib/dns', branch: 'rightscale_development_v2'
 
 group :integration do
-  cookbook 'apt', '~> 2.3.0'
-  cookbook 'yum', '~> 2.4.2'
-  cookbook 'curl'
+  cookbook 'apt', '~> 2.6.0'
+  cookbook 'yum-epel', '~> 0.4.0'
+  cookbook 'curl', '~> 1.1.0'
   cookbook 'fake', path: './test/cookbooks/fake'
+  cookbook 'rhsm', '~> 1.0.0'
 end

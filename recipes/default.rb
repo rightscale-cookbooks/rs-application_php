@@ -58,6 +58,7 @@ application node['rs-application_php']['application_name'] do
   repository node['rs-application_php']['scm']['repository']
   revision node['rs-application_php']['scm']['revision']
   scm_provider node['rs-application_php']['scm']['provider']
+  shallow_clone false
   if node['rs-application_php']['scm']['deploy_key'] && !node['rs-application_php']['scm']['deploy_key'].empty?
     deploy_key node['rs-application_php']['scm']['deploy_key']
   end

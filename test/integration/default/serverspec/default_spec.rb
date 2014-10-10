@@ -2,12 +2,12 @@ require 'spec_helper'
 
 apache_name = ''
 php_packages = []
-case backend.check_os[:family]
-when 'Debian', 'Ubuntu'
+case os[:family]
+when 'debian', 'ubuntu'
   apache_name = 'apache2'
   php_packages = %w(php5 php5-cgi php5-dev php5-cli php-pear)
   collectd_plugin_dir = '/etc/collectd/plugins'
-when 'RedHat'
+when 'redhat'
   apache_name = 'httpd'
   php_packages = %w(php php-devel php-cli php-pear)
   collectd_plugin_dir = '/etc/collectd.d'
@@ -48,11 +48,11 @@ describe port(8080) do
 end
 
 describe command('curl --silent --location http://localhost:8080') do
-  it { should return_stdout /Basic html serving succeeded/ }
+  its(:stdout) { should match /Basic html serving succeeded/ }
 end
 
 describe command('curl --silent --location http://localhost:8080/appserver') do
-  it { should return_stdout /PHP configuration=succeeded/ }
+  its(:stdout) { should match /PHP configuration=succeeded/ }
 end
 
 describe file('/usr/local/www/sites/example/migration') do
@@ -66,14 +66,7 @@ describe 'apache status module' do
   end
 
   describe file("/etc/#{apache_name}/mods-enabled/status.conf") do
-    # A relative link is created for httpd and apache2 has full path as the link.
-    # Serverspec tries to do an exact match of the symlinks.
-    #
-    if apache_name == 'httpd'
-      it { should be_linked_to '/etc/httpd/mods-available/status.conf' }
-    else
-      it { should be_linked_to '../mods-available/status.conf' }
-    end
+    it { should be_linked_to '../mods-available/status.conf' }
   end
 end
 
@@ -87,11 +80,11 @@ describe 'application server tags' do
     it "should have the application server tags" do
       tags_json = JSON.load(IO.read(tag_file))
 
-      tags_json.should include("application:active=true")
-      tags_json.should include("application:active_example=true")
-      tags_json.should include("application:bind_ip_address_example=33.33.33.10")
-      tags_json.should include("application:bind_port_example=8080")
-      tags_json.should include("application:vhost_path_example=www.example.com")
+      expect(tags_json).to include("application:active=true")
+      expect(tags_json).to include("application:active_example=true")
+      expect(tags_json).to include("application:bind_ip_address_example=33.33.33.10")
+      expect(tags_json).to include("application:bind_port_example=8080")
+      expect(tags_json).to include("application:vhost_path_example=www.example.com")
     end
   end
 end
