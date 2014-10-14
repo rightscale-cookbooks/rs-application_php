@@ -4,9 +4,9 @@ maintainer_email 'cookbooks@rightscale.com'
 license          'Apache 2.0'
 description      'Installs/Configures a PHP application server'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          '1.1.0'
+version          '1.1.1'
 
-depends 'marker', '~> 1.0.0'
+depends 'marker', '~> 1.0.1'
 depends 'application', '~> 4.1.4'
 depends 'application_php', '~> 2.0.0'
 depends 'database', '~> 1.5.2'
@@ -78,7 +78,7 @@ attribute 'rs-application_php/vhost_path',
   :description => 'The virtual host served by the application server. The virtual host name can be' +
     ' a valid domain/path name supported by the access control lists (ACLs) in a load balancer.' +
     ' Ensure that no two application servers in the same deployment having the same' +
-    ' application name have different vhost paths. Example: http:://www.example.com, /index',
+    ' application name have different vhost paths. Example: www.example.com, /index',
   :required => 'required',
   :recipes => [
     'rs-application_php::tags',
