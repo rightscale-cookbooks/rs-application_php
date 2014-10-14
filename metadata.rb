@@ -78,7 +78,7 @@ attribute 'rs-application_php/vhost_path',
   :description => 'The virtual host served by the application server. The virtual host name can be' +
     ' a valid domain/path name supported by the access control lists (ACLs) in a load balancer.' +
     ' Ensure that no two application servers in the same deployment having the same' +
-    ' application name have different vhost paths. Example: http:://www.example.com, /index',
+    ' application name have different vhost paths. Example: www.example.com, /index',
   :required => 'required',
   :recipes => [
     'rs-application_php::tags',
