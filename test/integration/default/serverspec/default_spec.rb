@@ -14,7 +14,6 @@ when 'redhat'
 end
 
 describe 'Required packages are installed' do
-
   # The package specified in rs-application_php/packages is installed
   describe package('sl') do
     it { should be_installed }
@@ -90,6 +89,10 @@ describe 'application server tags' do
 end
 
 describe 'apache collectd plugin' do
+  describe command('curl --silent http://localhost:8080/server-status?auto') do
+    its(:stdout) { should match(/Scoreboard: /) }
+  end
+
   describe file("#{collectd_plugin_dir}/apache.conf") do
     it { should be_file }
     its(:content) { should match /^\s*LoadPlugin "apache"/ }
