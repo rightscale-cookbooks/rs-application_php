@@ -39,35 +39,31 @@ machine_tag "application:active_#{node['rs-application_php']['application_name']
   action :create
 end
 
-remote_request_json = '/tmp/rs-haproxy_remote_request.json'
-
-file remote_request_json do
-  mode 0660
-  content ::JSON.pretty_generate({
-    'remote_recipe' => {
-      'application_bind_ip' => RsApplicationPhp::Helper.get_bind_ip_address(node),
-      'application_bind_port' => node['rs-application_php']['listen_port'],
-      'application_server_id' => node['rightscale']['instance_uuid'],
-      'pool_name' => node['rs-application_php']['application_name'],
-      'vhost_path' => node['rs-application_php']['vhost_path'],
-      'application_action' => 'attach'
-    }
-  })
-end
 
 # Send remote recipe request
 log "Running recipe '#{node['rs-application_php']['remote_attach_recipe']}' on all load balancers" +
  " with tags 'load_balancer:active_#{node['rs-application_php']['application_name']}=true'..."
 
-execute 'Attach to load balancer(s)' do
-  command [
-    'rs_run_recipe',
-    '--name', node['rs-application_php']['remote_attach_recipe'],
-    '--recipient_tags', "load_balancer:active_#{node['rs-application_php']['application_name']}=true",
-    '--json', remote_request_json
-  ]
+remote_recipe "Haproxy Frontend - chef" do
+  tags "load_balancer:active_#{node['rs-application_php']['application_name']}=true"
+  attributes( {'APPLICATION_BIND_IP' => "text:#{node['cloud']["private_ips"][0]}",
+      'APPLICATION_BIND_PORT' => "text:#{node['rs-application_php']['listen_port']}",
+      'APPLICATION_SERVER_ID' => "text:#{node['rightscale']['instance_uuid']}",
+      'POOL_NAME' => "text:#{node['rs-application_php']['application_name']}",
+      'VHOST_PATH' => "text:#{node['rs-application_php']['vhost_path']}",
+      'APPLICATION_ACTION' => "text:attach"})
+  action :run
 end
 
-file remote_request_json do
-  action :delete
-end
+#execute 'Attach to load balancer(s)' do
+#  command [
+#    'rs_run_recipe',
+#    '--name', node['rs-application_php']['remote_attach_recipe'],
+#    '--recipient_tags', "load_balancer:active_#{node['rs-application_php']['application_name']}=true",
+#    '--json', remote_request_json
+#  ]
+#end
+#
+#file remote_request_json do
+#  action :delete
+#end
