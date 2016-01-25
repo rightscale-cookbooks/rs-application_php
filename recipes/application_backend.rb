@@ -44,7 +44,7 @@ end
 log "Running recipe '#{node['rs-application_php']['remote_attach_recipe']}' on all load balancers" +
  " with tags 'load_balancer:active_#{node['rs-application_php']['application_name']}=true'..."
 
-remote_recipe "Haproxy Frontend - chef" do
+remote_recipe "HAProxy Frontend - chef" do
   tags "load_balancer:active_#{node['rs-application_php']['application_name']}=true"
   attributes( {'APPLICATION_BIND_IP' => "text:#{node['cloud']["private_ips"][0]}",
       'APPLICATION_BIND_PORT' => "text:#{node['rs-application_php']['listen_port']}",
