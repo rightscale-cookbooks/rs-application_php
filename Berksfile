@@ -5,7 +5,7 @@ metadata
 cookbook 'collectd', github: 'rightscale-cookbooks-contrib/chef-collectd', branch: 'generalize_install_for_both_centos_and_ubuntu'
 cookbook 'application_php', github: 'rightscale-cookbooks-contrib/application_php', branch: 'template_fix_and_application_cookbook_upgrade'
 cookbook 'mysql', github: 'rightscale-cookbooks-contrib/mysql', branch: 'rs-fixes'
-cookbook 'rs-mysql', github: 'cdwilhelm/rs-mysql', branch: 'curt-dev'
+cookbook 'rs-mysql', github: 'cdwilhelm/rs-mysql', branch: 'curtd-dev'
 cookbook 'dns', github: 'rightscale-cookbooks-contrib/dns', branch: 'rightscale_development_v2'
 cookbook 'iptables', '~> 1.1.0' # keep for compatiblity with chef 11, can remove with chef 12
 
