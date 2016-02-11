@@ -9,6 +9,8 @@ cookbook 'rs-mysql', github: 'rightscale-cookbooks/rs-mysql'
 cookbook 'dns', github: 'rightscale-cookbooks-contrib/dns', branch: 'rightscale_development_v2'
 cookbook 'iptables', '~> 1.1.0' # keep for compatiblity with chef 11, can remove with chef 12
 
+cookbook 'rightscale_volume', github:'rightscale-cookbooks/rightscale_volume'
+cookbook 'rightscale_backup', github:'rightscale-cookbooks/rightscale_backup'
 cookbook 'rightscale_tag', github: 'rightscale-cookbooks/rightscale_tag'
 cookbook 'machine_tag', github: 'rightscale-cookbooks/machine_tag'
 cookbook 'rsc_remote_recipe', github:'rightscale-services-cookbooks/rsc_remote_recipe'
