@@ -4,7 +4,7 @@ maintainer_email 'cookbooks@rightscale.com'
 license          'Apache 2.0'
 description      'Installs/Configures a PHP application server'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          '1.1.1'
+version          '1.2.0'
 
 depends 'marker', '~> 1.0.1'
 depends 'application', '~> 4.1.4'
@@ -13,7 +13,7 @@ depends 'database', '~> 1.5.2'
 depends 'git', '~> 4.0.2'
 depends 'php', '~> 1.4.4'
 depends 'collectd', '~> 1.1.0'
-depends 'rightscale_tag', '~> 1.0.6'
+depends 'rightscale_tag', '~> 1.1.0'
 depends 'rsc_remote_recipe', '~> 10.0.0'
 
 recipe 'rs-application_php::default', 'Installs/configures PHP application server'
