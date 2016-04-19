@@ -28,6 +28,7 @@ Github Repository: [https://github.com/rightscale-cookbooks/rs-application_php](
   * [git](http://community.opscode.com/cookbooks/git)
   * [rightscale_tag](http://community.opscode.com/cookbooks/rightscale_tag)
   * [collectd](https://github.com/rightscale-cookbooks-contrib/chef-collectd)
+  * [mysql](https://github.com/rightscale-cookbooks-contrib/mysql)
 * Platform
   * Ubuntu 12.04
   * CentOS 6
