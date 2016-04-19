@@ -4,7 +4,7 @@ maintainer_email 'cookbooks@rightscale.com'
 license          'Apache 2.0'
 description      'Installs/Configures a PHP application server'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          '1.2.1'
+version          '1.2.2'
 
 depends 'marker', '~> 1.0.1'
 depends 'application', '~> 4.1.4'
@@ -138,4 +138,10 @@ attribute 'rs-application_php/database/schema',
   :display_name => 'MySQL Database Name',
   :description => 'The schema name used to connect to the database. Example: mydb',
   :required => 'recommended',
+  :recipes => ['rs-application_php::default']
+
+attribute 'rs-application_php/write_settings_file',
+  :display_name => 'Write PHP settings file',
+  :description => 'Write PHP settings file to config/db.php',
+  :required => 'optional',
   :recipes => ['rs-application_php::default']

@@ -106,7 +106,7 @@ To **detach** the application server from a **load balancer**
 * `node['rs-application_php']['migration_command']` - The command used to perform
   application migration.
 * `node['rs-application_php']['write_settings_file']` - Create the local settings file on the
-  application deployment. Default: `true`.
+  application deployment. Default: `false`.
 * `node['rs-application_php]['local_settings_file']` - The name of local settings file to be
   created. The name can also be path relative to the application code. Default: `config/db.php`.
   Example: `LocalSettings.php`, `config/db.php`.
