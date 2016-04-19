@@ -15,6 +15,7 @@ depends 'php', '~> 1.8.0'
 depends 'collectd', '~> 1.1.0'
 depends 'rightscale_tag', '~> 1.1.0'
 depends 'rsc_remote_recipe', '~> 10.0.0'
+depends 'mysql', '~> 4.0.20'
 
 recipe 'rs-application_php::default', 'Installs/configures PHP application server'
 recipe 'rs-application_php::tags', 'Sets up application server tags used in a 3-tier deployment setup'
