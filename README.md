@@ -17,7 +17,7 @@ Github Repository: [https://github.com/rightscale-cookbooks/rs-application_php](
 
 # Requirements
 
-* Chef 11 or higher
+* Chef 11
 * Requires [RightLink 10](http://docs.rightscale.com/rl10/) See cookbook version 1.1.1 for RightLink 6 support
 * Cookbook requirements
   * [marker](http://community.opscode.com/cookbooks/marker)
