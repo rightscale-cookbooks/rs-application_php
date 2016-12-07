@@ -1,15 +1,18 @@
 source 'https://rubygems.org'
 
-gem 'berkshelf'
+gem 'berkshelf', '~> 5.2'
 gem 'thor-foodcritic'
-gem 'rack', '= 1.6.4'
-gem 'json', '~> 1.8', '>= 1.8.3'
-gem 'buff-ignore', '= 1.1.1'
-gem 'net-http-persistent', '= 2.9.4'
+gem 'rake'
+gem 'chef', '~> 12.16.0'
 
 group :integration do
-  gem 'test-kitchen', '~> 1.2.1'
-  gem 'kitchen-vagrant'
-  gem 'chefspec', '~> 3.2'
-  gem 'strainer', '~> 3.3.0'
+  gem 'travis-lint'
+  gem 'chefspec', '~> 5.3.0'
+  gem 'test-kitchen'
+  gem 'kitchen-vagrant', '0.15.0'
+  gem 'coveralls', require: false
+  gem 'machine_tag'
+  gem 'chef-rewind'
+  gem 'cookstyle'
+  gem 'rubocop', '~> 0.39.0'
 end
