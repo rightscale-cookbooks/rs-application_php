@@ -8,7 +8,7 @@ version          '2.0.0'
 source_url       'https://github.com/rightscale-cookbooks/rs-application_php'
 issues_url       'https://github.com/rightscale-cookbooks/rs-application_php/issues'
 
-depends 'marker', '~> 2.0.0'
+depends 'marker'
 depends 'application'
 depends 'application_php'
 depends 'database'
