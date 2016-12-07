@@ -37,9 +37,9 @@ end
 
 include_recipe 'collectd::default'
 
-rewind "package[collectd]" do
+rewind 'package[collectd]' do
   action :nothing
-  only_if {::File.exists?("/etc/collect.d/collectd.conf")}
+  only_if { ::File.exist?('/etc/collect.d/collectd.conf') }
 end
 
 # The 'collectd::default' recipe attempts to delete collectd plugins that were not
@@ -66,9 +66,7 @@ end
 collectd_plugin 'apache_ps' do
   template 'apache_ps.conf.erb'
   cookbook 'rs-application_php'
-  options({
-    :collectd_lib => node['collectd']['plugin_dir'],
-    :instance_uuid => node['rightscale']['instance_uuid'],
-    :apache_user => node['apache']['user']
-  })
+  options(collectd_lib: node['collectd']['plugin_dir'],
+          instance_uuid: node['rightscale']['instance_uuid'],
+          apache_user: node['apache']['user'])
 end

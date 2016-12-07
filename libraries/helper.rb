@@ -43,7 +43,7 @@ module RsApplicationPhp
         packages_hash = {}
         packages.each do |pkg|
           if pkg =~ /(.*)=(.*)/
-            packages_hash[$1] = $2
+            packages_hash[Regexp.last_match(1)] = Regexp.last_match(2)
           else
             packages_hash[pkg] = nil
           end
@@ -64,21 +64,21 @@ module RsApplicationPhp
     #
     def self.get_bind_ip_address(node)
       case node['rs-application_php']['bind_network_interface']
-      when "private"
+      when 'private'
         if node['cloud']['private_ips'].nil? || node['cloud']['private_ips'].empty?
           raise 'Cannot find private IP of the server!'
         end
 
         node['cloud']['private_ips'].first
-      when "public"
+      when 'public'
         if node['cloud']['public_ips'].nil? || node['cloud']['public_ips'].empty?
           raise 'Cannot find public IP of the server!'
         end
 
         node['cloud']['public_ips'].first
       else
-        raise "Unknown network interface '#{node['rs-application_php']['bind_network_interface']}'!" +
-          " The network interface must be either 'public' or 'private'."
+        raise "Unknown network interface '#{node['rs-application_php']['bind_network_interface']}'!" \
+              " The network interface must be either 'public' or 'private'."
       end
     end
 
@@ -93,8 +93,8 @@ module RsApplicationPhp
     #
     def self.validate_application_name(name)
       if name =~ /[^\w]/
-        raise "'#{name}' is not a valid application name. The application name can only have" +
-        " alphanumeric characters and underscores!"
+        raise "'#{name}' is not a valid application name. The application name can only have" \
+              ' alphanumeric characters and underscores!'
       else
         true
       end
