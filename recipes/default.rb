@@ -23,7 +23,10 @@ end
 
 include_recipe 'git'
 
-include_recipe 'database::mysql'
+# include_recipe 'database::mysql'
+mysql2_chef_gem 'default' do
+  action :install
+end
 
 include_recipe 'php::module_mysql'
 

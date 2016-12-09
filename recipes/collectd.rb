@@ -21,9 +21,6 @@ marker 'recipe_start_rightscale' do
   template 'rightscale_audit_entry.erb'
 end
 
-chef_gem 'chef-rewind'
-require 'chef/rewind'
-
 if node['rightscale'] && node['rightscale']['instance_uuid']
   node.override['collectd']['fqdn'] = node['rightscale']['instance_uuid']
 end
@@ -31,24 +28,11 @@ end
 log 'Setting up monitoring for apache...'
 
 # On CentOS the Apache collectd plugin is installed separately
-package 'collectd-apache' do
-  only_if { node['platform'] =~ /redhat|centos/ }
-end
+#package 'collectd-apache' do
+#  only_if { node['platform'] =~ /redhat|centos/ }
+#end
 
-include_recipe 'collectd::default'
-
-rewind 'package[collectd]' do
-  action :nothing
-  only_if { ::File.exist?('/etc/collect.d/collectd.conf') }
-end
-
-# The 'collectd::default' recipe attempts to delete collectd plugins that were not
-# created during the same runlist as this recipe. Some common plugins are installed
-# as a part of base install which runs in a different runlist. This resource
-# will safeguard the base plugins from being removed.
-rewind 'ruby_block[delete_old_plugins]' do
-  action :nothing
-end
+include_recipe 'rs-base::monitoring_collectd'
 
 # Set up apache monitoring
 collectd_plugin 'apache' do
@@ -63,10 +47,10 @@ cookbook_file "#{node['collectd']['plugin_dir']}/apache_ps" do
   source 'apache_ps'
 end
 
-collectd_plugin 'apache_ps' do
-  template 'apache_ps.conf.erb'
-  cookbook 'rs-application_php'
-  options(collectd_lib: node['collectd']['plugin_dir'],
-          instance_uuid: node['rightscale']['instance_uuid'],
-          apache_user: node['apache']['user'])
-end
+#collectd_plugin 'apache_ps' do
+#  template 'apache_ps.conf.erb'
+#  cookbook 'rs-application_php'
+#  options(collectd_lib: node['collectd']['plugin_dir'],
+#          instance_uuid: node['rightscale']['instance_uuid'],
+#          apache_user: node['apache']['user'])
+#end
