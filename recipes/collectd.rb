@@ -28,9 +28,9 @@ end
 log 'Setting up monitoring for apache...'
 
 # On CentOS the Apache collectd plugin is installed separately
-#package 'collectd-apache' do
+# package 'collectd-apache' do
 #  only_if { node['platform'] =~ /redhat|centos/ }
-#end
+# end
 
 include_recipe 'rs-base::monitoring_collectd'
 
@@ -47,10 +47,10 @@ cookbook_file "#{node['collectd']['plugin_dir']}/apache_ps" do
   source 'apache_ps'
 end
 
-#collectd_plugin 'apache_ps' do
+# collectd_plugin 'apache_ps' do
 #  template 'apache_ps.conf.erb'
 #  cookbook 'rs-application_php'
 #  options(collectd_lib: node['collectd']['plugin_dir'],
 #          instance_uuid: node['rightscale']['instance_uuid'],
 #          apache_user: node['apache']['user'])
-#end
+# end
