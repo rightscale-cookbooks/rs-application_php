@@ -21,7 +21,7 @@
 default['rs-application_php']['packages'] = []
 
 # Application listen port
-default['rs-application_php']['listen_port'] = 8080
+default['rs-application_php']['listen_port'] = "*:8080"
 
 # Application bind IP type - 'private' or 'public'
 default['rs-application_php']['bind_network_interface'] = 'private'
