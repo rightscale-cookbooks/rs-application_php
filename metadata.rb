@@ -10,7 +10,7 @@ issues_url       'https://github.com/rightscale-cookbooks/rs-application_php/iss
 
 depends 'marker'
 depends 'application'
-depends 'application_php'
+depends 'application_php', '~> 2.0.2'
 depends 'mysql2_chef_gem'
 depends 'database'
 depends 'git'
