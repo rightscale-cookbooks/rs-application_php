@@ -150,3 +150,11 @@ attribute 'rs-application_php/write_settings_file',
   description: 'Write PHP settings file to config/db.php',
   required: 'optional',
   recipes: ['rs-application_php::default']
+
+attribute 'rs-applicatin_php/allow_override',
+  display_name: 'Allow Override',
+  description: 'Sets Allow Override to All or None to enable/disable .htaccess',
+  required: 'optional',
+  choice: %w(All None),
+  default: 'None',
+  recipes: ['rs-application_php::default']

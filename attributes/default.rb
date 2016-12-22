@@ -89,3 +89,6 @@ default['rs-application_php']['remote_attach_recipe'] = 'rs-haproxy::frontend'
 
 # Remote recipe to detach application server from load balancer
 default['rs-application_php']['remote_detach_recipe'] = 'rs-haproxy::frontend'
+
+# Allow Override Variable to enable .htaccess
+default['rs-application_php']['allow_override'] = 'None'

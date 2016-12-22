@@ -58,7 +58,10 @@ vhost_aliases = ['localhost', 'localhost.localdomain', "*.#{application_name}", 
 vhost_aliases << node['cloud']['public_hostname'] if node.key?('cloud')
 
 # setting up overrides
-overrides = { server_port: listen_port }
+overrides = {
+  server_port: listen_port,
+  allow_override: node['rs-application_php']['allow_override']
+}
 
 # Set up application
 application application_name do
