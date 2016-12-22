@@ -45,8 +45,9 @@ database_host = node['rs-application_php']['database']['host']
 database_user = node['rs-application_php']['database']['user']
 database_password = node['rs-application_php']['database']['password']
 database_schema = node['rs-application_php']['database']['schema']
+listen_port=node['rs-application_php']['listen_port']
 
-node.override['apache']['listen'] = [node['rs-application_php']['listen_port']]
+node.override['apache']['listen'] = ["*:#{listen_port}"]
 
 # Enable Apache extended status page
 Chef::Log.info "Overriding 'apache/ext_status' to true"
@@ -100,5 +101,6 @@ application application_name do
   # Configure Apache and mod_php to run application by creating virtual host
   mod_php_apache2 do
     server_aliases vhost_aliases
+    webapp_overrides { server_port: listen_port }
   end
 end
