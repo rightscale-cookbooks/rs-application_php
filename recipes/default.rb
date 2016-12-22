@@ -57,7 +57,7 @@ node.override['apache']['ext_status'] = true
 vhost_aliases = ['localhost', 'localhost.localdomain', "*.#{application_name}", "#{application_name}.#{node['domain']}", node['fqdn']]
 vhost_aliases << node['cloud']['public_hostname'] if node.key?('cloud')
 
-# setting up overrides
+Chef::Log.info "web_app overrides(server_port:#{listen_port},allow_override:#{node['rs-application_php']['allow_override']}"
 overrides = {
   server_port: listen_port,
   allow_override: node['rs-application_php']['allow_override']
