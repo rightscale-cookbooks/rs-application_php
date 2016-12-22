@@ -45,7 +45,7 @@ database_host = node['rs-application_php']['database']['host']
 database_user = node['rs-application_php']['database']['user']
 database_password = node['rs-application_php']['database']['password']
 database_schema = node['rs-application_php']['database']['schema']
-listen_port=node['rs-application_php']['listen_port']
+listen_port = node['rs-application_php']['listen_port']
 
 node.override['apache']['listen'] = ["*:#{listen_port}"]
 
@@ -56,6 +56,9 @@ node.override['apache']['ext_status'] = true
 # Setting up vhost alias list
 vhost_aliases = ['localhost', 'localhost.localdomain', "*.#{application_name}", "#{application_name}.#{node['domain']}", node['fqdn']]
 vhost_aliases << node['cloud']['public_hostname'] if node.key?('cloud')
+
+# setting up overrides
+overrides = { server_port: listen_port }
 
 # Set up application
 application application_name do
@@ -101,6 +104,6 @@ application application_name do
   # Configure Apache and mod_php to run application by creating virtual host
   mod_php_apache2 do
     server_aliases vhost_aliases
-    webapp_overrides { server_port: listen_port }
+    webapp_overrides overrides
   end
 end
