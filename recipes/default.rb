@@ -52,11 +52,9 @@ node.override['apache']['listen'] = [node['rs-application_php']['listen_port']]
 Chef::Log.info "Overriding 'apache/ext_status' to true"
 node.override['apache']['ext_status'] = true
 
-#Setting up vhost alias list
-vhost_aliases = [ 'localhost', 'localhost.localdomain', "*.#{application_name}","#{application_name}.#{node['domain']}", node['fqdn'] ]
-if node.has_key?("cloud")
-  vhost_aliases << node['cloud']['public_hostname']
-end
+# Setting up vhost alias list
+vhost_aliases = ['localhost', 'localhost.localdomain', "*.#{application_name}", "#{application_name}.#{node['domain']}", node['fqdn']]
+vhost_aliases << node['cloud']['public_hostname'] if node.key?('cloud')
 
 # Set up application
 application application_name do
