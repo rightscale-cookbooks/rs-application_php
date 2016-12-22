@@ -32,6 +32,7 @@ include_recipe 'php::module_mysql'
 
 # Validate application name
 RsApplicationPhp::Helper.validate_application_name(node['rs-application_php']['application_name'])
+application_name = node['rs-application_php']['application_name']
 
 # Convert the packages list to a Hash if any of the package has version specified.
 # See libraries/helper.php for the definition of `split_by_package_name_and_version` method.
@@ -51,9 +52,15 @@ node.override['apache']['listen'] = [node['rs-application_php']['listen_port']]
 Chef::Log.info "Overriding 'apache/ext_status' to true"
 node.override['apache']['ext_status'] = true
 
+#Setting up vhost alias list
+vhost_aliases = [ 'localhost', 'localhost.localdomain', "*.#{application_name}","#{application_name}.#{node['domain']}", node['fqdn'] ]
+if node.has_key?("cloud")
+  vhost_aliases << node['cloud']['public_hostname']
+end
+
 # Set up application
-application node['rs-application_php']['application_name'] do
-  path "/usr/local/www/sites/#{node['rs-application_php']['application_name']}"
+application application_name do
+  path "/usr/local/www/sites/#{application_name}"
   owner node['apache']['user']
   group node['apache']['group']
 
@@ -93,5 +100,7 @@ application node['rs-application_php']['application_name'] do
   end
 
   # Configure Apache and mod_php to run application by creating virtual host
-  mod_php_apache2
+  mod_php_apache2 do
+    server_aliases vhost_aliases
+  end
 end

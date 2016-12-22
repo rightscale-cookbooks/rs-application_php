@@ -1,18 +1,36 @@
 ---
 driver_plugin: vagrant
 driver_config:
-  require_chef_omnibus: '11.6'
+  require_chef_omnibus: '12.16'
   customize:
-    cpus: 2
-    memory: 1024
+    cpus: 1
+    memory: 512
+  ssh:
+    insert_key: false
+#  network:
+#    - ["private_network", {ip: "192.0.2.2", netmask: "255.255.255.255"}]
+provisioner:
+  name: chef_zero
 
 platforms:
-- name: centos-6.5
-  run_list: ['recipe[yum-epel]']
+- name: ubuntu-14.04
+  run_list: ['recipe[fake::create_secrets]','recipe[apt]']
   driver_config:
-    box: opscode-centos-6.5
+    box: bento/ubuntu-14.04
+- name: ubuntu-12.04
+  run_list: ['recipe[fake::create_secrets]','recipe[apt]']
+  driver_config:
+    box: bento/ubuntu-12.04
+- name: centos-6.8
+  run_list: ['recipe[fake::create_secrets]','recipe[yum-epel]']
+  driver_config:
+    box: bento/centos-6.8 
+- name: centos-7.0
+  run_list: ['recipe[fake::create_secrets]','recipe[yum-epel]']
+  driver_config:
+    box: bento/centos-7.0
 - name: rhel-6.5
-  run_list: ['recipe[yum-epel]', 'recipe[rhsm::register]']
+  run_list: ['recipe[fake::create_secrets]','recipe[yum-epel]', 'recipe[rhsm]']
   attributes:
     rhsm:
       username: <%= ENV['RHSM_USERNAME'] %>
@@ -21,21 +39,16 @@ platforms:
   driver_config:
     box: local-rhel-6.5
     box_url: file://<%= File.expand_path('~') %>/opscode_rhel-6.5_chef-provisionerless.box
-- name: ubuntu-12.04
-  run_list: ['recipe[apt]']
+- name: rhel-7.0
+  run_list: ['recipe[yum-epel]', 'recipe[rhsm]', 'recipe[fake::mysql_repo]', 'recipe[fake::wget_cacert]']
   attributes:
-    apt:
-      compile_time_update: true
+    rhsm:
+      username: <%= ENV['RHSM_USERNAME'] %>
+      password: <%= ENV['RHSM_PASSWORD'] %>
+      additional_repos: ['rhel-7-server-optional-rpms']
   driver_config:
-    box: opscode-ubuntu-12.04
-- name: ubuntu-14.04
-  run_list: ['recipe[apt]']
-  attributes:
-    apt:
-      compile_time_update: true
-  driver_config:
-    box: opscode-ubuntu-14.04
-
+    box: local-rhel-7.0
+    box_url: file://<%= File.expand_path('~') %>/opscode_rhel-7.0_chef-provisionerless.box
 busser:
   sudo: true
 
@@ -52,6 +65,8 @@ suites:
   attributes:
     rightscale:
       instance_uuid: '01-ABCDEFGH0123'
+    rs-base:
+      collectd_server: 'tss-4.rightscale.com'
     cloud:
       provider: vagrant
       public_ips: ['33.33.33.10']
