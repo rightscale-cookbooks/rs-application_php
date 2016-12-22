@@ -77,7 +77,6 @@ application node['rs-application_php']['application_name'] do
 
   # Configure PHP
   php node['rs-application_php']['application_name'] do
-    server_aliases ['localhost', 'localhost.localdomain']
     app_root node['rs-application_php']['app_root']
     write_settings_file node['rs-application_php']['write_settings_file'] == true ||
                         node['rs-application_php']['write_settings_file'] == 'true'
