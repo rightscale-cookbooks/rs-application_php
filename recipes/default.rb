@@ -45,7 +45,7 @@ database_user = node['rs-application_php']['database']['user']
 database_password = node['rs-application_php']['database']['password']
 database_schema = node['rs-application_php']['database']['schema']
 
-node.set['apache']['listen'] = [node['rs-application_php']['listen_port']]
+node.override['apache']['listen'] = [node['rs-application_php']['listen_port']]
 
 # Enable Apache extended status page
 Chef::Log.info "Overriding 'apache/ext_status' to true"
@@ -77,6 +77,7 @@ application node['rs-application_php']['application_name'] do
 
   # Configure PHP
   php node['rs-application_php']['application_name'] do
+    server_aliases ['localhost', 'localhost.localdomain']
     app_root node['rs-application_php']['app_root']
     write_settings_file node['rs-application_php']['write_settings_file'] == true ||
                         node['rs-application_php']['write_settings_file'] == 'true'
