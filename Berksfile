@@ -2,7 +2,7 @@ source 'https://supermarket.chef.io'
 
 metadata
 
-cookbook 'application_php', github: 'rightscale-cookbooks-contrib/application_php'
+cookbook 'application_php', github: 'rightscale-cookbooks-contrib/application_php', branch: 'chef-12-migration'
 cookbook 'rs-base', github: 'rightscale-cookbooks/rs-base'
 cookbook 'marker', github: 'rightscale-cookbooks/marker'
 cookbook 'rightscale_tag', github: 'rightscale-cookbooks/rightscale_tag'
