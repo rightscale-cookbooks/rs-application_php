@@ -11,9 +11,9 @@ cookbook 'logrotate','1.9.2' # keep for compatiblity with chef 11, can remove wi
 cookbook 'aws','3.4.1' # keep for compatiblity with chef 11, can remove with chef 12
 cookbook 'ohai', '3.0.0' # keep for compatiblity with chef 11, can remove with chef 12
 cookbook 'runit', '~> 1.6.0' # keep for compatiblity with chef 11, can remove with chef 12
-cookbook 'rightscale_tag',github: 'rightscale-cookbooks/rightscale_tag'
-cookbook 'machine_tag', github: 'rightscale-cookbooks/machine_tag'
-cookbook 'rsc_remote_recipe', github:'rightscale-services-cookbooks/rsc_remote_recipe'
+cookbook 'rightscale_tag',github: 'rightscale-cookbooks/rightscale_tag', tag: 'v1.2.2'
+cookbook 'machine_tag', github: 'rightscale-cookbooks/machine_tag', tag: 'v1.2.2'
+cookbook 'rsc_remote_recipe', github:'rightscale-services-cookbooks/rsc_remote_recipe', tag: 'v10.0.1'
 
 group :integration do
   cookbook 'apt', '~> 2.9.2'
