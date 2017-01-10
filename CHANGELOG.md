@@ -3,6 +3,10 @@ rs-application_php Cookbook CHANGELOG
 
 This file is used to list changes made in each version of the rs-application_php cookbook.
 
+v2.0.0
+------
+- Chef 12 Migration
+
 v1.2.3
 ------
 - use rightscale_tag v1.2.1

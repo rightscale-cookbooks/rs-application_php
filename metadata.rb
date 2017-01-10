@@ -5,8 +5,9 @@ license          'Apache 2.0'
 description      'Installs/Configures a PHP application server'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          '2.0.0'
-source_url       'https://github.com/rightscale-cookbooks/rs-application_php'
-issues_url       'https://github.com/rightscale-cookbooks/rs-application_php/issues'
+source_url       'https://github.com/rightscale-cookbooks/rs-application_php' if respond_to?(:source_url)
+issues_url       'https://github.com/rightscale-cookbooks/rs-application_php/issues' if respond_to?(:issues_url)
+chef_version '>= 12.0' if respond_to?(:chef_version)
 
 depends 'marker'
 depends 'application'
