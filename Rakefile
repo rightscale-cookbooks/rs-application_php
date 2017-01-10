@@ -6,6 +6,7 @@ directory = File.expand_path(File.dirname(__FILE__))
 
 desc 'Sets up knife, and vendors cookbooks'
 task :setup_test_environment do
+  sh('chef exec bundle install')
   File.open('knife.rb', 'w+') do |file|
     file.write <<-EOF
       log_level                :debug
