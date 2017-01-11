@@ -66,7 +66,7 @@ module RsApplicationPhp
       case node['rs-application_php']['bind_network_interface']
       when 'private'
         priv_ip = nil
-        if !node['cloud']['private_ips'].nil? && node['cloud']['private_ips'].empty?
+        if !node['cloud']['private_ips'].nil? && !node['cloud']['private_ips'].empty?
           priv_ip = node['cloud']['private_ips'].first
         end
 
@@ -84,11 +84,24 @@ module RsApplicationPhp
 
         priv_ip
       when 'public'
-        if node['cloud']['public_ips'].nil? || node['cloud']['public_ips'].empty?
+        public_ip = nil
+        if !node['cloud']['public_ips'].nil? && !node['cloud']['public_ips'].empty?
+          public_ip = node['cloud']['public_ips'].first
+        end
+
+        if !node['cloud_v2']['public_ipv4_addrs'].nil? && !node['cloud_v2']['public_ipv4_addrs'].empty? && public_ip.nil?
+          public_ip = node['cloud_v2']['public_ipv4_addrs'].first
+        end
+
+        if public_ip.nil? && !IPAddress(node['ipaddress']).private?
+          public_ip = node['ipaddress']
+        end
+
+        if public_ip.nil?
           raise 'Cannot find public IP of the server!'
         end
 
-        node['cloud']['public_ips'].first
+        public_ip
       else
         raise "Unknown network interface '#{node['rs-application_php']['bind_network_interface']}'!" \
               " The network interface must be either 'public' or 'private'."
