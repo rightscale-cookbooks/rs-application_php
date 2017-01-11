@@ -65,11 +65,24 @@ module RsApplicationPhp
     def self.get_bind_ip_address(node)
       case node['rs-application_php']['bind_network_interface']
       when 'private'
-        if node['cloud']['private_ips'].nil? || node['cloud']['private_ips'].empty?
+        priv_ip = nil
+        if !node['cloud']['private_ips'].nil? && node['cloud']['private_ips'].empty?
+          priv_ip = node['cloud']['private_ips'].first
+        end
+
+        if !node['cloud_v2']['local_ipv4_addrs'].nil? && !node['cloud_v2']['local_ipv4_addrs'].empty? && priv_ip.nil?
+          priv_ip = node['cloud_v2']['local_ipv4_addrs'].first
+        end
+
+        if priv_ip.nil? && IPAddress(node['ipaddress']).private?
+          priv_ip = node['ipaddress']
+        end
+
+        if priv_ip.nil?
           raise 'Cannot find private IP of the server!'
         end
 
-        node['cloud']['private_ips'].first
+        priv_ip
       when 'public'
         if node['cloud']['public_ips'].nil? || node['cloud']['public_ips'].empty?
           raise 'Cannot find public IP of the server!'
