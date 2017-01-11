@@ -78,9 +78,7 @@ module RsApplicationPhp
           priv_ip = node['ipaddress']
         end
 
-        if priv_ip.nil?
-          raise 'Cannot find private IP of the server!'
-        end
+        raise 'Cannot find private IP of the server!' if priv_ip.nil?
 
         priv_ip
       when 'public'
@@ -97,9 +95,7 @@ module RsApplicationPhp
           public_ip = node['ipaddress']
         end
 
-        if public_ip.nil?
-          raise 'Cannot find public IP of the server!'
-        end
+        raise 'Cannot find public IP of the server!' if public_ip.nil?
 
         public_ip
       else
