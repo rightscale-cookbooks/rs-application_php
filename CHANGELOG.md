@@ -7,6 +7,17 @@ v2.0.0
 ------
 - Chef 12 Migration
 
+v1.2.5
+------
+- pins nio4r
+- pins rightscale_tag
+- pins machine_tag
+- pins rsc_remote_recipe
+
+v1.2.4
+------
+- fix cookbook and gem compatiblity
+
 v1.2.3
 ------
 - use rightscale_tag v1.2.1
