@@ -6,6 +6,7 @@ This file is used to list changes made in each version of the rs-application_php
 v2.0.0
 ------
 - Chef 12 Migration
+- includes yum-mysql-community for centos-6.8/7.2
 
 v1.2.5
 ------
