@@ -21,9 +21,9 @@ include_recipe 'database::mysql'
 
 # The connection hash to use to connect to mysql
 mysql_connection_info = {
-  :host     => 'localhost',
-  :username => 'root',
-  :password => node['mysql']['server_root_password']
+  host: 'localhost',
+  username: 'root',
+  password: node['mysql']['server_root_password']
 }
 
 # Create the application user
@@ -49,6 +49,6 @@ end
 
 # Import the mysql dump
 execute 'import mysql dump' do
-  command "cat /tmp/mysql.dump | mysql --user=root -b #{node['fake']['database_name']}" +
-    " --password=#{node['mysql']['server_root_password']}"
+  command "cat /tmp/mysql.dump | mysql --user=root -b #{node['fake']['database_name']}" \
+          " --password=#{node['mysql']['server_root_password']}"
 end

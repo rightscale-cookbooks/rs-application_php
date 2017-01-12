@@ -17,18 +17,24 @@
 # limitations under the License.
 #
 
-marker "recipe_start_rightscale" do
-  template "rightscale_audit_entry.erb"
+marker 'recipe_start_rightscale' do
+  template 'rightscale_audit_entry.erb'
 end
 
 include_recipe 'git'
 
-include_recipe 'database::mysql'
+include_recipe 'yum-mysql-community::mysql57' if node['platform_family'] == 'rhel'
+
+# include_recipe 'database::mysql'
+mysql2_chef_gem 'default' do
+  action :install
+end
 
 include_recipe 'php::module_mysql'
 
 # Validate application name
 RsApplicationPhp::Helper.validate_application_name(node['rs-application_php']['application_name'])
+application_name = node['rs-application_php']['application_name']
 
 # Convert the packages list to a Hash if any of the package has version specified.
 # See libraries/helper.php for the definition of `split_by_package_name_and_version` method.
@@ -41,16 +47,27 @@ database_host = node['rs-application_php']['database']['host']
 database_user = node['rs-application_php']['database']['user']
 database_password = node['rs-application_php']['database']['password']
 database_schema = node['rs-application_php']['database']['schema']
+listen_port = node['rs-application_php']['listen_port']
 
-node.set['apache']['listen_ports'] = [node['rs-application_php']['listen_port']]
+node.override['apache']['listen'] = ["*:#{listen_port}"]
 
 # Enable Apache extended status page
 Chef::Log.info "Overriding 'apache/ext_status' to true"
 node.override['apache']['ext_status'] = true
 
+# Setting up vhost alias list
+vhost_aliases = ['localhost', 'localhost.localdomain', "*.#{application_name}", "#{application_name}.#{node['domain']}", node['fqdn']]
+vhost_aliases << node['cloud']['public_hostname'] if node.key?('cloud')
+
+Chef::Log.info "web_app overrides(server_port:#{listen_port},allow_override:#{node['rs-application_php']['allow_override']}"
+overrides = {
+  server_port: listen_port,
+  allow_override: node['rs-application_php']['allow_override']
+}
+
 # Set up application
-application node['rs-application_php']['application_name'] do
-  path "/usr/local/www/sites/#{node['rs-application_php']['application_name']}"
+application application_name do
+  path "/usr/local/www/sites/#{application_name}"
   owner node['apache']['user']
   group node['apache']['group']
 
@@ -76,7 +93,7 @@ application node['rs-application_php']['application_name'] do
   php node['rs-application_php']['application_name'] do
     app_root node['rs-application_php']['app_root']
     write_settings_file node['rs-application_php']['write_settings_file'] == true ||
-      node['rs-application_php']['write_settings_file'] == 'true'
+                        node['rs-application_php']['write_settings_file'] == 'true'
     local_settings_file node['rs-application_php']['local_settings_file']
     settings_template node['rs-application_php']['settings_template']
 
@@ -90,5 +107,8 @@ application node['rs-application_php']['application_name'] do
   end
 
   # Configure Apache and mod_php to run application by creating virtual host
-  mod_php_apache2
+  mod_php_apache2 do
+    server_aliases vhost_aliases
+    webapp_overrides overrides
+  end
 end

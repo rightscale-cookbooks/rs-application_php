@@ -35,27 +35,26 @@ machine_tag "application:active_#{node['rs-application_php']['application_name']
 end
 
 # Send remote recipe request
-log "Running recipe '#{node['rs-application_php']['remote_detach_recipe']}' on all load balancers" +
-" with tags 'load_balancer:active_#{node['rs-application_php']['application_name']}=true'..."
+log "Running recipe '#{node['rs-application_php']['remote_detach_recipe']}' on all load balancers" \
+    " with tags 'load_balancer:active_#{node['rs-application_php']['application_name']}=true'..."
 
-remote_recipe "HAProxy Frontend - chef" do
+remote_recipe 'HAProxy Frontend - chef' do
   tags "load_balancer:active_#{node['rs-application_php']['application_name']}=true"
-  attributes( {
-      'APPLICATION_SERVER_ID' => "text:#{node['rightscale']['instance_uuid']}",
-      'POOL_NAME' => "text:#{node['rs-application_php']['application_name']}",
-      'APPLICATION_ACTION' => "text:detach"})
+  attributes('APPLICATION_SERVER_ID' => "text:#{node['rightscale']['instance_uuid']}",
+             'POOL_NAME' => "text:#{node['rs-application_php']['application_name']}",
+             'APPLICATION_ACTION' => 'text:detach')
   action :run
 end
 
-#execute 'Detach from load balancer(s)' do
+# execute 'Detach from load balancer(s)' do
 #  command [
 #    'rs_run_recipe',
 #    '--name', node['rs-application_php']['remote_detach_recipe'],
 #    '--recipient_tags', "load_balancer:active_#{node['rs-application_php']['application_name']}=true",
 #    '--json', remote_request_json
 #  ]
-#end
+# end
 #
-#file remote_request_json do
+# file remote_request_json do
 #  action :delete
-#end
+# end

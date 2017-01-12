@@ -1,9 +1,13 @@
 language: ruby
 rvm:
-  - 2.0.0
-  - 1.9.3
-before_script: bundle exec berks install
-script: bundle exec strainer test --except kitchen
+- 2.3.1
+before_install:
+- curl -L https://www.getchef.com/chef/install.sh | sudo bash -s -- -P chefdk -v 1.0.3
+- gem install bundler -v 1.11.2
+install:
+- chef exec bundle install --jobs=3 --retry=3
+before_script: chef exec rake setup_test_environment
+script: "./.travis_install.sh"
 notifications:
   slack:
-    secure: LBbaBXSsTB9a9CQ2B4+B5IW8AaMbfDgbubni2PgkHQWydn42qx/hpm8OsT2YVU6CS43tqVQ84s+lUGh4db4die/Ux7A0unnTqhSSatLp6T/vWtcigjopAEfIp+RmZ5C8hZU7onekyta+36tCRBSJRm3KrRQnkTkfA9nwpJSV/wo=
+    secure: JQYkoAiYhzU29x90aOFPb5+mBY0DEYLLilIWY67bqJGYz0NeyVJMZVDq5FyBq0ERroCZ553Ve1Yl9SCgP28klluFHFRX4/2Hz7voVNt11zG2cMnRTXIFESepmJAjMa6tFGwuXdPSvRzl/DV56kqkA8vB0Gr0M+kQuqKxEG7r/AQ=

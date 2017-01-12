@@ -9,7 +9,6 @@ when 'redhat'
 end
 
 describe 'Required packages are installed' do
-
   php_mysql_packages = []
   case os[:family]
   when 'debian'
@@ -45,12 +44,11 @@ describe 'Database configuration file is created with correct settings' do
   end
 end
 
-
 describe service(mysql_service_name) do
   it { should be_enabled }
   it { should be_running }
 end
 
 describe command('curl --silent --location http://localhost:8080/dbread') do
-  its(:stdout) { should match /I am in the db/ }
+  its(:stdout) { should match(/I am in the db/) }
 end

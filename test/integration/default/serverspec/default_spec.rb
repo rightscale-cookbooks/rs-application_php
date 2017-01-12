@@ -47,11 +47,11 @@ describe port(8080) do
 end
 
 describe command('curl --silent --location http://localhost:8080') do
-  its(:stdout) { should match /Basic html serving succeeded/ }
+  its(:stdout) { should match(/Basic html serving succeeded/) }
 end
 
 describe command('curl --silent --location http://localhost:8080/appserver') do
-  its(:stdout) { should match /PHP configuration=succeeded/ }
+  its(:stdout) { should match(/PHP configuration=succeeded/) }
 end
 
 describe file('/usr/local/www/sites/example/migration') do
@@ -61,7 +61,7 @@ end
 describe 'apache status module' do
   describe file("/etc/#{apache_name}/mods-available/status.conf") do
     it { should be_file }
-    its(:content) { should match /^\s*ExtendedStatus On/ }
+    its(:content) { should match(/^\s*ExtendedStatus On/) }
   end
 
   describe file("/etc/#{apache_name}/mods-enabled/status.conf") do
@@ -76,14 +76,14 @@ describe 'application server tags' do
   describe file(tag_file) do
     it { should be_file }
 
-    it "should have the application server tags" do
+    it 'should have the application server tags' do
       tags_json = JSON.load(IO.read(tag_file))
 
-      expect(tags_json).to include("application:active=true")
-      expect(tags_json).to include("application:active_example=true")
-      expect(tags_json).to include("application:bind_ip_address_example=33.33.33.10")
-      expect(tags_json).to include("application:bind_port_example=8080")
-      expect(tags_json).to include("application:vhost_path_example=www.example.com")
+      expect(tags_json).to include('application:active=true')
+      expect(tags_json).to include('application:active_example=true')
+      expect(tags_json).to include('application:bind_ip_address_example=33.33.33.10')
+      expect(tags_json).to include('application:bind_port_example=8080')
+      expect(tags_json).to include('application:vhost_path_example=www.example.com')
     end
   end
 end
@@ -95,7 +95,7 @@ describe 'apache collectd plugin' do
 
   describe file("#{collectd_plugin_dir}/apache.conf") do
     it { should be_file }
-    its(:content) { should match /^\s*LoadPlugin "apache"/ }
-    it { should contain("URL \"http://localhost:8080/server-status?auto\"").from("<Plugin \"apache\">").to("</Plugin>") }
+    its(:content) { should match(/^\s*LoadPlugin "apache"/) }
+    it { should contain('URL "http://localhost:8080/server-status?auto"').from('<Plugin "apache">').to('</Plugin>') }
   end
 end
