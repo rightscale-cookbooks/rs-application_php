@@ -22,6 +22,7 @@ depends 'rsc_remote_recipe'
 depends 'mysql'
 depends 'collectd'
 depends 'curl'
+depends 'yum-mysql-community'
 
 recipe 'rs-application_php::default', 'Installs/configures PHP application server'
 recipe 'rs-application_php::tags', 'Sets up application server tags used in a 3-tier deployment setup'

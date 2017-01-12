@@ -23,6 +23,8 @@ end
 
 include_recipe 'git'
 
+include_recipe 'yum-mysql-community::mysql57' if node['platform_family'] == 'rhel'
+
 # include_recipe 'database::mysql'
 mysql2_chef_gem 'default' do
   action :install
