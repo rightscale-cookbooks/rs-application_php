@@ -10,7 +10,7 @@ DEPENDENCIES
     path: test/cookbooks/fake
   machine_tag
     git: https://github.com/rightscale-cookbooks/machine_tag.git
-    revision: 2cf4d496223986fdb13af29a7d3434ed7fbda82e
+    revision: 581dd0b7ddf2e65939527bb5e6c6c47788d1bf33
   marker
     git: https://github.com/rightscale-cookbooks/marker.git
     revision: 058e70879408fceceb628c600d487b1ddfa06cdb
@@ -49,19 +49,19 @@ GRAPH
   curl (2.0.3)
   database (6.1.1)
     postgresql (>= 1.0.0)
-  dmg (3.0.0)
+  dmg (3.1.0)
   ephemeral_lvm (2.0.0)
     lvm (~> 3.1)
   fake (0.1.0)
     database (>= 0.0.0)
-  git (5.0.1)
+  git (5.0.2)
     build-essential (>= 0.0.0)
     dmg (>= 0.0.0)
     yum-epel (>= 0.0.0)
   iis (5.0.5)
     windows (>= 1.34.6)
   lvm (3.1.0)
-  machine_tag (2.0.0)
+  machine_tag (2.0.1)
     apt (>= 0.0.0)
     build-essential (>= 0.0.0)
   mariadb (1.0.1)
@@ -69,8 +69,8 @@ GRAPH
     yum (>= 0.0.0)
     yum-epel (>= 0.0.0)
   marker (2.0.0)
-  mingw (1.2.4)
-    compat_resource (>= 0.0.0)
+  mingw (1.2.5)
+    compat_resource (>= 12.16.3)
     seven_zip (>= 0.0.0)
   mysql (8.2.0)
   mysql2_chef_gem (1.1.0)
@@ -80,7 +80,7 @@ GRAPH
   ntp (3.3.1)
   ohai (4.2.3)
     compat_resource (>= 12.14.7)
-  openssl (6.0.0)
+  openssl (6.1.1)
   php (2.2.0)
     build-essential (>= 0.0.0)
     iis (>= 0.0.0)
@@ -133,7 +133,7 @@ GRAPH
   swap (0.3.8)
   windows (2.1.1)
     ohai (>= 4.0.0)
-  xml (3.1.0)
+  xml (3.1.1)
     build-essential (>= 0.0.0)
   yum (4.1.0)
   yum-epel (2.1.1)
