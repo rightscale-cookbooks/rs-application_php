@@ -4,7 +4,7 @@ maintainer_email 'cookbooks@rightscale.com'
 license          'Apache 2.0'
 description      'Installs/Configures a PHP application server'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          '2.1.0'
+version          '2.0.1'
 source_url       'https://github.com/rightscale-cookbooks/rs-application_php' if respond_to?(:source_url)
 issues_url       'https://github.com/rightscale-cookbooks/rs-application_php/issues' if respond_to?(:issues_url)
 chef_version '>= 12.0' if respond_to?(:chef_version)
@@ -22,6 +22,7 @@ depends 'rsc_remote_recipe'
 depends 'mysql'
 depends 'collectd'
 depends 'curl'
+depends 'yum-mysql-community'
 
 recipe 'rs-application_php::default', 'Installs/configures PHP application server'
 recipe 'rs-application_php::tags', 'Sets up application server tags used in a 3-tier deployment setup'
