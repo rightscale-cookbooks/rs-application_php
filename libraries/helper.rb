@@ -72,7 +72,7 @@ module RsApplicationPhp
 
         if !node['cloud_v2']['local_ipv4_addrs'].nil? && !node['cloud_v2']['local_ipv4_addrs'].empty? && priv_ip.nil?
           priv_ip = node['cloud_v2']['local_ipv4_addrs'].first
-        end
+	end unless node['cloud_v2'].nil?
 
         if priv_ip.nil? && IPAddress(node['ipaddress']).private?
           priv_ip = node['ipaddress']
@@ -89,7 +89,7 @@ module RsApplicationPhp
 
         if !node['cloud_v2']['public_ipv4_addrs'].nil? && !node['cloud_v2']['public_ipv4_addrs'].empty? && public_ip.nil?
           public_ip = node['cloud_v2']['public_ipv4_addrs'].first
-        end
+	end unless node['cloud_v2'].nil?
 
         if public_ip.nil? && !IPAddress(node['ipaddress']).private?
           public_ip = node['ipaddress']

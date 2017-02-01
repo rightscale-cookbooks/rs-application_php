@@ -88,7 +88,6 @@ suites:
 #
 - name: database_mysql
   run_list:
-  - recipe[mysql::server]
   - recipe[fake::database_mysql]
   - recipe[rs-application_php::default]
   - recipe[curl::default]

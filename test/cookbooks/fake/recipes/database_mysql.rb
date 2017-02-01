@@ -16,15 +16,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
-include_recipe 'database::mysql'
+mysql2_chef_gem 'default' do
+  action :install
+end
 
 # The connection hash to use to connect to mysql
 mysql_connection_info = {
   host: 'localhost',
   username: 'root',
+  socket: '/var/run/mysql-default/mysqld.sock',
   password: node['mysql']['server_root_password']
 }
+
+mysql_service 'default' do
+  port '3306'
+  initial_root_password node['mysql']['server_root_password']
+  action [:create, :start]
+end
 
 # Create the application user
 mysql_database_user node['fake']['app_user'] do
@@ -50,5 +58,5 @@ end
 # Import the mysql dump
 execute 'import mysql dump' do
   command "cat /tmp/mysql.dump | mysql --user=root -b #{node['fake']['database_name']}" \
-          " --password=#{node['mysql']['server_root_password']}"
+          " --password=#{node['mysql']['server_root_password']} --socket=/var/run/mysql-default/mysqld.sock"
 end
