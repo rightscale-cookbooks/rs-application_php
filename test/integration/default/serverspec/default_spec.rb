@@ -97,6 +97,6 @@ describe 'apache collectd plugin' do
   describe file("#{collectd_plugin_dir}/apache.conf") do
     it { should be_file }
     its(:content) { should match(/^\s*LoadPlugin "apache"/) }
-    it { should contain('URL "http://localhost:8080/server-status?auto"').from('<Plugin "apache">').to('</Plugin>') }
+    it { should contain('Url "http://localhost:8080/server-status?auto"').from('<Plugin "apache">').to('</Plugin>') }
   end
 end

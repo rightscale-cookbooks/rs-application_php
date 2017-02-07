@@ -16,7 +16,7 @@ DEPENDENCIES
     revision: 058e70879408fceceb628c600d487b1ddfa06cdb
   rightscale_tag
     git: https://github.com/rightscale-cookbooks/rightscale_tag.git
-    revision: 69b6eeded9d0587ab39e85aaa2270028764db5d4
+    revision: 93a8e1d1040f508623fa3cae4fbd7ecf67bcb450
   rs-application_php
     path: .
     metadata: true
@@ -96,7 +96,7 @@ GRAPH
     build-essential (>= 2.0.0)
     compat_resource (>= 12.16.3)
     openssl (>= 4.0)
-  rightscale_tag (2.0.0)
+  rightscale_tag (2.0.1)
     machine_tag (~> 2.0)
     marker (~> 2.0)
   rs-application_php (2.0.1)
