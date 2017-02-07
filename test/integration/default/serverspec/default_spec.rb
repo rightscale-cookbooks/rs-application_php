@@ -7,7 +7,7 @@ case os[:family]
 when 'debian', 'ubuntu'
   apache_name = 'apache2'
   php_packages = %w(php5 php5-cgi php5-dev php5-cli php-pear)
-  collectd_plugin_dir = '/etc/collectd/plugins'
+  collectd_plugin_dir = '/etc/collectd.d'
 when 'redhat'
   apache_name = 'httpd'
   php_packages = %w(php php-devel php-cli php-pear)

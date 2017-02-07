@@ -106,6 +106,7 @@ suites:
       server_repl_password: replpass
     rs-application_php:
       application_name: example
+      write_settings_file: true
       scm:
         revision: unified_php
         repository: git://github.com/rightscale/examples.git
