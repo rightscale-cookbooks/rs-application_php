@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #
 # Cookbook Name:: rs-application_php
 # Recipe:: default
@@ -25,9 +26,13 @@ include_recipe 'git'
 
 include_recipe 'yum-mysql-community::mysql57' if node['platform_family'] == 'rhel'
 
-# include_recipe 'database::mysql'
+mysql_client 'default' do
+  action :create
+end
+
 mysql2_chef_gem 'default' do
-  action :install
+    provider Chef::Provider::Mysql2ChefGem::Mysql
+    action :install
 end
 
 include_recipe 'php::module_mysql'
@@ -62,7 +67,7 @@ vhost_aliases << node['cloud']['public_hostname'] if node.key?('cloud')
 Chef::Log.info "web_app overrides(server_port:#{listen_port},allow_override:#{node['rs-application_php']['allow_override']}"
 overrides = {
   server_port: listen_port,
-  allow_override: node['rs-application_php']['allow_override']
+  allow_override: node['rs-application_php']['allow_override'],
 }
 
 # Set up application

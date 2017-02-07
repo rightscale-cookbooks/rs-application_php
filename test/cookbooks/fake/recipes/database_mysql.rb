@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #
 # Cookbook Name:: fake
 # Recipe:: database_mysql
@@ -25,7 +26,7 @@ mysql_connection_info = {
   host: 'localhost',
   username: 'root',
   socket: '/var/run/mysql-default/mysqld.sock',
-  password: node['mysql']['server_root_password']
+  password: node['mysql']['server_root_password'],
 }
 
 mysql_service 'default' do
