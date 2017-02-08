@@ -76,7 +76,8 @@ cookbook_file '/etc/my.cnf' do
 end
 
 if node['platform_family'] == 'rhel'
-  php_ini_file = '/etc/php.d/app-mysql.ini' 
+  php_ini_file = '/etc/php.d/app-mysql.ini'
+  php_apache_location = '/etc/php.d/app-mysql2.ini'
 elsif node['platform_family'] == 'debian'
   case node['platform_version']
   when '12.04'
