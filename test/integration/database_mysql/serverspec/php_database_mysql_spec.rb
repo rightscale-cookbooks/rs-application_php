@@ -10,6 +10,9 @@ describe 'Required packages are installed' do
     php_mysql_packages = %w(mysql-client libmysqlclient-dev php5-mysql)
   when 'redhat'
     php_mysql_packages = %w(mysql mysql-devel php-mysql)
+    if os[:release].split('.').first == '7'
+      php_mysql_packages = %w(mysql-community-client mysql-community-devel php-mysql)
+    end
   end
 
   describe 'Mysql client packages for PHP are installed' do

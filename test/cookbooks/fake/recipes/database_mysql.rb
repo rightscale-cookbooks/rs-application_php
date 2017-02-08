@@ -36,7 +36,32 @@ mysql_connection_info = {
 mysql_service 'default' do
   port '3306'
   initial_root_password 'rootpass'
-  action [:create, :start]
+  action [:create]
+end
+
+if node['platform_family'] == 'rhel' && node['platform_version'].split('.').first == '7'
+  mysql_data_dir = '/var/lib/mysql-default'
+  execute "mysql_install_db --datadir #{mysql_data_dir}"
+
+  execute "chown -R mysql:mysql #{mysql_data_dir}" do
+    action :run
+  end
+
+  bash 'setup db' do
+    code <<-EOF
+  mysqld --defaults-file=/etc/mysql-default/my.cnf --init-file=/tmp/mysql-default/my.sql &
+  sleep 10
+  pkill mysqld
+  touch /tmp/configured
+  EOF
+    not_if ::File.exist?('/tmp/configured')
+  end
+end
+
+mysql_service 'default' do
+  port '3306'
+  initial_root_password 'rootpass'
+  action [:start]
 end
 
 # Create the test database
