@@ -63,7 +63,7 @@ end
 # Import the mysql dump
 execute 'import mysql dump' do
   command "cat /tmp/mysql.dump | mysql --user=root -b #{node['fake']['database_name']}" \
-          " --password=rootpass --socket=/var/run/mysql-default/mysqld.sock"
+          ' --password=rootpass --socket=/var/run/mysql-default/mysqld.sock'
 end
 
 cookbook_file '/etc/my.cnf' do
