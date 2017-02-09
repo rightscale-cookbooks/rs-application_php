@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'spec_helper'
 
 apache_name = ''
@@ -6,7 +7,7 @@ case os[:family]
 when 'debian', 'ubuntu'
   apache_name = 'apache2'
   php_packages = %w(php5 php5-cgi php5-dev php5-cli php-pear)
-  collectd_plugin_dir = '/etc/collectd/plugins'
+  collectd_plugin_dir = '/etc/collectd.d'
 when 'redhat'
   apache_name = 'httpd'
   php_packages = %w(php php-devel php-cli php-pear)
@@ -96,6 +97,6 @@ describe 'apache collectd plugin' do
   describe file("#{collectd_plugin_dir}/apache.conf") do
     it { should be_file }
     its(:content) { should match(/^\s*LoadPlugin "apache"/) }
-    it { should contain('URL "http://localhost:8080/server-status?auto"').from('<Plugin "apache">').to('</Plugin>') }
+    it { should contain('Url "http://localhost:8080/server-status?auto"').from('<Plugin "apache">').to('</Plugin>') }
   end
 end

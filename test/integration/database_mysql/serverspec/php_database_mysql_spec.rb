@@ -1,12 +1,7 @@
+# frozen_string_literal: true
 require 'spec_helper'
 
-mysql_service_name = ''
-case os[:family]
-when 'debian'
-  mysql_service_name = 'mysql'
-when 'redhat'
-  mysql_service_name = 'mysqld'
-end
+mysql_service_name = 'mysql-default'
 
 describe 'Required packages are installed' do
   php_mysql_packages = []
@@ -15,6 +10,9 @@ describe 'Required packages are installed' do
     php_mysql_packages = %w(mysql-client libmysqlclient-dev php5-mysql)
   when 'redhat'
     php_mysql_packages = %w(mysql mysql-devel php-mysql)
+    if os[:release].split('.').first == '7'
+      php_mysql_packages = %w(mysql-community-client mysql-community-devel php-mysql)
+    end
   end
 
   describe 'Mysql client packages for PHP are installed' do
@@ -26,7 +24,7 @@ describe 'Required packages are installed' do
   end
 end
 
-describe package('mysql') do
+describe package('mysql2') do
   let(:path) { '/opt/chef/embedded/bin:$PATH' }
   it { should be_installed.by('gem') }
 end

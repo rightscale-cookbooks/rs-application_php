@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #
 # Cookbook Name:: rs-application_php
 # Recipe:: application_backend
@@ -45,7 +46,7 @@ log "Running recipe '#{node['rs-application_php']['remote_attach_recipe']}' on a
 
 remote_recipe 'HAProxy Frontend - chef' do
   tags "load_balancer:active_#{node['rs-application_php']['application_name']}=true"
-  attributes('APPLICATION_BIND_IP' => "text:#{node['cloud']['private_ips'][0]}",
+  attributes('APPLICATION_BIND_IP' => "text:#{RsApplicationPhp::Helper.get_bind_ip_address(node)}",
              'APPLICATION_BIND_PORT' => "text:#{node['rs-application_php']['listen_port']}",
              'APPLICATION_SERVER_ID' => "text:#{node['rightscale']['instance_uuid']}",
              'POOL_NAME' => "text:#{node['rs-application_php']['application_name']}",

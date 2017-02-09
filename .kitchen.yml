@@ -88,7 +88,6 @@ suites:
 #
 - name: database_mysql
   run_list:
-  - recipe[mysql::server]
   - recipe[fake::database_mysql]
   - recipe[rs-application_php::default]
   - recipe[curl::default]
@@ -101,12 +100,9 @@ suites:
       provider: vagrant
       public_ips: ['33.33.33.10']
       private_ips: ['10.0.2.15']
-    mysql:
-      server_root_password: rootpass
-      server_debian_password: debpass
-      server_repl_password: replpass
     rs-application_php:
       application_name: example
+      write_settings_file: true
       scm:
         revision: unified_php
         repository: git://github.com/rightscale/examples.git

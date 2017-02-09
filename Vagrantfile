@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
@@ -71,37 +72,37 @@ Vagrant.configure('2') do |config|
 
   config.vm.provision :chef_solo do |chef|
     chef.json = {
-      :mysql => {
+      mysql: {
         server_root_password: 'rootpass',
         server_debian_password: 'debpass',
-        server_repl_password: 'replpass'
+        server_repl_password: 'replpass',
       },
-      :vagrant => {
-        box_name: 'appserver'
+      vagrant: {
+        box_name: 'appserver',
       },
-      :'rs-application_php' => {
+      'rs-application_php': {
         application_name: 'example',
         local_settings_file: 'config/db.php',
         scm: {
           provider: 'git',
           revision: 'unified_php',
-          repository: 'git://github.com/rightscale/examples.git'
+          repository: 'git://github.com/rightscale/examples.git',
         },
         database: {
           provider: 'mysql',
           host: 'localhost',
           user: 'app_user',
           password: 'apppass',
-          schema: 'app_test'
-        }
-      }
+          schema: 'app_test',
+        },
+      },
     }
 
     chef.run_list = [
       'recipe[apt]',
       'recipe[mysql::server]',
       'recipe[fake::database_mysql]',
-      'recipe[rs-application_php::default]'
+      'recipe[rs-application_php::default]',
     ]
   end
 end
