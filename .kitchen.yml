@@ -83,6 +83,36 @@ suites:
         revision: unified_php
         repository: git://github.com/rightscale/examples.git
 
+- name: default-php-72
+  include: centos-7.2
+  run_list:
+  - recipe[yum-epel]
+  - recipe[yum-ius]
+  - recipe[rs-application_php::default]
+  - recipe[rs-application_php::tags]
+  - recipe[rs-application_php::collectd]
+  - recipe[curl::default]
+  attributes:
+    apt:
+      compile_time_update: true
+    rightscale:
+      instance_uuid: '01-ABCDEFGH0123'
+    rs-base:
+      collectd_server: 'tss-4.rightscale.com'
+    cloud:
+      provider: vagrant
+      public_ips: ['33.33.33.10']
+      private_ips: ['10.0.2.15']
+    rs-application_php:
+      packages: ['sl', 'php71u', 'php71u-common', 'php71u-mysqlnd']
+      application_name: example
+      vhost_path: www.example.com
+      bind_network_interface: 'public'
+      migration_command: echo migration is being performed >> /usr/local/www/sites/example/migration
+      scm:
+        revision: unified_php
+        repository: git://github.com/rightscale/examples.git
+
 # This test sets up a mysql database server locally, tests the database connectivity from the application to the
 # database server, and ensures that the required database client packages are installed.
 #
