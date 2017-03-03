@@ -36,8 +36,8 @@ mysql2_chef_gem 'default' do
 end
 
 unless node['rs-application_php']['application_name'].nil?
-  node.override['php']['packages'] = node['rs-application_php']['application_name'].select { |s| s.match(/php/) }
-  node.override['php']['mysql']['package'] = node['rs-application_php']['application_name'].select { |s| s.match(/mysql/) }
+  node.override['php']['packages'] = node['rs-application_php']['packages'].select { |s| s.match(/php/) }
+  node.override['php']['mysql']['package'] = node['rs-application_php']['packages'].select { |s| s.match(/mysql/) }
 end
 
 include_recipe 'php::module_mysql'
