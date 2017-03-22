@@ -35,7 +35,7 @@ mysql2_chef_gem 'default' do
   action :install
 end
 
-unless node['rs-application_php']['application_name'].nil?
+unless node['rs-application_php']['packages'].nil?
   node.override['php']['packages'] = node['rs-application_php']['packages'].select { |s| s.match(/php/) }
   node.override['php']['mysql']['package'] = node['rs-application_php']['packages'].select { |s| s.match(/mysql/) }
 end
