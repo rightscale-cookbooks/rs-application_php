@@ -1,30 +1,30 @@
 DEPENDENCIES
   application_php
-    git: git://github.com/rightscale-cookbooks-contrib/application_php
+    git: https://github.com/rightscale-cookbooks-contrib/application_php.git
     revision: ca2c927704c8b65bf0055a84e076158af8e41875
     branch: chef-12-migration
   ephemeral_lvm
-    git: git://github.com/rightscale-cookbooks/ephemeral_lvm
+    git: https://github.com/rightscale-cookbooks/ephemeral_lvm.git
     revision: 27cc02d57949e45de0be30d549bb40869387fd73
   fake
     path: test/cookbooks/fake
   machine_tag
-    git: git://github.com/rightscale-cookbooks/machine_tag
+    git: https://github.com/rightscale-cookbooks/machine_tag.git
     revision: 059187968cd8119a4ec39a660b485de6a21043eb
   marker
-    git: git://github.com/rightscale-cookbooks/marker
+    git: https://github.com/rightscale-cookbooks/marker.git
     revision: 058e70879408fceceb628c600d487b1ddfa06cdb
   rightscale_tag
-    git: git://github.com/rightscale-cookbooks/rightscale_tag
+    git: https://github.com/rightscale-cookbooks/rightscale_tag.git
     revision: 93a8e1d1040f508623fa3cae4fbd7ecf67bcb450
   rs-application_php
     path: .
     metadata: true
   rs-base
-    git: git://github.com/rightscale-cookbooks/rs-base
+    git: https://github.com/rightscale-cookbooks/rs-base.git
     revision: 088e44a646cf9db6e123534ef052775e45f25846
   rsc_remote_recipe
-    git: git://github.com/rightscale-services-cookbooks/rsc_remote_recipe
+    git: https://github.com/rightscale-services-cookbooks/rsc_remote_recipe.git
     revision: 1b97227b64c063a8c132133e9e38ab8f5065c670
 
 GRAPH
