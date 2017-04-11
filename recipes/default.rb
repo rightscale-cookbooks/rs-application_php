@@ -31,7 +31,6 @@ mysql_client 'default' do
 end
 
 mysql2_chef_gem 'default' do
-  provider Chef::Provider::Mysql2ChefGem::Mysql
   action :install
 end
 
