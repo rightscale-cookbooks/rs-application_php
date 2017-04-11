@@ -10,6 +10,8 @@ source_url       'https://github.com/rightscale-cookbooks/rs-application_php' if
 issues_url       'https://github.com/rightscale-cookbooks/rs-application_php/issues' if respond_to?(:issues_url)
 chef_version '>= 12.0' if respond_to?(:chef_version)
 
+supports 'ubuntu', '>= 14.04'
+
 depends 'marker'
 depends 'application'
 depends 'application_php', '~> 2.0.2'
