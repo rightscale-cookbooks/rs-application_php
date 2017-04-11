@@ -3,20 +3,8 @@ DEPENDENCIES
     git: https://github.com/rightscale-cookbooks-contrib/application_php.git
     revision: ca2c927704c8b65bf0055a84e076158af8e41875
     branch: chef-12-migration
-  ephemeral_lvm
-    git: https://github.com/rightscale-cookbooks/ephemeral_lvm.git
-    revision: 27cc02d57949e45de0be30d549bb40869387fd73
   fake
     path: test/cookbooks/fake
-  machine_tag
-    git: https://github.com/rightscale-cookbooks/machine_tag.git
-    revision: 059187968cd8119a4ec39a660b485de6a21043eb
-  marker
-    git: https://github.com/rightscale-cookbooks/marker.git
-    revision: 058e70879408fceceb628c600d487b1ddfa06cdb
-  rightscale_tag
-    git: https://github.com/rightscale-cookbooks/rightscale_tag.git
-    revision: 93a8e1d1040f508623fa3cae4fbd7ecf67bcb450
   rs-application_php
     path: .
     metadata: true
@@ -50,7 +38,7 @@ GRAPH
     postgresql (>= 1.0.0)
   dmg (3.1.0)
   ephemeral_lvm (3.0.0)
-    lvm (>= 4.0.0)
+    lvm (>= 4.0)
     now (>= 0.0.0)
   fake (0.1.0)
     database (>= 0.0.0)
@@ -61,11 +49,11 @@ GRAPH
     build-essential (>= 0.0.0)
     dmg (>= 0.0.0)
     yum-epel (>= 0.0.0)
-  iis (5.1.0)
+  iis (6.0.1)
     windows (>= 2.0)
   inifile_chef_gem (0.1.0)
     build-essential (>= 0.0.0)
-  lvm (4.0.5)
+  lvm (4.0.6)
   machine_tag (2.0.4)
     apt (>= 0.0.0)
     build-essential (>= 0.0.0)
@@ -78,16 +66,16 @@ GRAPH
   marker (2.0.0)
   mingw (2.0.0)
     seven_zip (>= 0.0.0)
-  mysql (8.3.0)
+  mysql (8.3.1)
   mysql2_chef_gem (2.0.1)
     build-essential (>= 2.4.0)
     mariadb (>= 0.0.0)
     mysql (>= 8.2.0)
   now (1.0.0)
   ntp (3.3.1)
-  ohai (5.0.2)
+  ohai (5.0.3)
   openssl (7.0.1)
-  php (3.0.0)
+  php (3.1.0)
     build-essential (>= 0.0.0)
     iis (>= 0.0.0)
     mysql (>= 6.0.0)
@@ -104,7 +92,7 @@ GRAPH
   rightscale_tag (2.0.1)
     machine_tag (~> 2.0)
     marker (~> 2.0)
-  rs-application_php (2.0.1)
+  rs-application_php (2.0.2)
     application (>= 0.0.0)
     application_php (~> 2.0.2)
     collectd (>= 0.0.0)
@@ -118,6 +106,8 @@ GRAPH
     rightscale_tag (>= 0.0.0)
     rs-base (>= 0.0.0)
     rsc_remote_recipe (>= 0.0.0)
+    yum-epel (>= 0.0.0)
+    yum-ius (>= 0.0.0)
     yum-mysql-community (>= 0.0.0)
   rs-base (2.1.1)
     apt (>= 0.0.0)
@@ -142,13 +132,16 @@ GRAPH
   swap (2.0.0)
   sysctl (0.8.1)
     ohai (>= 4.0)
-  windows (3.0.3)
+  windows (3.0.5)
     ohai (>= 4.0.0)
   xml (3.1.1)
     build-essential (>= 0.0.0)
-  yum (5.0.0)
+  yum (5.0.1)
   yum-epel (2.1.1)
     compat_resource (>= 12.16.3)
+  yum-ius (2.1.0)
+    compat_resource (>= 12.16.3)
+    yum-epel (>= 0.0.0)
   yum-mysql-community (2.1.0)
     compat_resource (>= 12.16.3)
   yum-scl (0.2.0)
