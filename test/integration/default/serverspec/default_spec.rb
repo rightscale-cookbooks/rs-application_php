@@ -1,23 +1,6 @@
 # frozen_string_literal: true
 require 'spec_helper'
 
-begin
-  require 'ohai'
-rescue LoadError
-  require 'rubygems/dependency_installer'
-  Gem::DependencyInstaller.new.install('ohai')
-  require 'ohai'
-end
-# Set backend type
-set :backend, :exec
-
-def ipaddress?
-  ohai = Ohai::System.new
-  ohai.all_plugins
-  @node = ohai
-  @node['ipaddress']
-end
-
 apache_name = ''
 php_packages = []
 case os[:family]
@@ -92,9 +75,6 @@ describe 'application server tags' do
   tag_file = "/vagrant/cache_dir/machine_tag_cache/#{hostname}/tags.json"
 
   describe file(tag_file) do
-    def ip_address?
-      ip_address?
-    end
     it { should be_file }
 
     it 'should have the application server tags' do
@@ -102,7 +82,7 @@ describe 'application server tags' do
 
       expect(tags_json).to include('application:active=true')
       expect(tags_json).to include('application:active_example=true')
-      expect(tags_json).to include("application:bind_ip_address_example=#{ip_address?}")
+      expect(tags_json).to include("application:bind_ip_address_example=#{Helper.ip_address?}")
       expect(tags_json).to include('application:bind_port_example=8080')
       expect(tags_json).to include('application:vhost_path_example=www.example.com')
     end
