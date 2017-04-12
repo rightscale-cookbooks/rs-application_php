@@ -90,6 +90,7 @@ platforms:
       intermediate_instructions:
         - RUN zypper --non-interactive install aaa_base perl-Getopt-Long-Descriptive which hostname
 
+suites:
 - name: default-dokken
   run_list:
   - recipe[fake::create_secrets]
