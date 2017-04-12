@@ -10,6 +10,7 @@ RSpec.configure do |conf|
 end
 
 module Helper
+  extend Specinfra::Helper
   begin
     require 'ohai'
   rescue LoadError
