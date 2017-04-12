@@ -24,8 +24,6 @@ $LOAD_PATH.unshift(libraries_path) unless $LOAD_PATH.include?(libraries_path)
 require 'chefspec'
 require 'chefspec/berkshelf'
 require 'chefspec/cacher'
-require 'coveralls'
-Coveralls.wear!
 
 ChefSpec::Coverage.start!
 

@@ -18,11 +18,10 @@
 # limitations under the License.
 #
 
-marker 'recipe_start_rightscale' do
-  template 'rightscale_audit_entry.erb'
-end
-
 include_recipe 'git'
+include_recipe 'apt'
+include_recipe 'yum-epel'
+include_recipe 'yum-ius' if node['platform_family'] == 'rhel'
 
 include_recipe 'yum-mysql-community::mysql57' if node['platform_family'] == 'rhel'
 
@@ -31,13 +30,14 @@ mysql_client 'default' do
 end
 
 mysql2_chef_gem 'default' do
-  provider Chef::Provider::Mysql2ChefGem::Mysql
   action :install
 end
 
-unless node['rs-application_php']['application_name'].nil?
-  node.override['php']['packages'] = node['rs-application_php']['packages'].select { |s| s.match(/php/) }
-  node.override['php']['mysql']['package'] = node['rs-application_php']['packages'].select { |s| s.match(/mysql/) }
+unless node['rs-application_php']['packages'].nil?
+  node.override['php']['packages'] = node['rs-application_php']['packages'].select { |s| s.match(/php/) } unless
+    node['rs-application_php']['packages'].select { |s| s.match(/php/) }.count == 0
+  node.override['php']['mysql']['package'] = node['rs-application_php']['packages'].select { |s| s.match(/mysql/) } unless
+     node['rs-application_php']['packages'].select { |s| s.match(/mysql/) }.count == 0
 end
 
 include_recipe 'php::module_mysql'

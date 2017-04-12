@@ -17,10 +17,10 @@ platforms:
   run_list: ['recipe[fake::create_secrets]','recipe[apt]']
   driver_config:
     box: bento/ubuntu-14.04
-- name: ubuntu-12.04
+- name: ubuntu-16.04
   run_list: ['recipe[fake::create_secrets]','recipe[apt]']
   driver_config:
-    box: bento/ubuntu-12.04
+    box: bento/ubuntu-16.04
 - name: centos-6.8
   run_list: ['recipe[fake::create_secrets]','recipe[yum-epel]']
   driver_config:
@@ -29,26 +29,7 @@ platforms:
   run_list: ['recipe[fake::create_secrets]','recipe[yum-epel]']
   driver_config:
     box: bento/centos-7.2
-# - name: rhel-6.5
-#   run_list: ['recipe[fake::create_secrets]','recipe[yum-epel]', 'recipe[rhsm]']
-#   attributes:
-#     rhsm:
-#       username: <%= ENV['RHSM_USERNAME'] %>
-#       password: <%= ENV['RHSM_PASSWORD'] %>
-#       additional_repos: ['rhel-6-server-optional-rpms']
-#   driver_config:
-#     box: local-rhel-6.5
-#     box_url: file://<%= File.expand_path('~') %>/opscode_rhel-6.5_chef-provisionerless.box
-# - name: rhel-7.0
-#   run_list: ['recipe[yum-epel]', 'recipe[rhsm]', 'recipe[fake::mysql_repo]', 'recipe[fake::wget_cacert]']
-#   attributes:
-#     rhsm:
-#       username: <%= ENV['RHSM_USERNAME'] %>
-#       password: <%= ENV['RHSM_PASSWORD'] %>
-#       additional_repos: ['rhel-7-server-optional-rpms']
-#   driver_config:
-#     box: local-rhel-7.0
-#     box_url: file://<%= File.expand_path('~') %>/opscode_rhel-7.0_chef-provisionerless.box
+
 busser:
   sudo: true
 
@@ -58,6 +39,7 @@ suites:
 #
 - name: default
   run_list:
+  - recipe[fake::create_secrets]
   - recipe[rs-application_php::default]
   - recipe[rs-application_php::tags]
   - recipe[rs-application_php::collectd]
@@ -77,7 +59,7 @@ suites:
       packages: ['sl']
       application_name: example
       vhost_path: www.example.com
-      bind_network_interface: 'public'
+      bind_network_interface: 'private'
       migration_command: echo migration is being performed >> /usr/local/www/sites/example/migration
       scm:
         revision: unified_php

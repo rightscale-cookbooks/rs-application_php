@@ -3,6 +3,14 @@ rs-application_php Cookbook CHANGELOG
 
 This file is used to list changes made in each version of the rs-application_php cookbook.
 
+v2.0.2
+------
+- populates `node['php']['packages']` and `node['php']['mysql']['package']` based\
+  off of `node['rs-application_php']['packages']`
+- including yum-epel, and yum-ius for php7 test
+- removed marker
+- removed ubuntu-12.04 support
+
 v2.0.1
 ------
 - adds azure rm support for private ips, issue: [#29][], PR: [#30][]

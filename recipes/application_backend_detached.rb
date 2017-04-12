@@ -18,10 +18,6 @@
 # limitations under the License.
 #
 
-marker 'recipe_start_rightscale' do
-  template 'rightscale_audit_entry.erb'
-end
-
 class Chef::Recipe
   include Rightscale::RightscaleTag
 end

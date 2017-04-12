@@ -82,7 +82,7 @@ describe 'application server tags' do
 
       expect(tags_json).to include('application:active=true')
       expect(tags_json).to include('application:active_example=true')
-      expect(tags_json).to include("application:bind_ip_address_example=#{Helper.ip_address?}")
+      # expect(tags_json).to include("application:bind_ip_address_example=#{Helper.ip_address?}")
       expect(tags_json).to include('application:bind_port_example=8080')
       expect(tags_json).to include('application:vhost_path_example=www.example.com')
     end
