@@ -19,6 +19,9 @@
 #
 
 include_recipe 'git'
+include_recipe 'apt'
+include_recipe 'yum-epel'
+include_recipe 'yum-ius' if node['platform_family'] == 'rhel'
 
 include_recipe 'yum-mysql-community::mysql57' if node['platform_family'] == 'rhel'
 
