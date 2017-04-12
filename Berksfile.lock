@@ -99,7 +99,6 @@ GRAPH
     curl (>= 0.0.0)
     database (>= 0.0.0)
     git (>= 0.0.0)
-    marker (>= 0.0.0)
     mysql (>= 0.0.0)
     mysql2_chef_gem (>= 2.0.0)
     php (>= 0.0.0)

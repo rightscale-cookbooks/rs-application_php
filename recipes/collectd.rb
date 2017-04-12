@@ -18,10 +18,6 @@
 # limitations under the License.
 #
 
-marker 'recipe_start_rightscale' do
-  template 'rightscale_audit_entry.erb'
-end
-
 if node['rightscale'] && node['rightscale']['instance_uuid']
   node.override['collectd']['fqdn'] = node['rightscale']['instance_uuid']
 end
