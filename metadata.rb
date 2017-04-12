@@ -12,6 +12,7 @@ chef_version '>= 12.0' if respond_to?(:chef_version)
 
 supports 'ubuntu', '>= 14.04'
 
+depends 'apache2', '~> 3.2.2'
 depends 'application'
 depends 'application_php', '~> 2.0.2'
 depends 'mysql2_chef_gem', '>= 2.0.0'

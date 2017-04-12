@@ -16,7 +16,7 @@ DEPENDENCIES
     revision: 1b97227b64c063a8c132133e9e38ab8f5065c670
 
 GRAPH
-  apache2 (3.3.0)
+  apache2 (3.2.2)
   application (4.1.6)
   application_php (2.0.2)
     apache2 (>= 0.0.0)
@@ -93,6 +93,7 @@ GRAPH
     machine_tag (~> 2.0)
     marker (~> 2.0)
   rs-application_php (2.0.2)
+    apache2 (~> 3.2.2)
     application (>= 0.0.0)
     application_php (~> 2.0.2)
     apt (>= 0.0.0)

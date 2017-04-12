@@ -8,6 +8,8 @@ v2.0.2
 - populates `node['php']['packages']` and `node['php']['mysql']['package']` based\
   off of `node['rs-application_php']['packages']`
 - including yum-epel, and yum-ius for php7 test
+- removed marker
+- removed ubuntu-12.04 support
 
 v2.0.1
 ------
