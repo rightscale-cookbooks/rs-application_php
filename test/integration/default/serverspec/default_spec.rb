@@ -92,6 +92,9 @@ describe 'application server tags' do
   tag_file = "/vagrant/cache_dir/machine_tag_cache/#{hostname}/tags.json"
 
   describe file(tag_file) do
+    def ip_address?
+      ip_address?
+    end
     it { should be_file }
 
     it 'should have the application server tags' do
