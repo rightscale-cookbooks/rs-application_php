@@ -59,7 +59,7 @@ suites:
       packages: ['sl']
       application_name: example
       vhost_path: www.example.com
-      bind_network_interface: 'public'
+      bind_network_interface: 'private'
       migration_command: echo migration is being performed >> /usr/local/www/sites/example/migration
       scm:
         revision: unified_php
