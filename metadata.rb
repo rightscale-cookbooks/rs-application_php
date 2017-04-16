@@ -105,6 +105,14 @@ attribute 'rs-application_php/app_root',
     'rs-application_php::tags',
   ]
 
+attribute 'rs-application_php/local_settings_file',
+  :display_name => 'Local Settings File',
+  :description => 'The name of local settings file to be created. The name can also ' +
+    'be path relative to the application code. Default: config/db.php',
+  :default => 'config/db.php',
+  :required => 'recommended',
+  :recipes => ['rs-application_php::default']
+
 attribute 'rs-application_php/bind_network_interface',
   display_name: 'Application Bind Network Interface',
   description: 'The network interface to use for the bind address of the application server.' \
