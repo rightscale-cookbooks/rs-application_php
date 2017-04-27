@@ -22,7 +22,6 @@ Github Repository: [https://github.com/rightscale-cookbooks/rs-application_php](
 * See cookbook version 1.2.4 for Chef11 support
 * See cookbook version 1.1.1 for RightLink 6 support
 * Cookbook requirements
-  * [marker](http://community.opscode.com/cookbooks/marker)
   * [application](http://community.opscode.com/cookbooks/application)
   * [application_php](http://community.opscode.com/cookbooks/application_php)
   * [database](http://community.opscode.com/cookbooks/database)
@@ -32,8 +31,9 @@ Github Repository: [https://github.com/rightscale-cookbooks/rs-application_php](
   * [collectd](https://github.com/rightscale-cookbooks-contrib/chef-collectd)
   * [mysql](https://github.com/rightscale-cookbooks-contrib/mysql)
 * Platform
-  * Ubuntu 12.04
+  * Ubuntu 14.04
   * CentOS 6
+  * CentOS 7
 
 # Usage
 
@@ -85,6 +85,8 @@ To **detach** the application server from a **load balancer**
 
 * `node['rs-application_php']['packages']` - List of packages to be installed before
   starting the deployment. Package versions can be specified in this format `<package>=<version>`.
+  This can be used to upgrade php, by specifying the php packages. It will automatically populate
+  `node['php']['packages']` and `node['php']['mysql']['package']`.
 * `node['rs-application_php']['listen_port']` - The port to use for the application to bind.
   Default: `8080`.
 * `node['rs-application_php']['bind_network_interface']` - The network interface for the application

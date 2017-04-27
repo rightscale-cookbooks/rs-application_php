@@ -4,13 +4,9 @@ require 'spec_helper'
 apache_name = ''
 php_packages = []
 case os[:family]
-when 'debian', 'ubuntu'
-  apache_name = 'apache2'
-  php_packages = %w(php5 php5-cgi php5-dev php5-cli php-pear)
-  collectd_plugin_dir = '/etc/collectd.d'
 when 'redhat'
   apache_name = 'httpd'
-  php_packages = %w(php php-devel php-cli php-pear)
+  php_packages = %w(php70u php70u-devel php70u-cli php70u-pear)
   collectd_plugin_dir = '/etc/collectd.d'
 end
 
@@ -82,7 +78,7 @@ describe 'application server tags' do
 
       expect(tags_json).to include('application:active=true')
       expect(tags_json).to include('application:active_example=true')
-      expect(tags_json).to include("application:bind_ip_address_example=#{Helper.ip_address?}")
+      expect(tags_json).to include('application:bind_ip_address_example=33.33.33.10')
       expect(tags_json).to include('application:bind_port_example=8080')
       expect(tags_json).to include('application:vhost_path_example=www.example.com')
     end

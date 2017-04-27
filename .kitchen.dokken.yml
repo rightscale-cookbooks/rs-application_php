@@ -1,0 +1,120 @@
+driver:
+  name: dokken
+  privileged: true # because Docker and SystemD/Upstart
+  chef_version: 12.16.42
+  volumes: [ '/mnt' ]
+
+transport:
+  name: dokken
+
+provisioner:
+  name: dokken
+  deprecations_as_errors: false
+
+verifier:
+  root_path: '/opt/verifier'
+  sudo: true
+
+platforms:
+  - name: centos-6
+    driver:
+      image: centos:6
+      privileged: true
+      platform: rhel
+      pid_one_command: /sbin/init
+      intermediate_instructions:
+        - RUN yum -y install which initscripts net-tools sudo curl wget
+
+  - name: centos-7
+    driver:
+      image: centos:7
+      privileged: true
+      platform: rhel
+      pid_one_command: /usr/lib/systemd/systemd
+      intermediate_instructions:
+        - RUN yum -y install lsof which systemd-sysv initscripts wget net-tools sudo curl
+
+  - name: debian-7
+    driver:
+      image: debian:7
+      privileged: true
+      pid_one_command: /sbin/init
+      intermediate_instructions:
+        - RUN /usr/bin/apt-get update
+        - RUN /usr/bin/apt-get install apt-transport-https lsb-release procps net-tools sudo curl -y
+
+  - name: debian-8
+    driver:
+      image: debian:8
+      privileged: true
+      pid_one_command: /bin/systemd
+      intermediate_instructions:
+        - RUN /usr/bin/apt-get update
+        - RUN /usr/bin/apt-get install apt-transport-https lsb-release procps net-tools sudo curl -y
+
+  - name: fedora-25
+    driver:
+      image: fedora:25
+      privileged: true
+      pid_one_command: /usr/lib/systemd/systemd
+      intermediate_instructions:
+        - RUN dnf -y install yum which systemd-sysv initscripts wget net-tools sudo curl
+
+  - name: ubuntu-14.04
+    driver:
+      image: ubuntu-upstart:14.04
+      privileged: true
+      hostname: <%= ENV['INSTANCE'].downcase %>
+      pid_one_command: /sbin/init
+      intermediate_instructions:
+        - RUN /usr/bin/apt-get update
+        - RUN /usr/bin/apt-get install apt-transport-https lsb-release procps net-tools sudo curl -y
+    attributes:
+      poise-service:
+        provider: upstart
+
+  - name: ubuntu-16.04
+    driver:
+      image: ubuntu:16.04
+      privileged: true
+      pid_one_command: /bin/systemd
+      intermediate_instructions:
+        - RUN /usr/bin/apt-get update
+        - RUN /usr/bin/apt-get install apt-transport-https lsb-release procps net-tools sudo curl -y
+
+  - name: opensuse-leap
+    driver:
+      image: opensuse:leap
+      privileged: true
+      pid_one_command: /bin/systemd
+      intermediate_instructions:
+        - RUN zypper --non-interactive install aaa_base perl-Getopt-Long-Descriptive which hostname
+
+suites:
+- name: default-dokken
+  run_list:
+  - recipe[fake::create_secrets]
+  - recipe[rs-application_php::default]
+  - recipe[rs-application_php::tags]
+  - recipe[rs-application_php::collectd]
+  - recipe[curl::default]
+  attributes:
+    apt:
+      compile_time_update: true
+    rightscale:
+      instance_uuid: '01-ABCDEFGH0123'
+    rs-base:
+      collectd_server: 'tss-4.rightscale.com'
+    cloud:
+      provider: vagrant
+      public_ips: ['33.33.33.10']
+      private_ips: ['10.0.2.15']
+    rs-application_php:
+      packages: ['sl']
+      application_name: example
+      vhost_path: www.example.com
+      bind_network_interface: 'private'
+      migration_command: echo migration is being performed >> /usr/local/www/sites/example/migration
+      scm:
+        revision: unified_php
+        repository: git://github.com/rightscale/examples.git

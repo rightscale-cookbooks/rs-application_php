@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 require 'serverspec'
 require 'pathname'
+require 'json'
 
 set :backend, :exec
 
